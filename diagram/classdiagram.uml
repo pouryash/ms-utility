@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="181.0" y="375.0">com.motaharinia.msutility.grpc</node>
+    <node x="0.0" y="150.0">com.motaharinia.msutility.encoding</node>
+    <node x="378.0" y="300.0">com.motaharinia.msutility.image</node>
+    <node x="221.0" y="75.0">com.motaharinia.msutility.exception</node>
+    <node x="0.0" y="225.0">com.motaharinia.msutility.graphql</node>
+    <node x="0.0" y="75.0">com.motaharinia.msutility.reflection</node>
+    <node x="0.0" y="450.0">com.motaharinia.msutility.fso</node>
+    <node x="0.0" y="0.0">com.motaharinia.msutility.customvalidation</node>
+    <node x="165.0" y="450.0">com.motaharinia.msutility.zip</node>
+    <node x="269.0" y="0.0">com.motaharinia.msutility.customfield</node>
+    <node x="0.0" y="300.0">com.motaharinia.msutility.string</node>
+    <node x="205.0" y="150.0">com.motaharinia.msutility.calendar</node>
+    <node x="354.0" y="375.0">com.motaharinia.msutility.json</node>
+    <node x="0.0" y="375.0">com.motaharinia.msutility.model</node>
+    <node x="189.0" y="300.0">com.motaharinia.msutility.object</node>
+    <node x="197.0" y="225.0">com.motaharinia.msutility.captcha</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.3000000000000003" x="358.4404761904763" y="205.97619047619054" />
+  <SelectedNodes>
+    <node>com.motaharinia.msutility.grpc</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
