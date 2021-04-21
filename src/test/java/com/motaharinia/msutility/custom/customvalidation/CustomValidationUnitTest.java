@@ -76,7 +76,7 @@ class CustomValidationUnitTest {
             model.setOrganizationRegistrationNo("2315");
             model.setPassword1("123456");
             model.setPassword2("123");
-            model.setPassword3("123$Abcd");
+            model.setPassword3("asd123ASD!@#");
             model.setPassword4("123$Abcd~");
             model.setPersianCharacters("مصطفی مطهری نیا");
             model.setPersonPhone("88888888");
