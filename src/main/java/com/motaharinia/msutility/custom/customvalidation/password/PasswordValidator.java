@@ -56,8 +56,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
             return false;
         }
-        complicatedSpecialChars=CustomValidationRegularExceptionEnum.PASSWORD_COMPLEXITY.getValue().replace("%COMPLECATED_SPECIAL_CHARS%",complicatedSpecialChars);
-        if (complicated.equals(true) && (!password.matches(complicatedSpecialChars))){
+        if (complicated.equals(true) && (!password.matches(CustomValidationRegularExceptionEnum.PASSWORD_COMPLEXITY.getValue().replace("%COMPLECATED_SPECIAL_CHARS%",complicatedSpecialChars)))){
                 message = MESSAGE_COMPLICATED;
                 cvc.disableDefaultConstraintViolation();
                 cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();

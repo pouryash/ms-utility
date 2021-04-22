@@ -60,3 +60,9 @@
 * Changed:
   * improve PasswordValidator added maxLength and complicatedSpecialChars
 * Fixed:
+
+#### [0.0.11] - 2021-04-23
+* Added:
+* Changed:
+* Fixed:
+  * fix complicatedSpecialChars problem in PasswordValidator
