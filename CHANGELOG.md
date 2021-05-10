@@ -66,3 +66,9 @@
 * Changed:
 * Fixed:
   * fix complicatedSpecialChars problem in PasswordValidator
+  
+#### [0.0.12] - 2021-05-10
+* Added:
+* Changed:
+  * changed JsonSerializerString and added "USER_MESSAGE."
+* Fixed:
