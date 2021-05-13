@@ -72,3 +72,10 @@
 * Changed:
   * changed JsonSerializerString and added "USER_MESSAGE."
 * Fixed:
+
+#### [0.0.13] - 2021-05-13
+* Added:
+  * added custommodel/search filter and data
+* Changed:
+  * changed custommodel/exceptionmodel to custommodel/exception
+* Fixed:

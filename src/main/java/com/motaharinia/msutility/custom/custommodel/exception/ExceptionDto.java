@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.custom.custommodel.exceptionmodel;
+package com.motaharinia.msutility.custom.custommodel.exception;
 
 import com.motaharinia.msutility.custom.customexception.ExceptionTypeEnum;
 import lombok.AllArgsConstructor;

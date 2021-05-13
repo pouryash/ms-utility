@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author https://github.com/motaharinia<br>
  * Description: <br>
- * کلاس تست SearchDataModel
+ * کلاس تست SearchDataDto
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class JsonUnitTest {

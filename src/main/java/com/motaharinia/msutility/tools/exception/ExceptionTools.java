@@ -2,8 +2,8 @@ package com.motaharinia.msutility.tools.exception;
 
 
 import com.motaharinia.msutility.custom.customexception.business.BusinessException;
-import com.motaharinia.msutility.custom.custommodel.exceptionmodel.ExceptionDto;
-import com.motaharinia.msutility.custom.custommodel.exceptionmodel.ExceptionMessageDto;
+import com.motaharinia.msutility.custom.custommodel.exception.ExceptionDto;
+import com.motaharinia.msutility.custom.custommodel.exception.ExceptionMessageDto;
 import com.motaharinia.msutility.custom.customexception.ExceptionTypeEnum;
 import com.motaharinia.msutility.custom.customexception.externalcall.ExternalCallException;
 import com.motaharinia.msutility.custom.custommodel.ClientResponseDto;

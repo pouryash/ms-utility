@@ -1,6 +1,6 @@
 package com.motaharinia.msutility.custom.custommodel;
 
-import com.motaharinia.msutility.custom.custommodel.exceptionmodel.ExceptionDto;
+import com.motaharinia.msutility.custom.custommodel.exception.ExceptionDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
