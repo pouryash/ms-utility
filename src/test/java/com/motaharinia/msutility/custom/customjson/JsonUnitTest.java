@@ -1,16 +1,14 @@
 package com.motaharinia.msutility.custom.customjson;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.motaharinia.msutility.custom.customjson.sample.EtcItemGender;
 import com.motaharinia.msutility.tools.calendar.CalendarTools;
 import com.motaharinia.msutility.custom.customfield.CustomDate;
-import com.motaharinia.msutility.custom.customjson.sample.JsonModel;
-import com.motaharinia.msutility.custom.customjson.sample.MembershipRequestFrontModelUpdate;
-import com.motaharinia.msutility.custom.custommodel.ClientResponseDto;
+import com.motaharinia.msutility.custom.customjson.sample.JsonDto;
+import com.motaharinia.msutility.custom.customjson.sample.MembershipRequestFrontDtoUpdate;
+import com.motaharinia.msutility.custom.customdto.ClientResponseDto;
 import org.junit.jupiter.api.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -77,11 +75,11 @@ class JsonUnitTest {
             Instant dateOfBirth = Instant.now();
 
             //مدل جاوا حاوی تاریخ میلادی برای ارسال به کلاینت
-            JsonModel jsonModel = new JsonModel(new CustomDate(dbDate), Stream.of(EtcItemGender.values()).map(EtcItemGender::getValue).collect(Collectors.toList()),dateOfBirth.toEpochMilli());
-            ClientResponseDto<JsonModel> model = new ClientResponseDto<>(jsonModel,"USER_MESSAGE.FORM_SUBMIT_SUCCESS");
+            JsonDto jsonDto = new JsonDto(new CustomDate(dbDate), Stream.of(EtcItemGender.values()).map(EtcItemGender::getValue).collect(Collectors.toList()),dateOfBirth.toEpochMilli());
+            ClientResponseDto<JsonDto> dto = new ClientResponseDto<>(jsonDto,"USER_MESSAGE.FORM_SUBMIT_SUCCESS");
 
             //سریالایز مدل جاوا در کنترلر در زمان ارسال به کلاینت
-            String jsonString= this.mapper.writeValueAsString(model);
+            String jsonString= this.mapper.writeValueAsString(dto);
 
             //تستهای سریالایز
             //تست عدم وجود خطا
@@ -95,20 +93,20 @@ class JsonUnitTest {
             assertThat(jsonString).contains("زن");
 
             //دیسریالایز رشته جیسون دریافتی از کلاینت به مدل در کنترلر
-            model = this.mapper.readValue(jsonString, new TypeReference<ClientResponseDto<JsonModel>>() {
+            dto = this.mapper.readValue(jsonString, new TypeReference<ClientResponseDto<JsonDto>>() {
             });
 
             //تست های دیسریالایز
             //تست عدم وجود خطا
-            assertThat(model).isNotNull();
+            assertThat(dto).isNotNull();
             //تست تبدیل تاریخ جلالی دریافتی از کلاینت به میلادی
-            assertThat(model.getData().getCustomDate()).isNotNull();
+            assertThat(dto.getData().getCustomDate()).isNotNull();
             Calendar dbDateCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
             dbDateCalendar.setTime(dbDate);
-            assertThat(model.getData().getCustomDate().getYear()).isEqualTo(dbDateCalendar.get(Calendar.YEAR));
-            assertThat(model.getData().getCustomDate().getMonth()).isEqualTo(dbDateCalendar.get(Calendar.MONTH)+1);
-            assertThat(model.getData().getCustomDate().getDay()).isEqualTo(dbDateCalendar.get(Calendar.DAY_OF_MONTH));
-            assertThat(Date.from(Instant.ofEpochMilli(model.getData().getDateOfBirth()))).isEqualTo(Date.from(dateOfBirth));
+            assertThat(dto.getData().getCustomDate().getYear()).isEqualTo(dbDateCalendar.get(Calendar.YEAR));
+            assertThat(dto.getData().getCustomDate().getMonth()).isEqualTo(dbDateCalendar.get(Calendar.MONTH)+1);
+            assertThat(dto.getData().getCustomDate().getDay()).isEqualTo(dbDateCalendar.get(Calendar.DAY_OF_MONTH));
+            assertThat(Date.from(Instant.ofEpochMilli(dto.getData().getDateOfBirth()))).isEqualTo(Date.from(dateOfBirth));
 
         } catch (Exception ex) {
             fail(ex.toString());
@@ -118,10 +116,10 @@ class JsonUnitTest {
 
     @Order(2)
     @Test
-    void serializeEmptyModelTest() {
+    void serializeEmptyDtoTest() {
         try {
-            MembershipRequestFrontModelUpdate membershipRequestFrontModelUpdate = new MembershipRequestFrontModelUpdate();
-            String jsonString= this.mapper.writeValueAsString(membershipRequestFrontModelUpdate);
+            MembershipRequestFrontDtoUpdate membershipRequestFrontDtoUpdate = new MembershipRequestFrontDtoUpdate();
+            String jsonString= this.mapper.writeValueAsString(membershipRequestFrontDtoUpdate);
             assertThat(jsonString).isNotNull();
         } catch (Exception ex) {
             fail(ex.toString());

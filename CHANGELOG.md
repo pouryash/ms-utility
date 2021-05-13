@@ -75,7 +75,8 @@
 
 #### [0.0.13] - 2021-05-13
 * Added:
-  * added custommodel/search filter and data
+  * added customdto/search/filter and customdto/search/data
 * Changed:
   * changed custommodel/exceptionmodel to custommodel/exception
+  * model names changed to dto names
 * Fixed:

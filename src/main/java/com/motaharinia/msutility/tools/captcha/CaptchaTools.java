@@ -25,7 +25,7 @@ public interface CaptchaTools {
     /**
      * ایت متد کد اتفاقی و مسیر پیش فرض و نوع تصویر مورد نظر را از ورودی دریافت میکند و یک تصویر کپچا مطابق با آنها خروجی میدهد
      *
-     * @param captchaConfigModel مدل تنظیمات تولید کپچا
+     * @param captchaConfigDto مدل تنظیمات تولید کپچا
      * @param code               کد اتفاقی
      * @param imageType          BufferedImage.TYPE_INT_** (Default:BufferedImage.TYPE_INT_RGB)
      * @return خروجی: تصویر کپچا
@@ -33,7 +33,7 @@ public interface CaptchaTools {
      * @throws FontFormatException این متد ممکن است اکسپشن داشته باشد
      */
     @NotNull
-    static BufferedImage generateCaptcha(@NotNull CaptchaConfigModel captchaConfigModel, @NotNull String code, @NotNull Integer imageType) throws IOException, FontFormatException {
+    static BufferedImage generateCaptcha(@NotNull CaptchaConfigDto captchaConfigDto, @NotNull String code, @NotNull Integer imageType) throws IOException, FontFormatException {
         if (ObjectUtils.isEmpty(code)) {
             throw new UtilityException(CaptchaTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "code");
         }
@@ -43,10 +43,10 @@ public interface CaptchaTools {
         InputStream inputStream;
 
         int fontIndex;
-        if (captchaConfigModel.isFontVarious()) {
-            fontIndex = RANDOM.nextInt(captchaConfigModel.getFontCount()) + 1;
+        if (captchaConfigDto.isFontVarious()) {
+            fontIndex = RANDOM.nextInt(captchaConfigDto.getFontCount()) + 1;
         } else {
-            fontIndex = captchaConfigModel.getFontFileDefaultIndex();
+            fontIndex = captchaConfigDto.getFontFileDefaultIndex();
         }
 
         String fontFilePath="static/captcha/font/" + fontIndex + ".ttf";
@@ -56,18 +56,18 @@ public interface CaptchaTools {
         }
         Font customFont = Font.createFont(Font.TRUETYPE_FONT, inputStream).deriveFont(getFontSize(fontIndex));
 
-        BufferedImage img = new BufferedImage(captchaConfigModel.getWidth(), captchaConfigModel.getHeight(), imageType);
+        BufferedImage img = new BufferedImage(captchaConfigDto.getWidth(), captchaConfigDto.getHeight(), imageType);
         Graphics2D g = img.createGraphics();
 
-        g.setColor(captchaConfigModel.getBackgroundColor());
-        g.fillRect(0, 0, captchaConfigModel.getWidth(), captchaConfigModel.getHeight());
+        g.setColor(captchaConfigDto.getBackgroundColor());
+        g.fillRect(0, 0, captchaConfigDto.getWidth(), captchaConfigDto.getHeight());
 
         //انتخاب تصویر اتفاقی پس زمینه
         int backgroundIndex;
-        if (captchaConfigModel.isBackgroundImageVarious()) {
-            backgroundIndex = RANDOM.nextInt(captchaConfigModel.getBackgroundImageCount()) + 1;
+        if (captchaConfigDto.isBackgroundImageVarious()) {
+            backgroundIndex = RANDOM.nextInt(captchaConfigDto.getBackgroundImageCount()) + 1;
         } else {
-            backgroundIndex = captchaConfigModel.getBackgroundImageFileDefaultIndex();
+            backgroundIndex = captchaConfigDto.getBackgroundImageFileDefaultIndex();
         }
         String backgroundFilePath="static/captcha/background/" + backgroundIndex + ".png";
         inputStream = CaptchaTools.class.getClassLoader().getResourceAsStream(backgroundFilePath);
@@ -75,14 +75,14 @@ public interface CaptchaTools {
             throw new UtilityException(CaptchaTools.class, UtilityExceptionKeyEnum.CAPTCHA_BACKGROUND_FILE_IS_NOT_EXIST, backgroundFilePath);
         }
         BufferedImage back = ImageIO.read(inputStream);
-        g.drawImage(back, 0, 0, captchaConfigModel.getWidth(), captchaConfigModel.getHeight(), null);
+        g.drawImage(back, 0, 0, captchaConfigDto.getWidth(), captchaConfigDto.getHeight(), null);
 
         //تولید متن کپچا
-        g.setColor(captchaConfigModel.getFontDefaultColor());
+        g.setColor(captchaConfigDto.getFontDefaultColor());
         g.setFont(customFont);
         int angle;
         int textPositionX = 30;
-        int textPositionY = (int) (captchaConfigModel.getHeight() / 1.5);
+        int textPositionY = (int) (captchaConfigDto.getHeight() / 1.5);
         for (int i = 0; i < code.length(); i++) {
             angle = RANDOM.nextInt(30 + 30) - 30;
             AffineTransform original = g.getTransform();
@@ -90,38 +90,38 @@ public interface CaptchaTools {
             original.rotate(angle * Math.PI / 180);
             Font theDerivedFont = theFont.deriveFont(original);
             g.setFont(theDerivedFont);
-            if (captchaConfigModel.isFontColorful()) {
-                g.setColor(captchaConfigModel.getFontColorfulArray()[RANDOM.nextInt(8)]);
+            if (captchaConfigDto.isFontColorful()) {
+                g.setColor(captchaConfigDto.getFontColorfulArray()[RANDOM.nextInt(8)]);
             }
             g.drawString(code.charAt(i) + "", textPositionX, textPositionY);
             g.setFont(theFont);
-            textPositionX += captchaConfigModel.getFontSize() + 5;
+            textPositionX += captchaConfigDto.getFontSize() + 5;
         }
 
         //تولید خطهای تصادفی
-        if (captchaConfigModel.isLinesIncluded()) {
+        if (captchaConfigDto.isLinesIncluded()) {
             int rand;
             int dest;
             int[] sourceCordinates;
             int[] destCordinates;
-            g.setColor(captchaConfigModel.getLinesColor());
-            for (int i = 0; i < captchaConfigModel.getLinesNumber(); i++) {
+            g.setColor(captchaConfigDto.getLinesColor());
+            for (int i = 0; i < captchaConfigDto.getLinesNumber(); i++) {
                 rand = RANDOM.nextInt(4) + 1;
-                sourceCordinates = getCoordinates(rand, captchaConfigModel.getWidth(), captchaConfigModel.getHeight());
+                sourceCordinates = getCoordinates(rand, captchaConfigDto.getWidth(), captchaConfigDto.getHeight());
                 dest = rand + RANDOM.nextInt(3) + 1;
-                destCordinates = getCoordinates(dest, captchaConfigModel.getWidth(), captchaConfigModel.getHeight());
+                destCordinates = getCoordinates(dest, captchaConfigDto.getWidth(), captchaConfigDto.getHeight());
                 g.drawLine(sourceCordinates[0], sourceCordinates[1], destCordinates[0], destCordinates[1]);
             }
         }
 
         //تولید نقطه های تصادفی
-        if (captchaConfigModel.isDotsIncluded()) {
+        if (captchaConfigDto.isDotsIncluded()) {
             int randomX;
             int randomY;
-            g.setColor(captchaConfigModel.getDotsColor());
-            for (int i = 0; i < captchaConfigModel.getDotsNumber(); i++) {
-                randomX = RANDOM.nextInt(captchaConfigModel.getWidth());
-                randomY = RANDOM.nextInt(captchaConfigModel.getHeight());
+            g.setColor(captchaConfigDto.getDotsColor());
+            for (int i = 0; i < captchaConfigDto.getDotsNumber(); i++) {
+                randomX = RANDOM.nextInt(captchaConfigDto.getWidth());
+                randomY = RANDOM.nextInt(captchaConfigDto.getHeight());
                 g.drawLine(randomX, randomY, randomX + 1, randomY + 1);
             }
         }

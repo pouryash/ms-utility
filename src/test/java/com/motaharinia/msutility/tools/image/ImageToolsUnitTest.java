@@ -1,6 +1,6 @@
 package com.motaharinia.msutility.tools.image;
 
-import com.motaharinia.msutility.tools.fso.FsoConfigModel;
+import com.motaharinia.msutility.tools.fso.FsoConfigDto;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 
@@ -24,7 +24,7 @@ class ImageToolsUnitTest {
     String parentDirPath = "/MsUtilityTests";
     String imageFileFullName = "imageTools.jpg";
 
-    FsoConfigModel fsoConfigModel = new FsoConfigModel(new Integer[]{60, 120}, "thumb", 100);
+    FsoConfigDto fsoConfigDto = new FsoConfigDto(new Integer[]{60, 120}, "thumb", 100);
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -66,8 +66,8 @@ class ImageToolsUnitTest {
     void createThumbTest() {
         try {
             //تست ایجاد تصویر بندانگشتی از فایل تصویر موجود
-            ImageTools.createThumb(parentDirPath, imageFileFullName, fsoConfigModel.getThumbSizeArray()[0],  fsoConfigModel.getThumbSizeArray()[0]);
-            File file = new File(parentDirPath + "/" + imageFileFullName + "-" +  fsoConfigModel.getThumbSizeArray()[0] + ".thumb");
+            ImageTools.createThumb(parentDirPath, imageFileFullName, fsoConfigDto.getThumbSizeArray()[0],  fsoConfigDto.getThumbSizeArray()[0]);
+            File file = new File(parentDirPath + "/" + imageFileFullName + "-" +  fsoConfigDto.getThumbSizeArray()[0] + ".thumb");
             assertThat(file).exists();
         } catch (Exception ex) {
             fail(ex.toString());

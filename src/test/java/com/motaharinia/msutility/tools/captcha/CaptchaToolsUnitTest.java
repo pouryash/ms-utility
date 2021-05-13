@@ -37,11 +37,11 @@ class CaptchaToolsUnitTest {
     void createThumbTest() {
         try {
             //تست ایجاد تصویر کپچا از روی تنظیمات پیش فرض
-            CaptchaConfigModel captchaConfigModel = new CaptchaConfigModel();
-            BufferedImage bufferedImage = CaptchaTools.generateCaptcha(captchaConfigModel, "123456", BufferedImage.TYPE_INT_RGB);
+            CaptchaConfigDto captchaConfigDto = new CaptchaConfigDto();
+            BufferedImage bufferedImage = CaptchaTools.generateCaptcha(captchaConfigDto, "123456", BufferedImage.TYPE_INT_RGB);
             assertThat(bufferedImage).isNotNull();
-            assertThat(bufferedImage.getWidth()).isEqualTo(captchaConfigModel.getWidth());
-            assertThat(bufferedImage.getHeight()).isEqualTo(captchaConfigModel.getHeight());
+            assertThat(bufferedImage.getWidth()).isEqualTo(captchaConfigDto.getWidth());
+            assertThat(bufferedImage.getHeight()).isEqualTo(captchaConfigDto.getHeight());
         } catch (Exception ex) {
             fail(ex.toString());
         }

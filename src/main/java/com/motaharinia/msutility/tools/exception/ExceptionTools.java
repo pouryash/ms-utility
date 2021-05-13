@@ -2,11 +2,11 @@ package com.motaharinia.msutility.tools.exception;
 
 
 import com.motaharinia.msutility.custom.customexception.business.BusinessException;
-import com.motaharinia.msutility.custom.custommodel.exception.ExceptionDto;
-import com.motaharinia.msutility.custom.custommodel.exception.ExceptionMessageDto;
+import com.motaharinia.msutility.custom.customdto.exception.ExceptionDto;
+import com.motaharinia.msutility.custom.customdto.exception.ExceptionMessageDto;
 import com.motaharinia.msutility.custom.customexception.ExceptionTypeEnum;
 import com.motaharinia.msutility.custom.customexception.externalcall.ExternalCallException;
-import com.motaharinia.msutility.custom.custommodel.ClientResponseDto;
+import com.motaharinia.msutility.custom.customdto.ClientResponseDto;
 import com.motaharinia.msutility.tools.string.StringTools;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -140,9 +140,9 @@ public interface ExceptionTools {
         List<FieldError> fieldErrors = result.getFieldErrors();
         String translatedMessage;
         for (FieldError fieldError : fieldErrors) {
-            String modelName = fieldError.getObjectName();
+            String dtoName = fieldError.getObjectName();
             translatedMessage = StringTools.translateCustomMessage(messageSource, fieldError.getDefaultMessage());
-            messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(methodArgumentNotValidException), getStackTraceLineString(methodArgumentNotValidException), modelName + "." + fieldError.getField()));
+            messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(methodArgumentNotValidException), getStackTraceLineString(methodArgumentNotValidException), dtoName + "." + fieldError.getField()));
         }
         if (!messageDtoList.isEmpty()) {
             exceptionDto.setMessage(messageDtoList.get(0).getMessage());
