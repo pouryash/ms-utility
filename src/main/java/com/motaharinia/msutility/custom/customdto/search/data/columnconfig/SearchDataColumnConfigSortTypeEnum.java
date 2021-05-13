@@ -1,10 +1,10 @@
-package com.motaharinia.msutility.custom.customdto.search.data.col;
+package com.motaharinia.msutility.custom.customdto.search.data.columnconfig;
 
 /**
 * @author https://github.com/motaharinia<br>
  *     اینام مقادیر ثابت نحوه مرتب سازی مطالب
  */
-public enum SearchDataColSortTypeEnum {
+public enum SearchDataColumnConfigSortTypeEnum {
     /**
      *مرتب سازی متنی
      */
@@ -23,7 +23,7 @@ public enum SearchDataColSortTypeEnum {
      *
      * @param value مقدار ثابت نحوه مرتب سازی مطالب
      */
-    SearchDataColSortTypeEnum(String value) {
+    SearchDataColumnConfigSortTypeEnum(String value) {
         this.value = value;
     }
 

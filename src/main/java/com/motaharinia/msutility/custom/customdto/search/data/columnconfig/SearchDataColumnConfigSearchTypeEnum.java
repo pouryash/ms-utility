@@ -1,10 +1,10 @@
-package com.motaharinia.msutility.custom.customdto.search.data.col;
+package com.motaharinia.msutility.custom.customdto.search.data.columnconfig;
 
 /**
 * @author https://github.com/motaharinia<br>
  *     اینام مقادیر ثابت نوع جستجو مطالب
  */
-public enum SearchDataColSearchTypeEnum {
+public enum SearchDataColumnConfigSearchTypeEnum {
     /**
      *متنی
      */
@@ -32,7 +32,7 @@ public enum SearchDataColSearchTypeEnum {
      *
      * @param value مقدار ثابت نوع جستجو مطالب
      */
-    SearchDataColSearchTypeEnum(String value) {
+    SearchDataColumnConfigSearchTypeEnum(String value) {
         this.value = value;
     }
 

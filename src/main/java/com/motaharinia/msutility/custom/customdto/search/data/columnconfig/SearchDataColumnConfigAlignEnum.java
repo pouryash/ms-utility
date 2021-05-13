@@ -1,10 +1,10 @@
-package com.motaharinia.msutility.custom.customdto.search.data.col;
+package com.motaharinia.msutility.custom.customdto.search.data.columnconfig;
 
 /**
 * @author https://github.com/motaharinia<br>
  *     اینام مقادیر ثابت جهت نمایش افقی مطالب
  */
-public enum SearchDataColAlignEnum {
+public enum SearchDataColumnConfigAlignEnum {
     /**
      *چپ چین
      */
@@ -36,7 +36,7 @@ public enum SearchDataColAlignEnum {
      *
      * @param value مقدار ثابت جهت نمایش افقی مطالب
      */
-    SearchDataColAlignEnum(String value) {
+    SearchDataColumnConfigAlignEnum(String value) {
         this.value = value;
     }
 

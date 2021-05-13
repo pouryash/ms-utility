@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.custom.customdto.search.data.col;
+package com.motaharinia.msutility.custom.customdto.search.data.columnconfig;
 
 import com.motaharinia.msutility.custom.customdto.search.filter.restriction.SearchFilterOperationEnum;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchDataColDto implements Serializable {
+public class SearchDataColumnConfigDto implements Serializable {
     /**
      * نام فیلد ستون
      */
@@ -27,7 +27,7 @@ public class SearchDataColDto implements Serializable {
     /**
      * جهت نمایش افقی
      */
-    private SearchDataColAlignEnum align = SearchDataColAlignEnum.CENTER;
+    private SearchDataColumnConfigAlignEnum align = SearchDataColumnConfigAlignEnum.CENTER;
     /**
      * عرض ستون
      */
@@ -35,11 +35,11 @@ public class SearchDataColDto implements Serializable {
     /**
      * نوع مرتب سازی ستون که عددی یا متنی است
      */
-    private SearchDataColSortTypeEnum sortType;
+    private SearchDataColumnConfigSortTypeEnum sortType;
     /**
      * نوع جستجوی ستون که متنی یا انتخابی است
      */
-    private SearchDataColSearchTypeEnum searchType;
+    private SearchDataColumnConfigSearchTypeEnum searchType;
     /**
      * لیستی از آپشنهای جستجوی پیشرفته قابل استفاده در این ستون که بیشتر در جستجوی پیشرفته استفاده میشود
      */

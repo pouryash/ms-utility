@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* @author https://github.com/motaharinia<br>
+ * @author https://github.com/motaharinia<br>
  * این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
  */
 @Data
@@ -29,9 +29,9 @@ public class SearchFilterDto implements Serializable {
     /**
      * صفحه مورد نظر برای دریافت در حالت صفحه بندی و اسمارت رندرینگ
      */
-    private Integer page=0;
+    private Long pageNo = 0L;
     /**
      * تعداد سطر مورد نیاز در هر صفحه
      */
-    private Integer rows=Integer.MAX_VALUE;
+    private Long pageRowSize = Long.MAX_VALUE;
 }

@@ -1,8 +1,7 @@
 package com.motaharinia.msutility.custom.customdto.search.data;
 
 
-import com.motaharinia.msutility.custom.customdto.search.data.col.SearchDataColDto;
-import com.motaharinia.msutility.custom.customdto.search.data.row.SearchDataRowDto;
+import com.motaharinia.msutility.custom.customdto.search.data.columnconfig.SearchDataColumnConfigDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,27 +17,27 @@ import java.util.*;
 @Slf4j
 @Data
 @NoArgsConstructor
-public class SearchDataDto implements Serializable {
-    /**
-     * شماره صفحه فعلی
-     */
-    private Integer page;
+public class SearchDataDto<T> implements Serializable {
     /**
      * تعداد کل سطرهای قابل نمایش که صفحه بندی شده اند و به صفحات کوچکتر تبدیل شده اند
      */
-    private Long records;
+    private Long totalRecordSize;
     /**
-     * لیست سطرهای داده
+     * شماره صفحه فعلی
      */
-    private List<SearchDataRowDto> rowList = new ArrayList<>();
+    private Long pageNo;
     /**
-     * لیست اطلاعات ستونها
+     * لیست سطرهای داده صفحه
      */
-    private List<SearchDataColDto> colList = new ArrayList<>();
+    private List<T> pageRowList = new ArrayList<>();
     /**
-     * تعداد صفحات در صفحه بندی اطلاعات
+     * لیست تنظیمات ستونها
      */
-    private Long total;
+    private List<SearchDataColumnConfigDto> columnConfigList = new ArrayList<>();
+    /**
+     * تعداد کل صفحات در صفحه بندی اطلاعات
+     */
+    private Long totalPageSize;
     /**
      * اطلاعات اضافی
      */
