@@ -29,9 +29,9 @@ public class SearchFilterDto implements Serializable {
     /**
      * صفحه مورد نظر برای دریافت در حالت صفحه بندی و اسمارت رندرینگ
      */
-    private Long pageNo = 0L;
+    private Integer pageNo = 0;
     /**
      * تعداد سطر مورد نیاز در هر صفحه
      */
-    private Long pageRowSize = Long.MAX_VALUE;
+    private Integer pageRowSize = Integer.MAX_VALUE;
 }
