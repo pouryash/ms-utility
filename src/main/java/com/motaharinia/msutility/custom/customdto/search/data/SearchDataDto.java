@@ -34,13 +34,13 @@ public class SearchDataDto<T extends Serializable> implements Serializable {
      */
     private List<T> pageRowList = new ArrayList<>();
     /**
-     * لیست تنظیمات ستونها
-     */
-    private List<SearchDataColumnConfigDto> columnConfigList = new ArrayList<>();
-    /**
      * تعداد کل صفحات در صفحه بندی اطلاعات
      */
     private Integer totalPageSize;
+    /**
+     * لیست تنظیمات ستونها
+     */
+    private List<SearchDataColumnConfigDto> columnConfigList = new ArrayList<>();
     /**
      * اطلاعات اضافی
      */
@@ -58,11 +58,12 @@ public class SearchDataDto<T extends Serializable> implements Serializable {
      * @return خروجی: مدل حاوی نتیجه جستجوی اطلاعات
      */
     public static <T extends Serializable> SearchDataDto<T> paginateAllRowList(SearchFilterDto searchFilterDto, List<T> allRowList, List<SearchDataColumnConfigDto> columnConfigList, Map<String, String> userDataMap) {
-        //آماده سازی مدل داده جستجو با توجه به اندیسهای ابتدا و انتها و مدل فیلتر داده
         SearchDataDto<T> searchDataDto = new SearchDataDto<>();
         searchDataDto.setTotalRecordSize((long) allRowList.size());
         searchDataDto.setPageNo(searchFilterDto.getPageNo());
         searchDataDto.setPageRowList(PaginationTools.paginateList(allRowList, searchFilterDto.getPageNo(), searchFilterDto.getPageRowSize()));
+        Long totalPageSize = (searchDataDto.getTotalRecordSize() + searchFilterDto.getPageRowSize() - 1) / searchFilterDto.getPageRowSize();
+        searchDataDto.setTotalPageSize(totalPageSize.intValue());
         searchDataDto.setColumnConfigList(columnConfigList);
         searchDataDto.setUserDataMap(userDataMap);
         return searchDataDto;

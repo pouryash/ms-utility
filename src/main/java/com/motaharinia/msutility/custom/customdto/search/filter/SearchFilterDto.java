@@ -29,8 +29,9 @@ public class SearchFilterDto implements Serializable {
     private List<SearchFilterSortDto> sortList = new ArrayList<>();
     /**
      * صفحه مورد نظر برای دریافت در حالت صفحه بندی و اسمارت رندرینگ
+     * اولین صفحه عدد 1 است
      */
-    private Integer pageNo = 0;
+    private Integer pageNo = 1;
     /**
      * تعداد سطر مورد نیاز در هر صفحه
      */
