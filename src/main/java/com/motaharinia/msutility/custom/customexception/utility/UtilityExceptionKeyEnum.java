@@ -28,14 +28,6 @@ public enum UtilityExceptionKeyEnum {
      */
     DATE_TIME_VALIDATION_FAILED("DATE_TIME_VALIDATION_FAILED"),
     /**
-     * مقدار انتیتی تهی میباشد
-     */
-    CHECK_ENTITY_IS_NULL("CHECK_ENTITY_IS_NULL"),
-    /**
-     * انتیتی غیرفعال میباشد
-     */
-    CHECK_ENTITY_IS_INVALID("CHECK_ENTITY_IS_INVALID"),
-    /**
      * فونت مورد نیاز برای تولید کد کپچا یافت نشد
      */
     CAPTCHA_FONT_FILE_IS_NOT_EXIST("CAPTCHA_FONT_FILE_IS_NOT_EXIST"),
@@ -80,6 +72,10 @@ public enum UtilityExceptionKeyEnum {
      * ابزار تصویر: تصویر ورودی قابل خواندن نیست
      */
     IMAGE_ORIGINAL_READ_PROBLEM("IMAGE_ORIGINAL_READ_PROBLEM"),
+    /**
+     *خطای ابزار جستجو
+     */
+    SEARCH_TOOLS_EXCEPTION("SEARCH_TOOLS_EXCEPTION"),
     ;
 
     private final String value;
