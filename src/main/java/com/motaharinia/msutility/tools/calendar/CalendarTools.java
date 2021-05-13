@@ -12,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -39,8 +40,8 @@ public interface CalendarTools {
     /**
      * این متد عدد را اگر یک رقمی باشد برای نمایش مرتب در خروجی دورقمی میکند
      *
-     * @param inputDigit عدد ورودی
-     * @return خروجی: عدد دورقمی شده
+     * @param inputDigit رشته عدد ورودی
+     * @return خروجی: رشته عدد دو رقمی شده
      */
     @NotNull
     static String fixOneDigit(@NotNull String inputDigit) {
@@ -51,6 +52,24 @@ public interface CalendarTools {
             return inputDigit;
         } else {
             return "0" + inputDigit;
+        }
+    }
+
+    /**
+     * این متد عدد را اگر یک رقمی باشد برای نمایش مرتب در خروجی دورقمی میکند
+     *
+     * @param inputDigit عدد ورودی
+     * @return خروجی: رشته عدد دو رقمی شده
+     */
+    @NotNull
+    static String fixOneDigit(@NotNull int inputDigit) {
+        if (inputDigit < 0) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "inputDigit");
+        }
+        if (inputDigit < 10) {
+            return "0" + inputDigit;
+        } else {
+            return "" + inputDigit;
         }
     }
 
@@ -183,6 +202,28 @@ public interface CalendarTools {
         return simpleDateFormat.format(destination);
     }
 
+    /**
+     * این متد رشته تاریخ جلالی و رشته جدا کننده تاریخ جلالی و ZoneId را از ورودی دریافت میکند و Instant آن را خروجی میدهد
+     *
+     * @param sourceDate          رشته تاریخ جلالی
+     * @param sourceDateDelimiter رشته جدا کننده تاریخ جلالی
+     * @param zoneId              zoneId
+     * @return خروجی: Instant
+     */
+    @NotNull
+    static Instant jalaliToGregorianDate(@NotNull String sourceDate, String sourceDateDelimiter, ZoneId zoneId) {
+        if (ObjectUtils.isEmpty(sourceDate)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, EXCEPTION_EMPTY_SOURCE_DATE);
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, EXCEPTION_EMPTY_SOURCE_DATE_DELIMITER);
+        }
+
+        String gregorianDateString = jalaliToGregorianDate(sourceDate, sourceDateDelimiter, "-");
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse(gregorianDateString + "T00:00:00.00"), zoneId);
+        return zonedDateTime.toInstant();
+    }
+
     //--------------------------------------------------متدهای تبدیل تاریخ-زمان جلالی به میلادی--------------------------------------------------
 
     /**
@@ -239,6 +280,27 @@ public interface CalendarTools {
         return simpleDateFormat.format(destination) + " " + sourceDateArray[1];
     }
 
+    /**
+     * این متد رشته تاریخ-زمان جلالی و رشته جدا کننده تاریخ جلالی و ZoneId را از ورودی دریافت میکند و Instant آن را خروجی میدهد
+     *
+     * @param sourceDateTime      رشته تاریخ-زمان جلالی
+     * @param sourceDateDelimiter رشته جدا کننده تاریخ جلالی
+     * @param zoneId              zoneId
+     * @return خروجی: Instant
+     */
+    @NotNull
+    static Instant jalaliToGregorianDateTime(@NotNull String sourceDateTime, String sourceDateDelimiter, ZoneId zoneId) {
+        if (ObjectUtils.isEmpty(sourceDateTime)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, EXCEPTION_EMPTY_SOURCE_DATE);
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, EXCEPTION_EMPTY_SOURCE_DATE_DELIMITER);
+        }
+
+        String gregorianDateTimeString = jalaliToGregorianDateTime(sourceDateTime, sourceDateDelimiter, "-");
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse(gregorianDateTimeString.replace(" ", "T") + ".00"), zoneId);
+        return zonedDateTime.toInstant();
+    }
 
     //--------------------------------------------------متدهای تبدیل تاریخ میلادی به جلالی--------------------------------------------------
 
@@ -286,6 +348,21 @@ public interface CalendarTools {
         destinationCustomDate.setMonth(Integer.parseInt(destinationDateArray[1]));
         destinationCustomDate.setDay(Integer.parseInt(destinationDateArray[2]));
         return destinationCustomDate;
+    }
+
+    /**
+     * این متد Instant را از ورودی دریافت میکند و رشته تاریخ جلالی آن را بر اساس رشته جدا کننده جلالی خروجی میدهد
+     *
+     * @param source                   پارامتر Instant میلادی
+     * @param destinationDateDelimiter رشته جدا کننده تاریخ جلالی
+     * @return خروجی: رشته تاریخ جلالی
+     */
+    @NotNull
+    static String gregorianToJalaliDate(@NotNull Instant source, @NotNull String destinationDateDelimiter) {
+        if (ObjectUtils.isEmpty(source)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
+        }
+        return fixDateSlash(jalaliCalendar.getJalaliDate(Date.from(source)), destinationDateDelimiter);
     }
 
     //--------------------------------------------------متدهای تبدیل تاریخ-زمان میلادی به جلالی--------------------------------------------------
@@ -341,6 +418,23 @@ public interface CalendarTools {
         destinationCustomDateTime.setMinute(calendar.get(Calendar.MINUTE));
         destinationCustomDateTime.setSecond(calendar.get(Calendar.SECOND));
         return destinationCustomDateTime;
+    }
+
+    /**
+     * این متد Instant را از ورودی دریافت میکند و رشته تاریخ-زمان جلالی آن را بر اساس رشته جدا کننده جلالی خروجی میدهد
+     *
+     * @param source                   پارامتر Instant میلادی
+     * @param destinationDateDelimiter رشته جدا کننده تاریخ جلالی
+     * @return خروجی: رشته تاریخ جلالی
+     */
+    @NotNull
+    static String gregorianToJalaliDateTime(@NotNull Instant source, @NotNull String destinationDateDelimiter) {
+        if (ObjectUtils.isEmpty(source)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.from(source));
+        return fixDateSlash(jalaliCalendar.getJalaliDate(Date.from(source)), destinationDateDelimiter) + " " + fixOneDigit(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + fixOneDigit(calendar.get(Calendar.MINUTE)) + ":" + fixOneDigit(calendar.get(Calendar.SECOND));
     }
 
     //--------------------------------------------------متدهای اصلاح کننده متناسب با زبان لوکال و تفاوت زمانی بین دو تاریخ--------------------------------------------------
@@ -667,12 +761,13 @@ public interface CalendarTools {
 
     /**
      * این متد بررسی میکند که آیا تاریخ ورودی امروز است یا خیر
+     *
      * @param dateForCheck تاریخ ورودی
      * @return خروجی: نتیجه بررسی
      */
     @NotNull
-    static Boolean isToday(Date dateForCheck){
+    static Boolean isToday(Date dateForCheck) {
         if (ObjectUtils.isEmpty(dateForCheck)) return false;
-        return DateUtils.isSameDay(new Date(),dateForCheck);
+        return DateUtils.isSameDay(new Date(), dateForCheck);
     }
 }

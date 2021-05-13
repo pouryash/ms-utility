@@ -76,6 +76,8 @@
 #### [0.0.13] - 2021-05-13
 * Added:
   * added customdto/search/filter and customdto/search/data
+  * added jalaliToGregorianDate and jalaliToGregorianDateTime for Instant
+  * added gregorianToJalaliDate and gregorianToJalaliDateTime for Instant
 * Changed:
   * changed custommodel/exceptionmodel to custommodel/exception
   * model names changed to dto names
