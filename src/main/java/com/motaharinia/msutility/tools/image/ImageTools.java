@@ -1,9 +1,15 @@
 package com.motaharinia.msutility.tools.image;
 
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
 import com.motaharinia.msutility.custom.customexception.utility.UtilityException;
 import com.motaharinia.msutility.custom.customexception.utility.UtilityExceptionKeyEnum;
 import com.motaharinia.msutility.tools.fso.FsoTools;
+import org.imgscalr.Scalr;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.ObjectUtils;
 
@@ -11,6 +17,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Collection;
 
 
 /**
@@ -88,6 +95,7 @@ public interface ImageTools {
     }
 
 
+
     /**
      * این متد داده آرایه بایت تصویر مبدا و پسوند فایل تصویر مبدا و عرض و طول و تناسب را از ورودی دریافت میکند و داده آرایه بایت تصویر تغییر اندازه شده را خروجی میدهد
      *
@@ -95,37 +103,91 @@ public interface ImageTools {
      * @param originalExt        پسوند فایل تصویر مبدا
      * @param destWidth          عرض تصویر مورد نظر
      * @param destHeight         طول تصویر مورد نظر
-     * @param withScale          تناسب داشته باشد؟
      * @return خروجی:  داده آرایه بایت تصویر تغییر اندازه شده
      * @throws IOException خطا
      */
-    static byte[] imageResize(byte[] originalImageBytes, @NotNull String originalExt, @NotNull Integer destWidth, @NotNull Integer destHeight, boolean withScale) throws IOException {
-        InputStream inputStream = new ByteArrayInputStream(originalImageBytes);
-        BufferedImage originalImage = ImageIO.read(inputStream);
-        if (withScale) {
-            double scaleValue;
-            double tempDouble;
-            if (originalImage.getHeight() > originalImage.getWidth()) {
-                scaleValue = (Double.valueOf(destHeight) / (double) originalImage.getHeight());
-            } else {
-                scaleValue = (Double.valueOf(destWidth) / (double) originalImage.getWidth());
-            }
-            tempDouble = originalImage.getHeight() * scaleValue;
-            destHeight = (int) tempDouble;
-            tempDouble = originalImage.getWidth() * scaleValue;
-            destWidth = (int) tempDouble;
-        }
-        BufferedImage resizedImage = new BufferedImage(destWidth, destHeight, originalImage.getType());
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, destWidth, destHeight, null);
-        g.dispose();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    static byte[] imageResize(byte[] originalImageBytes, @NotNull String originalExt, @NotNull Integer destWidth, @NotNull Integer destHeight) throws IOException, ImageProcessingException, MetadataException {
+        //زمانی که تصاویر با دوربین موبایل گرفته میشوند داخل ExifIF آنها چرخش تنظیم میشود و ImageIO.read قادر به فهمیدن آن نیست
+        //با استفاده از metadata-extractor تنظیمات داخل ExifIf را میخوانیم و در هنگام ریسایز اگر لازم باشد چرخش میدهیم
+        Scalr.Rotation imageRotation = getImageRotation(originalImageBytes);
 
-        ImageIO.write(resizedImage, originalExt, baos);
-        baos.flush();
-        byte[] imageInByte = baos.toByteArray();
-        baos.close();
-        return imageInByte;
+        //تبدیل آرایه بایت فایل به شیی تصویر بافر شده
+        BufferedImage mainBufferedImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
+        //ایجاد شیی تصویر بافر شده با اندازه تصویر ریسایز شده
+        BufferedImage resizedBufferedImage = Scalr.resize(mainBufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, destHeight, destWidth, Scalr.OP_ANTIALIAS);
+        //اگر بخاطر مشکل خواندن ExifIF توسط ImageIO.read تصویر بعد از ریسایز نیاز به چرخش داشت اینکار انجام شود
+        if (imageRotation != null) {
+            resizedBufferedImage = Scalr.rotate(resizedBufferedImage, imageRotation);
+        }
+        BufferedImage resultResizedBufferedImage = new BufferedImage(resizedBufferedImage.getWidth(), resizedBufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+        resultResizedBufferedImage.createGraphics().drawImage(resizedBufferedImage, 0, 0, Color.WHITE, null);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(resultResizedBufferedImage, originalExt, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
+
+
+    /**
+     * این متد داده آرایه بایت تصویر مبدا و پسوند فایل تصویر مبدا و سایز نهایی عرض یا طول (هر کدام بیشتر باشد لحاظ میشود) را از ورودی دریافت میکند و داده آرایه بایت تصویر تغییر اندازه شده را خروجی میدهد
+     *
+     * @param originalImageBytes  داده آرایه بایت تصویر مبدا
+     * @param originalExt         پسوند فایل تصویر مبدا
+     * @param targetSizeWithScale سایز طول/عرض تصویر مورد نظر که به صورت خودکار Scale میشود
+     * @return خروجی:  داده آرایه بایت تصویر تغییر اندازه شده
+     * @throws IOException خطا
+     */
+    static byte[] imageResize(byte[] originalImageBytes, @NotNull String originalExt, @NotNull Integer targetSizeWithScale) throws IOException, ImageProcessingException, MetadataException {
+        //زمانی که تصاویر با دوربین موبایل گرفته میشوند داخل ExifIF آنها چرخش تنظیم میشود و ImageIO.read قادر به فهمیدن آن نیست
+        //با استفاده از metadata-extractor تنظیمات داخل ExifIf را میخوانیم و در هنگام ریسایز اگر لازم باشد چرخش میدهیم
+        Scalr.Rotation imageRotation = getImageRotation(originalImageBytes);
+
+        //تبدیل آرایه بایت فایل به شیی تصویر بافر شده
+        BufferedImage mainBufferedImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
+        //ایجاد شیی تصویر بافر شده با اندازه تصویر ریسایز شده
+        BufferedImage resizedBufferedImage = Scalr.resize(mainBufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, targetSizeWithScale, Scalr.OP_ANTIALIAS);
+        //اگر بخاطر مشکل خواندن ExifIF توسط ImageIO.read تصویر بعد از ریسایز نیاز به چرخش داشت اینکار انجام شود
+        if (imageRotation != null) {
+            resizedBufferedImage = Scalr.rotate(resizedBufferedImage, imageRotation);
+        }
+        BufferedImage resultResizedBufferedImage = new BufferedImage(resizedBufferedImage.getWidth(), resizedBufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+        resultResizedBufferedImage.createGraphics().drawImage(resizedBufferedImage, 0, 0, Color.WHITE, null);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(resultResizedBufferedImage, originalExt, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+
+    /**
+     * متد بررسی کننده rotation تصویر بر اساس ExifIf برای تصاویر گرفته شده با دوربین دیجیتال
+     *
+     * @param originalImageBytes آرایه بایت تصویر
+     * @return خروجی: میزان چرخش مورد نیاز
+     * @throws IOException              خطا
+     * @throws ImageProcessingException خطا
+     * @throws MetadataException        خطا
+     */
+    static Scalr.Rotation getImageRotation(byte[] originalImageBytes) throws IOException, ImageProcessingException, MetadataException {
+        Metadata metadata = ImageMetadataReader.readMetadata(new ByteArrayInputStream(originalImageBytes));
+        Collection<ExifIFD0Directory> exifIFD0Collection = metadata.getDirectoriesOfType(ExifIFD0Directory.class);
+        if (!ObjectUtils.isEmpty(exifIFD0Collection)) {
+            ExifIFD0Directory exifIFD0 = exifIFD0Collection.iterator().next();
+            int orientation = exifIFD0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+            switch (orientation) {
+                case 1: // [Exif IFD0] Orientation - Top, left side (Horizontal / normal)
+                    return null;
+                case 6: // [Exif IFD0] Orientation - Right side, top (Rotate 90 CW)
+                    return Scalr.Rotation.CW_90;
+                case 3: // [Exif IFD0] Orientation - Bottom, right side (Rotate 180)
+                    return Scalr.Rotation.CW_180;
+                case 8: // [Exif IFD0] Orientation - Left side, bottom (Rotate 270 CW)
+                    return Scalr.Rotation.CW_270;
+                default:
+                    return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
 
 }

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>MsUtility</artifactId>
-    <version>0.0.13</version>
+    <version>0.0.14</version>
     <name>MsUtility</name>
     <description>Motaharinia MsUtility</description>
     <url>https://github.com/motaharinia</url>
@@ -118,12 +118,18 @@
             <version>19.0.0</version>
             <scope>compile</scope>
         </dependency>
-<!--        &lt;!&ndash;image resize&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.imgscalr</groupId>-->
-<!--            <artifactId>imgscalr-lib</artifactId>-->
-<!--            <version>4.2</version>-->
-<!--        </dependency>-->
+        <!--image resize-->
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <!--image resize (for image rotate problem in resize)-->
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+            <version>2.16.0</version>
+        </dependency>
     </dependencies>
 
 

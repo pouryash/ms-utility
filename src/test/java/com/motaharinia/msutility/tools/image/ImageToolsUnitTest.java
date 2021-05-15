@@ -79,7 +79,7 @@ class ImageToolsUnitTest {
     void imageResizeTest() {
         try {
             File sourceFile = new File(parentDirPath + "/" + imageFileFullName);
-           byte[] resizedByteArray=  ImageTools.imageResize(FileUtils.readFileToByteArray(sourceFile),"jpg",100,100,true);
+           byte[] resizedByteArray=  ImageTools.imageResize(FileUtils.readFileToByteArray(sourceFile),"jpg",100,100);
             FileUtils.writeByteArrayToFile(new File(parentDirPath + "/imgaeToolsResized.jpg"), resizedByteArray);
             File file = new File(parentDirPath + "/imgaeToolsResized.jpg");
             assertThat(file).exists();

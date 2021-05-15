@@ -82,3 +82,11 @@
   * changed custommodel/exceptionmodel to custommodel/exception
   * model names changed to dto names
 * Fixed:
+
+#### [0.0.14] - 2021-05-15
+* Added:
+  * added ImageTools.imageResize for desired auto scale resize
+* Changed:
+  * changed ImageTools.imageResize for desired width and height
+* Fixed:
+  * fixed PaginationTools.paginateList for empty and null lists

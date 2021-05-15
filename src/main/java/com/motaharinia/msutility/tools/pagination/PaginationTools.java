@@ -1,6 +1,9 @@
 package com.motaharinia.msutility.tools.pagination;
 
 
+import org.jetbrains.annotations.NotNull;
+import org.springframework.util.ObjectUtils;
+
 import java.io.*;
 import java.util.List;
 
@@ -21,9 +24,13 @@ public interface PaginationTools {
      * @param <T>         نوع داده
      * @return خروجی: لیست صفحه بندی شده
      */
-    static <T extends Serializable> List<T> paginateList(List<T> allRowList, Integer pageNo, Integer pageRowSize) {
+    @NotNull
+    static <T extends Serializable> List<T> paginateList(@NotNull List<T> allRowList, @NotNull Integer pageNo, @NotNull Integer pageRowSize) {
+        if (ObjectUtils.isEmpty(allRowList)) {
+            return allRowList;
+        }
         //محاسبه اندیسهای ابتدا و انتها جهت برش از لیست کلی
-        int fromIndex = (pageNo-1) * pageRowSize;
+        int fromIndex = (pageNo - 1) * pageRowSize;
         int toIndex;
         if (fromIndex >= allRowList.size()) {
             fromIndex = allRowList.size() - 1;
