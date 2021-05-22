@@ -90,3 +90,11 @@
   * changed ImageTools.imageResize for desired width and height
 * Fixed:
   * fixed PaginationTools.paginateList for empty and null lists
+
+#### [0.0.15] - 2021-05-22
+* Added:
+  * added ImageTools.mapFromDate and CustomMapper.mapToDate
+  * added CustomMapperTest class
+* Changed:
+* Fixed:
+  * fixed ImageTools.getImageRotation for empty orientation in digital pictures

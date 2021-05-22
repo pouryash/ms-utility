@@ -170,19 +170,29 @@ public interface ImageTools {
         Metadata metadata = ImageMetadataReader.readMetadata(new ByteArrayInputStream(originalImageBytes));
         Collection<ExifIFD0Directory> exifIFD0Collection = metadata.getDirectoriesOfType(ExifIFD0Directory.class);
         if (!ObjectUtils.isEmpty(exifIFD0Collection)) {
+            //تصویر با دوربین دیجیتال گرفته شده است
             ExifIFD0Directory exifIFD0 = exifIFD0Collection.iterator().next();
-            int orientation = exifIFD0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-            switch (orientation) {
-                case 1: // [Exif IFD0] Orientation - Top, left side (Horizontal / normal)
+            if (exifIFD0 != null) {
+                try {
+                    int orientation = exifIFD0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+                    switch (orientation) {
+                        case 1: // [Exif IFD0] Orientation - Top, left side (Horizontal / normal)
+                            return null;
+                        case 6: // [Exif IFD0] Orientation - Right side, top (Rotate 90 CW)
+                            return Scalr.Rotation.CW_90;
+                        case 3: // [Exif IFD0] Orientation - Bottom, right side (Rotate 180)
+                            return Scalr.Rotation.CW_180;
+                        case 8: // [Exif IFD0] Orientation - Left side, bottom (Rotate 270 CW)
+                            return Scalr.Rotation.CW_270;
+                        default:
+                            return null;
+                    }
+                } catch (Exception exception) {
+                    //تصویر با دوربین دیجیتال گرفته شده ولی تگ ORIENTATION ندارد
                     return null;
-                case 6: // [Exif IFD0] Orientation - Right side, top (Rotate 90 CW)
-                    return Scalr.Rotation.CW_90;
-                case 3: // [Exif IFD0] Orientation - Bottom, right side (Rotate 180)
-                    return Scalr.Rotation.CW_180;
-                case 8: // [Exif IFD0] Orientation - Left side, bottom (Rotate 270 CW)
-                    return Scalr.Rotation.CW_270;
-                default:
-                    return null;
+                }
+            } else {
+                return null;
             }
         } else {
             return null;

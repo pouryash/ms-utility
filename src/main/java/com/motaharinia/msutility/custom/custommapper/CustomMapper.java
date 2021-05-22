@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * @author eng.motahari@gmail.com<br>
@@ -45,13 +46,13 @@ public interface CustomMapper {
     /**
      * متد مبدل میلی ثانیه زمان به شیی تاریخ
      *
-     * @param instantLong میلی ثانیه زمان
+     * @param epochLong میلی ثانیه زمان
      * @return خروجی: شیی تاریخ
      */
-    default LocalDate mapToLocalDate(Long instantLong) {
+    default LocalDate mapToLocalDate(Long epochLong) {
         //because of java8 compatibility:
 //        return instantLong == null ? null : LocalDate.ofInstant(Instant.ofEpochMilli(instantLong), ZoneId.systemDefault());
-        return instantLong == null ? null : Instant.ofEpochMilli(instantLong).atZone(ZoneId.systemDefault()).toLocalDate();
+        return epochLong == null ? null : Instant.ofEpochMilli(epochLong).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     /**
@@ -67,10 +68,31 @@ public interface CustomMapper {
     /**
      * متد مبدل میلی ثانیه زمان به شیی تاریخ-زمان
      *
-     * @param instantLong میلی ثانیه زمان
+     * @param epochLong میلی ثانیه زمان
      * @return خروجی: شیی تاریخ-زمان
      */
-    default LocalDateTime mapToLocalDateTime(Long instantLong) {
-        return instantLong == null ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(instantLong), ZoneId.systemDefault());
+    default LocalDateTime mapToLocalDateTime(Long epochLong) {
+        return epochLong == null ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(epochLong), ZoneId.systemDefault());
+    }
+
+
+    /**
+     * متد مبدل شیی Date به میلی ثانیه زمان
+     *
+     * @param date شیی Date
+     * @return خروجی: میلی ثانیه
+     */
+    default Long mapFromDate(Date date) {
+        return date == null ? null : date.getTime();
+    }
+
+    /**
+     * متد مبدل میلی ثانیه زمان به شیی Date
+     *
+     * @param epochLong میلی ثانیه زمان
+     * @return خروجی: شیی Date
+     */
+    default Date mapToDate(Long epochLong) {
+        return epochLong == null ? null : new Date(epochLong);
     }
 }
