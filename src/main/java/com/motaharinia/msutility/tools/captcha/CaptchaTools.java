@@ -51,7 +51,7 @@ public interface CaptchaTools {
 
         String fontFilePath="static/captcha/font/" + fontIndex + ".ttf";
         inputStream = CaptchaTools.class.getClassLoader().getResourceAsStream(fontFilePath);
-        if(ObjectUtils.isEmpty(inputStream)){
+        if(ObjectUtils.isEmpty(inputStream) || inputStream.available()<=0){
             throw new UtilityException(CaptchaTools.class, UtilityExceptionKeyEnum.CAPTCHA_FONT_FILE_IS_NOT_EXIST, fontFilePath);
         }
         Font customFont = Font.createFont(Font.TRUETYPE_FONT, inputStream).deriveFont(getFontSize(fontIndex));
@@ -71,7 +71,7 @@ public interface CaptchaTools {
         }
         String backgroundFilePath="static/captcha/background/" + backgroundIndex + ".png";
         inputStream = CaptchaTools.class.getClassLoader().getResourceAsStream(backgroundFilePath);
-        if(ObjectUtils.isEmpty(inputStream)){
+        if(ObjectUtils.isEmpty(inputStream) || inputStream.available()<=0){
             throw new UtilityException(CaptchaTools.class, UtilityExceptionKeyEnum.CAPTCHA_BACKGROUND_FILE_IS_NOT_EXIST, backgroundFilePath);
         }
         BufferedImage back = ImageIO.read(inputStream);

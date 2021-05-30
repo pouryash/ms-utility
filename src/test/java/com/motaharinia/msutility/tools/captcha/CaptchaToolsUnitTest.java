@@ -34,7 +34,7 @@ class CaptchaToolsUnitTest {
 
     @Order(1)
     @Test
-    void createThumbTest() {
+    void generateCaptchaTest() {
         try {
             //تست ایجاد تصویر کپچا از روی تنظیمات پیش فرض
             CaptchaConfigDto captchaConfigDto = new CaptchaConfigDto();
