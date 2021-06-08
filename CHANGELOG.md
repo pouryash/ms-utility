@@ -98,3 +98,10 @@
 * Changed:
 * Fixed:
   * fixed ImageTools.getImageRotation for empty orientation in digital pictures
+  
+#### [0.0.16] - 2021-06-09
+* Added:
+  * added LocalDate , LocalDateTime conversion to CalendarTools
+* Changed:
+  * changed CalendarTools jalali and gregorian conversion method names
+* Fixed:

@@ -78,7 +78,7 @@ public class CustomDate implements Comparable<CustomDate>, Serializable {
             //user entered a jalali date
             String jalaiDateString = this.year + "/" + this.month + "/" + this.day;
             try {
-                String gregorianDateString = CalendarTools.jalaliToGregorianDate(jalaiDateString, "/", "/");
+                String gregorianDateString = CalendarTools.jalaliToGregorianString(jalaiDateString, "/", "/");
                 String[] gregorianParts = gregorianDateString.split("/");
                 this.year = Integer.parseInt(gregorianParts[0]);
                 this.month = Integer.parseInt(gregorianParts[1]);

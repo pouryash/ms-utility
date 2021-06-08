@@ -94,7 +94,7 @@ public class CustomDateTime implements Comparable<CustomDateTime>, Serializable 
             //user entered a jalali date
             String jalaiDateStringTime = this.year + "/" + this.month + "/" + this.day + " " + this.hour + ":" + this.minute + ":" + this.second;
             try {
-                String gregorianDateString = CalendarTools.jalaliToGregorianDateTime(jalaiDateStringTime, "/", "/");
+                String gregorianDateString = CalendarTools.jalaliToGregorianString(jalaiDateStringTime, "/", "/");
                 String[] dateTimeParts = gregorianDateString.split(" ");
                 String[] dateParts = dateTimeParts[0].split("/");
                 String[] timeParts = dateTimeParts[1].split(":");

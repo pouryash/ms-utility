@@ -124,7 +124,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             }
         } else {
             //convert TO date from jalali to gregorian
-            String gregorianToString = CalendarTools.jalaliToGregorianDate(to, "-", "-");
+            String gregorianToString = CalendarTools.jalaliToGregorianString(to, "-", "-");
             try {
                 Date gregorianToDate = simpleDateFormat.parse(gregorianToString);
                 result = userEnteredDate.before(gregorianToDate);
@@ -151,7 +151,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             }
         } else {
             //convert TO date from jalali to gregorian
-            String gregorianFromString = CalendarTools.jalaliToGregorianDate(from, "-", "-");
+            String gregorianFromString = CalendarTools.jalaliToGregorianString(from, "-", "-");
             try {
                 Date gregorianFromDate = simpleDateFormat.parse(gregorianFromString);
                 result = userEnteredDate.after(gregorianFromDate);
@@ -177,7 +177,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             c.add(Calendar.DATE, -1);
             fromDate = c.getTime();
         } else {
-            String gregorianFromString = CalendarTools.jalaliToGregorianDate(from, "-", "-");
+            String gregorianFromString = CalendarTools.jalaliToGregorianString(from, "-", "-");
             try {
                 fromDate = simpleDateFormat.parse(gregorianFromString);
             } catch (ParseException exception) {
@@ -193,7 +193,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             c.add(Calendar.DATE, 1);
             toDate = c.getTime();
         } else {
-            String gregorianToString = CalendarTools.jalaliToGregorianDate(to, "-", "-");
+            String gregorianToString = CalendarTools.jalaliToGregorianString(to, "-", "-");
             try {
                 toDate = simpleDateFormat.parse(gregorianToString);
             } catch (ParseException exception) {

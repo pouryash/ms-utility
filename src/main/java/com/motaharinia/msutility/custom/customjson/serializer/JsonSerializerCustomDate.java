@@ -33,7 +33,7 @@ public class JsonSerializerCustomDate extends JsonSerializer<CustomDate> {
                 Locale currentLocale = LocaleContextHolder.getLocale();
                 if (currentLocale.getLanguage().equals("fa")) {
                     Date date = CalendarTools.getDateFromCustomDate(customDate);
-                    customDate = CalendarTools.gregorianToJalaliDate(date);
+                    customDate = CalendarTools.gregorianToJalaliCustomDate(date);
                 }
                 output.put("year", customDate.getYear().toString());
                 output.put("month", CalendarTools.fixOneDigit(customDate.getMonth().toString()));

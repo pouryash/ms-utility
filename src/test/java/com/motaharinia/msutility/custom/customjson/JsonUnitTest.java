@@ -85,7 +85,7 @@ class JsonUnitTest {
             assertThat(jsonString).isNotNull();
             //تست تبدیل تاریخ میلادی به جلالی جهت ارسال به کلاینت
             //برای اینکه بتوانیم سال شمسی را در رشته جیسون پیدا کنیم این شیی را میسازیم
-            CustomDate jalaliCustomDate= CalendarTools.gregorianToJalaliDate(dbDate);
+            CustomDate jalaliCustomDate= CalendarTools.gregorianToJalaliCustomDate(dbDate);
             assertThat(jsonString).contains(jalaliCustomDate.getYear().toString());
 
             //تست  رشته ترجمه "ای تی سی آیتم" به زبان فارسی

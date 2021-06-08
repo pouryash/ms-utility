@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -121,35 +120,33 @@ class CalendarToolsUnitTest {
 
     @Order(8)
     @Test
-    void jalaliToGregorianDate2Test() {
-        try {
-            assertThat(CalendarTools.jalaliToGregorianDate("1399/12/30", "/", "-")).isEqualTo("2021-03-20");
-        } catch (Exception ex) {
-            fail(ex.toString());
-        }
-    }
-
-    @Order(9)
-    @Test
-    void jalaliToGregorianDate3Test() {
-        try {
-            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
-            assertThat(CalendarTools.jalaliToGregorianDate("1399/12/30", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toInstant());
-        } catch (Exception ex) {
-            fail(ex.toString());
-        }
-    }
-
-    //--------------------------------------------------متدهای تبدیل تاریخ-زمان جلالی به میلادی--------------------------------------------------
-
-    @Order(10)
-    @Test
-    void jalaliToGregorianDateTimeTest() {
+    void jalaliToGregorianDateWithTimeTest() {
         try {
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
-            assertThat(CalendarTools.jalaliToGregorianDateTime("1399/12/30 00:00:00", "/")).isEqualTo(cal.getTime());
+            assertThat(CalendarTools.jalaliToGregorianDate("1399/12/30 00:00:00", "/")).isEqualTo(cal.getTime());
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+
+    @Order(9)
+    @Test
+    void jalaliToGregorianStringTest() {
+        try {
+            assertThat(CalendarTools.jalaliToGregorianString("1399/12/30", "/", "-")).isEqualTo("2021-03-20");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(10)
+    @Test
+    void jalaliToGregorianStringWithTimeTest() {
+        try {
+            assertThat(CalendarTools.jalaliToGregorianString("1399/12/30 00:00:00", "/", "-")).isEqualTo("2021-03-20 00:00:00");
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -157,9 +154,10 @@ class CalendarToolsUnitTest {
 
     @Order(11)
     @Test
-    void jalaliToGregorianDateTime2Test() {
+    void jalaliToGregorianInstantTest() {
         try {
-            assertThat(CalendarTools.jalaliToGregorianDateTime("1399/12/30 00:00:00", "/", "-")).isEqualTo("2021-03-20 00:00:00");
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.jalaliToGregorianInstant("1399/12/30", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toInstant());
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -167,35 +165,33 @@ class CalendarToolsUnitTest {
 
     @Order(12)
     @Test
-    void jalaliToGregorianDateTime3Test() {
+    void jalaliToGregorianInstantWithTimeTest() {
         try {
             ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
-            assertThat(CalendarTools.jalaliToGregorianDateTime("1399/12/30 00:00:00", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toInstant());
+            assertThat(CalendarTools.jalaliToGregorianInstant("1399/12/30 00:00:00", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toInstant());
         } catch (Exception ex) {
             fail(ex.toString());
         }
     }
-
-    //--------------------------------------------------متدهای تبدیل تاریخ میلادی به جلالی--------------------------------------------------
 
     @Order(13)
     @Test
-    void gregorianToJalaliDateTest() {
+    void jalaliToGregorianLocalDateTest() {
         try {
-            assertThat(CalendarTools.gregorianToJalaliDate("2021/03/20", "/", "-")).isEqualTo("1399-12-30");
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.jalaliToGregorianLocalDate("1399/12/30", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toLocalDate());
         } catch (Exception ex) {
             fail(ex.toString());
         }
     }
 
+
     @Order(14)
     @Test
-    void gregorianToJalaliDate2Test() {
+    void jalaliToGregorianLocalDateWithTimeTest() {
         try {
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-            cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
-            assertThat(CalendarTools.gregorianToJalaliDate(cal.getTime()).toString()).hasToString("CustomDate{1399-12-30}");
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.jalaliToGregorianLocalDate("1399/12/30 00:00:00", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toLocalDate());
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -203,21 +199,22 @@ class CalendarToolsUnitTest {
 
     @Order(15)
     @Test
-    void gregorianToJalaliDate3Test() {
+    void jalaliToGregorianLocalDateTimeTest() {
         try {
             ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
-            assertThat(CalendarTools.gregorianToJalaliDate(zonedDateTime.toInstant(),"-").toString()).hasToString("1399-12-30");
+            assertThat(CalendarTools.jalaliToGregorianLocalDateTime("1399/12/30", "/", ZoneId.systemDefault())).isEqualTo(zonedDateTime.toLocalDateTime());
         } catch (Exception ex) {
             fail(ex.toString());
         }
     }
 
-    //--------------------------------------------------متدهای تبدیل تاریخ-زمان میلادی به جلالی--------------------------------------------------
+    //--------------------------------------------------متدهای تبدیل تاریخ میلادی به جلالی--------------------------------------------------
+
     @Order(16)
     @Test
-    void gregorianToJalaliDateTimeTest() {
+    void gregorianToJalaliStringTest() {
         try {
-            assertThat(CalendarTools.gregorianToJalaliDateTime("2021/03/20 00:00:00", "/", "-")).isEqualTo("1399-12-30 00:00:00");
+            assertThat(CalendarTools.gregorianToJalaliString("2021/03/20", "/", "-")).isEqualTo("1399-12-30");
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -225,12 +222,9 @@ class CalendarToolsUnitTest {
 
     @Order(17)
     @Test
-    void gregorianToJalaliDateTime2Test() {
+    void gregorianToJalaliStringWithTimeTest() {
         try {
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-            cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
-            assertThat(CalendarTools.gregorianToJalaliDateTime(cal.getTime()).toString()).hasToString("CustomDateTime{1399-12-30 00:00:00}");
+            assertThat(CalendarTools.gregorianToJalaliString("2021/03/20 00:00:00", "/", "-")).isEqualTo("1399-12-30 00:00:00");
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -238,10 +232,118 @@ class CalendarToolsUnitTest {
 
     @Order(18)
     @Test
-    void gregorianToJalaliDateTime3Test() {
+    void gregorianToJalaliDateTest() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
+            assertThat(CalendarTools.gregorianToJalaliString(cal.getTime(),"-",false)).isEqualTo("1399-12-30");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(19)
+    @Test
+    void gregorianToJalaliDateWithTimeTest() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
+            assertThat(CalendarTools.gregorianToJalaliString(cal.getTime(),"-",true)).isEqualTo("1399-12-30 00:00:00");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(20)
+    @Test
+    void gregorianToJalaliInstantTest() {
         try {
             ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
-            assertThat(CalendarTools.gregorianToJalaliDateTime(zonedDateTime.toInstant(),"-").toString()).hasToString("1399-12-30 00:00:00");
+            assertThat(CalendarTools.gregorianToJalaliString(zonedDateTime.toInstant(),"-",false).toString()).hasToString("1399-12-30");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(21)
+    @Test
+    void gregorianToJalaliInstantWithTimeTest() {
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.gregorianToJalaliString(zonedDateTime.toInstant(),"-",true).toString()).hasToString("1399-12-30 00:00:00");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(22)
+    @Test
+    void gregorianToJalaliLocalDateTest() {
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.gregorianToJalaliString(zonedDateTime.toLocalDate(),"-",false).toString()).hasToString("1399-12-30");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(23)
+    @Test
+    void gregorianToJalaliLocalDateWithTimeTest() {
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.gregorianToJalaliString(zonedDateTime.toLocalDate(),"-",true).toString()).hasToString("1399-12-30 00:00:00");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(24)
+    @Test
+    void gregorianToJalaliLocalDateTimeTest() {
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.gregorianToJalaliString(zonedDateTime.toLocalDateTime(),"-",false).toString()).hasToString("1399-12-30");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(25)
+    @Test
+    void gregorianToJalaliLocalDateTimeWithTimeTest() {
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.parse("2021-03-20T00:00:00.00"), ZoneId.systemDefault());
+            assertThat(CalendarTools.gregorianToJalaliString(zonedDateTime.toLocalDateTime(),"-",true).toString()).hasToString("1399-12-30 00:00:00");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(26)
+    @Test
+    void gregorianToJalaliCustomDate() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
+            assertThat(CalendarTools.gregorianToJalaliCustomDate(cal.getTime()).toString()).hasToString("CustomDate{1399-12-30}");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+
+    @Order(27)
+    @Test
+    void gregorianToJalaliCustomDateTime() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
+            assertThat(CalendarTools.gregorianToJalaliCustomDateTime(cal.getTime()).toString()).hasToString("CustomDateTime{1399-12-30 00:00:00}");
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -249,7 +351,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای اصلاح کننده متناسب با زبان لوکال و تفاوت زمانی بین دو تاریخ--------------------------------------------------
 
-    @Order(19)
+    @Order(28)
     @Test
     void fixToLocaleDateTest() {
         try {
@@ -259,13 +361,13 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(20)
+    @Order(29)
     @Test
     void fixToLocaleDateTimeTest() throws ParseException, UtilityException {
         assertThat(CalendarTools.fixToLocaleDateTime("2021/03/20 00:00:00", "-", new Locale("fa", "IR"))).isEqualTo("1399-12-30 00:00:00");
     }
 
-    @Order(21)
+    @Order(30)
     @Test
     void getTwoDateDifferenceSecondTest() {
         try {
@@ -280,7 +382,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(22)
+    @Order(31)
     @Test
     void getTwoDateDifferenceMinuteTest() {
         try {
@@ -295,7 +397,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(23)
+    @Order(32)
     @Test
     void getTwoDateDifferenceHourTest() {
         try {
@@ -310,7 +412,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(24)
+    @Order(33)
     @Test
     void getTwoDateDifferenceDayTest() {
         try {
@@ -327,7 +429,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای تبدیلی CustomDate و CustomDateTime به Date--------------------------------------------------
 
-    @Order(25)
+    @Order(34)
     @Test
     void getDateFromCustomDateTest() {
         try {
@@ -341,7 +443,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(26)
+    @Order(35)
     @Test
     void getDateFromCustomDateTimeTest() {
         try {
@@ -357,7 +459,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای بررسی کننده تاریخهای جلالی و میلادی--------------------------------------------------
 
-    @Order(27)
+    @Order(36)
     @Test
     void checkJalaliDateValidityTest() {
         try {
@@ -367,7 +469,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(28)
+    @Order(37)
     @Test
     void checkGregorianDateValidityTest() {
         try {
@@ -377,7 +479,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(29)
+    @Order(38)
     @Test
     void isTodayTest() {
         try {
