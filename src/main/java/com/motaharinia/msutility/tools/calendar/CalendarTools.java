@@ -291,9 +291,9 @@ public interface CalendarTools {
         String[] sourceArray = source.split(" ", -1);
         String gregorianDateString = jalaliToGregorianString(sourceArray[0], sourceDateDelimiter, "-");
         ZonedDateTime zonedDateTime;
-        if(sourceArray.length>1){
+        if (sourceArray.length > 1) {
             zonedDateTime = ZonedDateTime.of(LocalDateTime.parse(gregorianDateString + "T" + sourceArray[1] + ".00"), zoneId);
-        }else{
+        } else {
             zonedDateTime = ZonedDateTime.of(LocalDateTime.parse(gregorianDateString + "T00:00:00.00"), zoneId);
         }
         return zonedDateTime.toLocalDateTime();
@@ -416,7 +416,7 @@ public interface CalendarTools {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(destination);
             return fixDateSlash(jalaliCalendar.getJalaliDate(destination), destinationDateDelimiter) + " " + fixOneDigit(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + fixOneDigit(calendar.get(Calendar.MINUTE)) + ":" + fixOneDigit(calendar.get(Calendar.SECOND));
-        }else{
+        } else {
             return fixDateSlash(jalaliCalendar.getJalaliDate(destination), destinationDateDelimiter);
         }
     }
@@ -798,5 +798,33 @@ public interface CalendarTools {
     static Boolean isToday(Date dateForCheck) {
         if (ObjectUtils.isEmpty(dateForCheck)) return false;
         return DateUtils.isSameDay(new Date(), dateForCheck);
+    }
+
+
+    /**
+     * متد اصلاح کننده جدا کننده رشته تاریخ جلالی
+     *
+     * @param jalaliString رشته تاریخ جلالی
+     * @return خروجی: رشته تاریخ جلالی اصلاح شده با جدا کننده
+     */
+    static String fixJalaliStringSeperator(String jalaliString, String seperator) {
+        if (jalaliString == null) {
+            return null;
+        }
+        if (jalaliString.contains("-")) {
+            jalaliString = jalaliString.replace("-", seperator);
+        }
+        if (jalaliString.contains("/")) {
+            jalaliString = jalaliString.replace("/", seperator);
+        }
+        if (jalaliString.contains(seperator)) {
+            return jalaliString;
+        } else {
+            if (jalaliString.length() > 7) {
+                return jalaliString.substring(0, 4) + seperator + jalaliString.substring(4, 6) + seperator + jalaliString.substring(6, 8);
+            } else {
+                return jalaliString;
+            }
+        }
     }
 }

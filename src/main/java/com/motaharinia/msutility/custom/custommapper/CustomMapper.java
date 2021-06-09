@@ -125,7 +125,7 @@ public interface CustomMapper {
      * @return خروجی: شیی Instant
      */
     default Instant mapJalaliStringToInstant(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianInstant(fixJalaliString(jalaliString), "/", ZoneId.systemDefault());
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianInstant(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/", ZoneId.systemDefault());
     }
 
     //--------------------LocalDate-String--------------------
@@ -147,7 +147,7 @@ public interface CustomMapper {
      * @return خروجی: شیی LocalDate
      */
     default LocalDate mapJalaliStringToLocalDate(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDate(fixJalaliString(jalaliString), "/", ZoneId.systemDefault());
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDate(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/", ZoneId.systemDefault());
     }
 
     //--------------------LocalDateTime-String--------------------
@@ -169,7 +169,7 @@ public interface CustomMapper {
      * @return خروجی: شیی LocalDateTime
      */
     default LocalDateTime mapStringToLocalDateTime(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDateTime(fixJalaliString(jalaliString), "/", ZoneId.systemDefault());
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDateTime(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/", ZoneId.systemDefault());
     }
 
     //--------------------Date-String--------------------
@@ -191,28 +191,7 @@ public interface CustomMapper {
      * @return خروجی: شیی Date
      */
     default Date mapJalaliStringToDate(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianDate(fixJalaliString(jalaliString), "/");
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianDate(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/");
     }
 
-
-    //--------------------fix jalali string date--------------------
-
-    /**
-     * متد اصلاح کننده رشته تاریخ جلالی
-     * @param jalaliString رشته تاریخ جلالی
-     * @return خروجی: رشته تاریخ جلالی اصلاح شده با جداکننده اسلش
-     */
-    static String fixJalaliString(String jalaliString) {
-        if (jalaliString == null) {
-            return null;
-        }
-        if (jalaliString.contains("-")) {
-            jalaliString = jalaliString.replace("-", "/");
-        }
-        if (jalaliString.contains("/")) {
-            return jalaliString;
-        } else {
-            return jalaliString.substring(0, 4) + "/" + jalaliString.substring(4, 6) + "/" + jalaliString.substring(6, 8);
-        }
-    }
 }
