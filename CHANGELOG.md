@@ -101,7 +101,7 @@
   
 #### [0.0.16] - 2021-06-09
 * Added:
-  * added LocalDate , LocalDateTime conversion to CalendarTools
+  * added LocalDate , LocalDateTime conversion to CalendarTools and CustomMapper
 * Changed:
   * changed CalendarTools jalali and gregorian conversion method names
 * Fixed:
