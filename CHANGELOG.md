@@ -104,4 +104,10 @@
   * added LocalDate , LocalDateTime conversion to CalendarTools and CustomMapper
 * Changed:
   * changed CalendarTools jalali and gregorian conversion method names
+* Fixed:  
+
+#### [0.0.17] - 2021-06-13
+* Added:
+* Changed:
+  * improve ExceptionTools.doException for null httpServletResponse parameter
 * Fixed:

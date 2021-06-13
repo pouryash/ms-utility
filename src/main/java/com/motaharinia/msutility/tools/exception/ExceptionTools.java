@@ -36,29 +36,37 @@ public interface ExceptionTools {
      * @param exception           خطای دریافتی
      * @param httpServletRequest  درخواست وب
      * @param httpServletResponse پاسخ وب
-     * @param appName نام برنامه
-     * @param appPort پورت برنامه
-     * @param messageSource شیی ترجمه
-     * @param userId شناسه کاربر
-     * @param username کلمه کاربری کاربر
+     * @param appName             نام برنامه
+     * @param appPort             پورت برنامه
+     * @param messageSource       شیی ترجمه
+     * @param userId              شناسه کاربر
+     * @param username            کلمه کاربری کاربر
      * @return خروجی: مدل خطای کلاینت
      */
     static ClientResponseDto<String> doException(Exception exception, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String appName, int appPort, MessageSource messageSource, Long userId, String username) {
         ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
         if (exception != null && exception.getClass() != null) {
+
+            //به صورت پیش فرض روی خطای عمومی ست میشود
+            HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+
             //به دست آوردن مدل از روی نوع اکسپشن
             if (exception instanceof BusinessException) {
                 exceptionDto = getDtoFromBusinessException((BusinessException) exception, appName, appPort, messageSource);
-                httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+                httpStatus = HttpStatus.BAD_REQUEST;
             } else if (exception instanceof ExternalCallException) {
                 exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
-                httpServletResponse.setStatus(HttpStatus.CONFLICT.value());
+                httpStatus = HttpStatus.CONFLICT;
             } else if (exception instanceof MethodArgumentNotValidException) {
                 exceptionDto = getDtoFromMethodArgumentNotValidException((MethodArgumentNotValidException) exception, appName, appPort, messageSource);
-                httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+                httpStatus = HttpStatus.BAD_REQUEST;
             } else {
                 exceptionDto = getDtoFromGeneralException(exception, appName, appPort);
-                httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            }
+
+            if (httpServletResponse != null) {
+                httpServletResponse.setStatus(httpStatus.value());
             }
         }
         exceptionDto.setUrl(getRequestUrl(httpServletRequest));
@@ -70,14 +78,13 @@ public interface ExceptionTools {
     }
 
 
-
     /**
      * متد سازنده مدل خطا از خطای بیزینس
      *
      * @param businessException خطای بیزینس
-     * @param appName نام برنامه
-     * @param appPort پورت برنامه
-     * @param messageSource شیی ترجمه
+     * @param appName           نام برنامه
+     * @param appPort           پورت برنامه
+     * @param messageSource     شیی ترجمه
      * @return خروجی: مدل خطا
      */
     static ExceptionDto getDtoFromBusinessException(BusinessException businessException, String appName, int appPort, MessageSource messageSource) {
@@ -101,9 +108,9 @@ public interface ExceptionTools {
      * متد سازنده مدل خطا از خطای فراخوانی سرویسهای بیرونی
      *
      * @param externalCallException خطای فراخوانی سرویسهای بیرونی
-     * @param appName نام برنامه
-     * @param appPort پورت برنامه
-     * @param messageSource شیی ترجمه
+     * @param appName               نام برنامه
+     * @param appPort               پورت برنامه
+     * @param messageSource         شیی ترجمه
      * @return خروجی: مدل خطا
      */
     static ExceptionDto getDtoFromExternalCallException(ExternalCallException externalCallException, String appName, int appPort, MessageSource messageSource) {
@@ -123,13 +130,13 @@ public interface ExceptionTools {
     }
 
 
-
     /**
      * متد سازنده مدل خطا از خطای اعتبارسنجی
+     *
      * @param methodArgumentNotValidException خطای اعتبارسنجی
-     * @param appName نام برنامه
-     * @param appPort پورت برنامه
-     * @param messageSource شیی ترجمه
+     * @param appName                         نام برنامه
+     * @param appPort                         پورت برنامه
+     * @param messageSource                   شیی ترجمه
      * @return خروجی: مدل خطا
      */
     static ExceptionDto getDtoFromMethodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException, String appName, int appPort, MessageSource messageSource) {
@@ -155,9 +162,10 @@ public interface ExceptionTools {
 
     /**
      * متد سازنده مدل خطا از خطای عمومی
+     *
      * @param generalException خطای عمومی
-     * @param appName نام برنامه
-     * @param appPort پورت برنامه
+     * @param appName          نام برنامه
+     * @param appPort          پورت برنامه
      * @return خروجی: مدل خطا
      */
     static ExceptionDto getDtoFromGeneralException(Exception generalException, String appName, int appPort) {
