@@ -111,3 +111,10 @@
 * Changed:
   * improve ExceptionTools.doException for null httpServletResponse parameter
 * Fixed:
+
+#### [0.0.18] - 2021-06-16
+* Added:
+* Changed:
+* Fixed:
+  * fix ExceptionTools.fixJalaliStringSeperator for half jalali years strings (99 will be replaced by 1399)
+  

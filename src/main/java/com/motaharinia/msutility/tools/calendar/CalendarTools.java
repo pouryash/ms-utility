@@ -817,6 +817,14 @@ public interface CalendarTools {
         if (jalaliString.contains("/")) {
             jalaliString = jalaliString.replace("/", seperator);
         }
+        //اصلاح تاریخهایی که ابتدای آنها 13 یا 14 نیست و سال به صورت مختصر نوشته شده مثلا بجای 1399 نوشته شده 99
+        if(!jalaliString.startsWith("13") && !jalaliString.startsWith("14")){
+            if(jalaliString.charAt(0)=='0' || jalaliString.charAt(0)=='1'){
+                jalaliString = "14" + jalaliString;
+            }else{
+                jalaliString = "13" + jalaliString;
+            }
+        }
         if (jalaliString.contains(seperator)) {
             return jalaliString;
         } else {
