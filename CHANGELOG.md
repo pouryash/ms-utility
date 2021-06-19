@@ -118,3 +118,8 @@
 * Fixed:
   * fix ExceptionTools.fixJalaliStringSeperator for half jalali years strings (99 will be replaced by 1399)
   
+#### [0.0.19] - 2021-06-19
+* Added:
+* Changed:
+* Fixed:
+  * fix PaginationTools.paginateList for request pageRowSize more than initial size problem

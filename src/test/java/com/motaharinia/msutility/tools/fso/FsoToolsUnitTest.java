@@ -47,7 +47,7 @@ class FsoToolsUnitTest {
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
     @BeforeEach
-    void initUseCase() throws Exception {
+    void beforeEach() throws Exception {
         File parentDir = new File(parentDirPath);
         if (parentDir.exists()) {
             FileUtils.deleteDirectory(parentDir);
@@ -88,7 +88,7 @@ class FsoToolsUnitTest {
      * این متد بعد از هر تست این کلاس اجرا میشود
      */
     @AfterEach
-    void finalizeEach() throws IOException {
+    void afterEach() throws IOException {
         Locale.setDefault(Locale.US);
         File parentDir = new File(parentDirPath);
         if (parentDir.exists()) {

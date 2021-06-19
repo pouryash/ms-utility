@@ -30,7 +30,7 @@ class ImageToolsUnitTest {
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
     @BeforeEach
-    void initUseCase() throws IOException {
+    void beforeEach() throws IOException {
         File parentDir = new File(parentDirPath);
         if (parentDir.exists()) {
             FileUtils.deleteDirectory(parentDir);
@@ -53,7 +53,7 @@ class ImageToolsUnitTest {
      * این متد بعد از هر تست این کلاس اجرا میشود
      */
     @AfterEach
-    void finalizeEach() throws IOException {
+    void afterEach() throws IOException {
         Locale.setDefault(Locale.US);
         File parentDir = new File(parentDirPath);
         if (parentDir.exists()) {

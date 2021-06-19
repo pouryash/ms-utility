@@ -37,7 +37,7 @@ public interface PaginationTools {
         }
         toIndex = fromIndex + pageRowSize;
         if (toIndex > allRowList.size()) {
-            toIndex = allRowList.size() - 1;
+            toIndex = allRowList.size() ;
         }
         return allRowList.subList(fromIndex, toIndex);
     }

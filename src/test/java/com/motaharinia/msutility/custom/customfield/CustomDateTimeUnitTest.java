@@ -23,7 +23,7 @@ class CustomDateTimeUnitTest {
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
     @BeforeEach
-    void initUseCase() {
+    void beforeEach() {
         Locale.setDefault(new Locale("fa", "IR"));
     }
 
@@ -31,7 +31,7 @@ class CustomDateTimeUnitTest {
      * این متد بعد از هر تست این کلاس اجرا میشود
      */
     @AfterEach
-    void finalizeEach() {
+    void afterEach() {
         Locale.setDefault(Locale.US);
     }
 
