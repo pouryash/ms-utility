@@ -105,6 +105,8 @@ public interface ImageTools {
      * @param destHeight         طول تصویر مورد نظر
      * @return خروجی:  داده آرایه بایت تصویر تغییر اندازه شده
      * @throws IOException خطا
+     * @throws ImageProcessingException خطا
+     * @throws MetadataException خطا
      */
     static byte[] imageResize(byte[] originalImageBytes, @NotNull String originalExt, @NotNull Integer destWidth, @NotNull Integer destHeight) throws IOException, ImageProcessingException, MetadataException {
         //زمانی که تصاویر با دوربین موبایل گرفته میشوند داخل ExifIF آنها چرخش تنظیم میشود و ImageIO.read قادر به فهمیدن آن نیست
@@ -135,6 +137,8 @@ public interface ImageTools {
      * @param targetSizeWithScale سایز طول/عرض تصویر مورد نظر که به صورت خودکار Scale میشود
      * @return خروجی:  داده آرایه بایت تصویر تغییر اندازه شده
      * @throws IOException خطا
+     * @throws ImageProcessingException خطا
+     * @throws MetadataException خطا
      */
     static byte[] imageResize(byte[] originalImageBytes, @NotNull String originalExt, @NotNull Integer targetSizeWithScale) throws IOException, ImageProcessingException, MetadataException {
         //زمانی که تصاویر با دوربین موبایل گرفته میشوند داخل ExifIF آنها چرخش تنظیم میشود و ImageIO.read قادر به فهمیدن آن نیست

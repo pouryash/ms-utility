@@ -805,6 +805,7 @@ public interface CalendarTools {
      * متد اصلاح کننده جدا کننده رشته تاریخ جلالی
      *
      * @param jalaliString رشته تاریخ جلالی
+     * @param seperator رشته جدا کننده تاریخ خروجی
      * @return خروجی: رشته تاریخ جلالی اصلاح شده با جدا کننده
      */
     static String fixJalaliStringSeperator(String jalaliString, String seperator) {

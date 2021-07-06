@@ -55,6 +55,7 @@ public class ExternalCallException extends RuntimeException implements Serializa
      * @param requestCode       کد درخواست
      * @param responseCode      کد خطای پاسخ
      * @param requestMethod     نوع درخواست وب
+     * @param responseCustomError  خطای خاص هر سرویس
      * @param responseException اکسپشن اتفاق افتاده
      */
     public ExternalCallException(@NotNull Class exceptionClass, @NotNull String requestUrl, @NotNull HttpMethod requestMethod, @NotNull String requestCode, @NotNull String responseCode,@NotNull String responseCustomError, @NotNull Exception responseException) {
