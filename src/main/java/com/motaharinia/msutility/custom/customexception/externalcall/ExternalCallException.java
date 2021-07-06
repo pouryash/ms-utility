@@ -28,27 +28,44 @@ public class ExternalCallException extends RuntimeException implements Serializa
     /**
      * نوع درخواست وب مانند GET,POST,PUT,DELETE
      */
-    private final HttpMethod httpMethod;
+    private final HttpMethod requestMethod;
     /**
-     * اکسپشن اتفاق افتاده
+     * کد درخواست
      */
-    private final Exception exception;
+    private final String requestCode;
+    /**
+     * کد خطای پاسخ
+     */
+    private final String responseCode;
+    /**
+     * خطای خاص هر سرویس
+     */
+    private final String responseCustomError;
+    /**
+     * اکسپشن پاسخ
+     */
+    private final Exception responseException;
 
 
     /**
      * متد سازنده اکسپشن
      *
-     * @param exceptionClass کلاسی که در آن خطا اتفاق می افتد
-     * @param requestUrl     نشانی درخواست
-     * @param httpMethod     نوع درخواست وب
-     * @param exception      اکسپشن اتفاق افتاده
+     * @param exceptionClass    کلاسی که در آن خطا اتفاق می افتد
+     * @param requestUrl        نشانی درخواست
+     * @param requestCode       کد درخواست
+     * @param responseCode      کد خطای پاسخ
+     * @param requestMethod     نوع درخواست وب
+     * @param responseException اکسپشن اتفاق افتاده
      */
-    public ExternalCallException(@NotNull Class exceptionClass, @NotNull String requestUrl, @NotNull HttpMethod httpMethod, @NotNull Exception exception) {
+    public ExternalCallException(@NotNull Class exceptionClass, @NotNull String requestUrl, @NotNull HttpMethod requestMethod, @NotNull String requestCode, @NotNull String responseCode,@NotNull String responseCustomError, @NotNull Exception responseException) {
         super("ExternalCallException");
         this.exceptionClassName = exceptionClass.getSimpleName();
         this.requestUrl = requestUrl;
-        this.httpMethod = httpMethod;
-        this.exception = exception;
+        this.requestMethod = requestMethod;
+        this.requestCode = requestCode;
+        this.responseCode = responseCode;
+        this.responseCustomError = responseCustomError;
+        this.responseException = responseException;
     }
 
 

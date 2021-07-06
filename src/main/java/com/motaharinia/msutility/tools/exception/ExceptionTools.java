@@ -115,17 +115,23 @@ public interface ExceptionTools {
      */
     static ExceptionDto getDtoFromExternalCallException(ExternalCallException externalCallException, String appName, int appPort, MessageSource messageSource) {
         List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
-        String translatedMessage = "ExternalCallException for " + "[" + externalCallException.getHttpMethod().toString() + "]: " + externalCallException.getRequestUrl() + " message:" + externalCallException.getException().getMessage();
+        String translatedMessage = "ExternalCallException for " + "[" + externalCallException.getRequestMethod().toString() + "]: " + externalCallException.getRequestUrl() + " message:" + externalCallException.getResponseException().getMessage();
         messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(externalCallException), getStackTraceLineString(externalCallException), ""));
         ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
         exceptionDto.setType(ExceptionTypeEnum.EXTERNAL_CAL_EXCEPTION);
         exceptionDto.setExceptionClassName(externalCallException.getExceptionClassName());
         exceptionDto.setDataId(externalCallException.getRequestUrl());
         if (!messageDtoList.isEmpty()) {
-            exceptionDto.setMessage(messageDtoList.get(0).getMessage());
+            if (externalCallException.getResponseCustomError().equalsIgnoreCase("I/O error. Connection refused: connect")) {
+                exceptionDto.setMessage("خطای شبکه روی درخواست: " + externalCallException.getRequestCode() );
+            }else if (externalCallException.getResponseCode().isEmpty()) {
+                exceptionDto.setMessage("خطای نامشخص روی درخواست: " + externalCallException.getRequestCode() );
+            }else {
+                exceptionDto.setMessage("خطای سرویس روی درخواست: " + externalCallException.getRequestCode() + " کد خطا: " + externalCallException.getResponseCode() + " خطا: " + externalCallException.getResponseCustomError());
+            }
         }
         exceptionDto.setMessageDtoList(messageDtoList);
-        exceptionDto.setDescription(externalCallException.getHttpMethod().toString());
+        exceptionDto.setDescription(externalCallException.getRequestMethod().toString());
         return exceptionDto;
     }
 

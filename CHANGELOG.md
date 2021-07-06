@@ -123,3 +123,10 @@
 * Changed:
 * Fixed:
   * fix PaginationTools.paginateList for request pageRowSize more than initial size problem
+  
+#### [0.0.20] - 2021-07-06
+* Added:
+* Changed:
+  * changed ExternalCallException and added more fields about request 
+  * changed ExceptionTools.getDtoFromExternalCallException to generalize messages 
+* Fixed:
