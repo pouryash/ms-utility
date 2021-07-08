@@ -805,19 +805,22 @@ public interface CalendarTools {
      * متد اصلاح کننده رشته تاریخ جلالی
      *
      * @param jalaliString رشته تاریخ جلالی
-     * @param delimiter رشته جدا کننده تاریخ خروجی
+     * @param delimiter    رشته جدا کننده تاریخ خروجی
      * @return خروجی: رشته تاریخ جلالی اصلاح شده با جدا کننده
      */
     static String fixJalaliString(String jalaliString, String delimiter) {
         //اگر تاریخ جلالی خالی است یا طول آن نامعتبر است
-        if (ObjectUtils.isEmpty(jalaliString) || jalaliString.length()<6) {
+        if (ObjectUtils.isEmpty(jalaliString) || jalaliString.length() < 6) {
             return null;
         }
         //اصلاح تاریخهای 6 رقمی جلالی که ابتدای آنها 13 یا 14 نیست و سال به صورت مختصر نوشته شده مثلا بجای 1399 نوشته شده 99
-        if(!jalaliString.startsWith("13") && !jalaliString.startsWith("14")){
-            if(jalaliString.charAt(0)=='0' || jalaliString.charAt(0)=='1'){
+        if (!jalaliString.startsWith("13") && !jalaliString.startsWith("14")) {
+            int twoFirstNumber = (Character.getNumericValue(jalaliString.charAt(0)) * 10) + Character.getNumericValue(jalaliString.charAt(1));
+            if (twoFirstNumber < 10) {
+                //00-09 -> 1400-1409
                 jalaliString = "14" + jalaliString;
-            }else{
+            } else {
+                //10-99 -> 1310-1399
                 jalaliString = "13" + jalaliString;
             }
         }
@@ -827,6 +830,9 @@ public interface CalendarTools {
         }
         if (jalaliString.contains("/")) {
             jalaliString = jalaliString.replace("/", delimiter);
+        }
+        if (jalaliString.contains("_")) {
+            jalaliString = jalaliString.replace("_", delimiter);
         }
         //اصلاح جدا کننده تاریخ در حالتی که تاریخ بدون جدا کننده داده شده است مثل 13990225
         if (!jalaliString.contains(delimiter)) {

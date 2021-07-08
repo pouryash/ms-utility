@@ -488,4 +488,18 @@ class CalendarToolsUnitTest {
             fail(ex.toString());
         }
     }
+
+    @Order(39)
+    @Test
+    void fixJalaliStringTest() {
+        try {
+            assertThat(CalendarTools.fixJalaliString("1361-06-25","/")).isEqualTo("1361/06/25");
+            assertThat(CalendarTools.fixJalaliString("1361_06_25","/")).isEqualTo("1361/06/25");
+            assertThat(CalendarTools.fixJalaliString("13610625","/")).isEqualTo("1361/06/25");
+            assertThat(CalendarTools.fixJalaliString("610625","/")).isEqualTo("1361/06/25");
+            assertThat(CalendarTools.fixJalaliString("000625","/")).isEqualTo("1400/06/25");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
 }
