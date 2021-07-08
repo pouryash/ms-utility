@@ -135,4 +135,10 @@
 * Changed:
   * changed ExternalCallException and added more fields about request 
   * changed ExceptionTools.getDtoFromExternalCallException to generalize messages 
+* Fixed:  
+
+#### [0.0.22] - 2021-07-08
+* Added:
+* Changed:
+  * improve CalendarTools.fixJalaliString to handle short damaged jalali date strings
 * Fixed:

@@ -802,23 +802,18 @@ public interface CalendarTools {
 
 
     /**
-     * متد اصلاح کننده جدا کننده رشته تاریخ جلالی
+     * متد اصلاح کننده رشته تاریخ جلالی
      *
      * @param jalaliString رشته تاریخ جلالی
-     * @param seperator رشته جدا کننده تاریخ خروجی
+     * @param delimiter رشته جدا کننده تاریخ خروجی
      * @return خروجی: رشته تاریخ جلالی اصلاح شده با جدا کننده
      */
-    static String fixJalaliStringSeperator(String jalaliString, String seperator) {
-        if (jalaliString == null) {
+    static String fixJalaliString(String jalaliString, String delimiter) {
+        //اگر تاریخ جلالی خالی است یا طول آن نامعتبر است
+        if (ObjectUtils.isEmpty(jalaliString) || jalaliString.length()<6) {
             return null;
         }
-        if (jalaliString.contains("-")) {
-            jalaliString = jalaliString.replace("-", seperator);
-        }
-        if (jalaliString.contains("/")) {
-            jalaliString = jalaliString.replace("/", seperator);
-        }
-        //اصلاح تاریخهایی که ابتدای آنها 13 یا 14 نیست و سال به صورت مختصر نوشته شده مثلا بجای 1399 نوشته شده 99
+        //اصلاح تاریخهای 6 رقمی جلالی که ابتدای آنها 13 یا 14 نیست و سال به صورت مختصر نوشته شده مثلا بجای 1399 نوشته شده 99
         if(!jalaliString.startsWith("13") && !jalaliString.startsWith("14")){
             if(jalaliString.charAt(0)=='0' || jalaliString.charAt(0)=='1'){
                 jalaliString = "14" + jalaliString;
@@ -826,14 +821,19 @@ public interface CalendarTools {
                 jalaliString = "13" + jalaliString;
             }
         }
-        if (jalaliString.contains(seperator)) {
-            return jalaliString;
-        } else {
+        //اصلاح جدا کننده تاریخ
+        if (jalaliString.contains("-")) {
+            jalaliString = jalaliString.replace("-", delimiter);
+        }
+        if (jalaliString.contains("/")) {
+            jalaliString = jalaliString.replace("/", delimiter);
+        }
+        //اصلاح جدا کننده تاریخ در حالتی که تاریخ بدون جدا کننده داده شده است مثل 13990225
+        if (!jalaliString.contains(delimiter)) {
             if (jalaliString.length() > 7) {
-                return jalaliString.substring(0, 4) + seperator + jalaliString.substring(4, 6) + seperator + jalaliString.substring(6, 8);
-            } else {
-                return jalaliString;
+                jalaliString = jalaliString.substring(0, 4) + delimiter + jalaliString.substring(4, 6) + delimiter + jalaliString.substring(6, 8);
             }
         }
+        return jalaliString;
     }
 }

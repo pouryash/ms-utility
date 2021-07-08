@@ -125,7 +125,8 @@ public interface CustomMapper {
      * @return خروجی: شیی Instant
      */
     default Instant mapJalaliStringToInstant(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianInstant(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/", ZoneId.systemDefault());
+        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianInstant(jalaliString, "/", ZoneId.systemDefault());
     }
 
     //--------------------LocalDate-String--------------------
@@ -147,7 +148,8 @@ public interface CustomMapper {
      * @return خروجی: شیی LocalDate
      */
     default LocalDate mapJalaliStringToLocalDate(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDate(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/", ZoneId.systemDefault());
+        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDate(jalaliString, "/", ZoneId.systemDefault());
     }
 
     //--------------------LocalDateTime-String--------------------
@@ -169,7 +171,8 @@ public interface CustomMapper {
      * @return خروجی: شیی LocalDateTime
      */
     default LocalDateTime mapStringToLocalDateTime(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDateTime(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/", ZoneId.systemDefault());
+        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDateTime(jalaliString, "/", ZoneId.systemDefault());
     }
 
     //--------------------Date-String--------------------
@@ -191,7 +194,8 @@ public interface CustomMapper {
      * @return خروجی: شیی Date
      */
     default Date mapJalaliStringToDate(String jalaliString) {
-        return jalaliString == null ? null : CalendarTools.jalaliToGregorianDate(CalendarTools.fixJalaliStringSeperator(jalaliString,"/"), "/");
+        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        return jalaliString == null ? null : CalendarTools.jalaliToGregorianDate(jalaliString, "/");
     }
 
 }
