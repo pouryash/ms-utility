@@ -142,3 +142,9 @@
 * Changed:
   * improve CalendarTools.fixJalaliString to handle short damaged jalali date strings
 * Fixed:
+
+#### [0.0.23] - 2021-07-09
+* Added:
+* Changed:
+* Fixed:
+  * fix CustomMapper.mapLocalDateToJalaliString withTime=false

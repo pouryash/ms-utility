@@ -138,7 +138,7 @@ public interface CustomMapper {
      * @return خروجی: رشته تاریخ شمسی
      */
     default String mapLocalDateToJalaliString(LocalDate localDate) {
-        return localDate == null ? null : CalendarTools.gregorianToJalaliString(localDate, "/", true);
+        return localDate == null ? null : CalendarTools.gregorianToJalaliString(localDate, "/", false);
     }
 
     /**
