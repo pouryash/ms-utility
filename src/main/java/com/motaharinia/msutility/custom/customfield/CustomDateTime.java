@@ -18,7 +18,6 @@ import java.util.Objects;
 
 /**
  * @author https://github.com/motaharinia<br>
- * Description: <br>
  * این کلاس برای جابجا کردن فیلد تاریخ-زمان در مدلها از شمسی به میلادی در زمان ارسال درخواست از کلاینت به سرور و بالعکس استفاده میشود
  */
 @Data

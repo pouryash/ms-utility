@@ -151,6 +151,7 @@
 
 #### [0.0.24] - 2021-07-19
 * Added:
+  * added NetworkTools.readCurrentRequestInfo
 * Changed:
-  * changed artifactId
+  * changed artifactId to ms-utility
 * Fixed:

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author https://github.com/motaharinia<br>
- * Description:کلاس مدل تنظیمات ابزار فایل
+ * کلاس مدل تنظیمات ابزار فایل
  */
 @Data
 @NoArgsConstructor

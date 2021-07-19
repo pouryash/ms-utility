@@ -4,7 +4,7 @@ package com.motaharinia.msutility.tools.string;
 /**
  * Created by IntelliJ IDEA.
  * @author https://github.com/motaharinia
- * Description: مقادیر ثابت نوع ترکیب رشته تصادفی
+ * مقادیر ثابت نوع ترکیب رشته تصادفی
  */
 public enum RandomGenerationTypeEnum {
 
