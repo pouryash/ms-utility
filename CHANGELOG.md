@@ -148,3 +148,9 @@
 * Changed:
 * Fixed:
   * fix CustomMapper.mapLocalDateToJalaliString withTime=false
+
+#### [0.0.24] - 2021-07-19
+* Added:
+* Changed:
+  * changed artifactId
+* Fixed:
