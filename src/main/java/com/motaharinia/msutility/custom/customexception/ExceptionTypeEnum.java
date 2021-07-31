@@ -21,7 +21,7 @@ public enum ExceptionTypeEnum {
     /**
      * نوع خطای فراخوانی سرویسهای بیرونی
      */
-    EXTERNAL_CAL_EXCEPTION("EXTERNAL_CAL_EXCEPTION");
+    EXTERNAL_CALL_EXCEPTION("EXTERNAL_CALL_EXCEPTION");
 
     private final String value;
 

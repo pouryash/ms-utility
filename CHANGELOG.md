@@ -155,3 +155,9 @@
 * Changed:
   * changed artifactId to ms-utility
 * Fixed:
+
+#### [0.0.25] - 2021-07-31
+* Added:
+* Changed:
+  * changed ExceptionTypeEnum.EXTERNAL_CAL_EXCEPTION to ExceptionTypeEnum.EXTERNAL_CALL_EXCEPTION
+* Fixed:

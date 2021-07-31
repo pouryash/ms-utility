@@ -118,7 +118,7 @@ public interface ExceptionTools {
         String translatedMessage = "ExternalCallException for " + "[" + externalCallException.getRequestMethod().toString() + "]: " + externalCallException.getRequestUrl() + " message:" + externalCallException.getResponseException().getMessage();
         messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(externalCallException), getStackTraceLineString(externalCallException), ""));
         ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
-        exceptionDto.setType(ExceptionTypeEnum.EXTERNAL_CAL_EXCEPTION);
+        exceptionDto.setType(ExceptionTypeEnum.EXTERNAL_CALL_EXCEPTION);
         exceptionDto.setExceptionClassName(externalCallException.getExceptionClassName());
         exceptionDto.setDataId(externalCallException.getRequestUrl());
         if (!messageDtoList.isEmpty()) {
