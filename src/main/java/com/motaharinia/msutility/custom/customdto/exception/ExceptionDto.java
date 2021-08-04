@@ -19,6 +19,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExceptionDto implements Serializable {
+    /**
+     * کلید لاگ که برای پیدا کردن خطا در کیبانا یا فایل لاگ میتواند استفاده شود
+     */
     private String logKey = UUID.randomUUID().toString();
     /**
      * نام سامانه

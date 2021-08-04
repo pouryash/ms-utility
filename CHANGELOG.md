@@ -164,6 +164,7 @@
 
 #### [0.0.26] - 2021-08-04
 * Added:
+  * added logKey to ExceptionDto to find log in Kibana (ELK) or log files
   * added RateLimitException
   * added RateLimitException handling in ExceptionTools
   * added exception_en.properties and exception_fa.properties for exception messages
