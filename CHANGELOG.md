@@ -169,4 +169,5 @@
   * added RateLimitException handling in ExceptionTools
   * added exception_en.properties and exception_fa.properties for exception messages
 * Changed:
+  * ClientResponseDto generic type is not required to be serialized anymore
 * Fixed:

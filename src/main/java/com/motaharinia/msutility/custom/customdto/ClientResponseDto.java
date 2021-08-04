@@ -17,7 +17,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientResponseDto<T extends Serializable> implements Serializable {
+public class ClientResponseDto<T> implements Serializable {
     /**
      * داده برگشتی از سرور به کلاینت
      */
