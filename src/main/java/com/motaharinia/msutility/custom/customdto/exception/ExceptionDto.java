@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eng.motahari@gmail.com<br>
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExceptionDto implements Serializable {
+    private String logKey = UUID.randomUUID().toString();
     /**
      * نام سامانه
      */

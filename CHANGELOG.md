@@ -161,3 +161,11 @@
 * Changed:
   * changed ExceptionTypeEnum.EXTERNAL_CAL_EXCEPTION to ExceptionTypeEnum.EXTERNAL_CALL_EXCEPTION
 * Fixed:
+
+#### [0.0.26] - 2021-08-04
+* Added:
+  * added RateLimitException
+  * added RateLimitException handling in ExceptionTools
+  * added exception_en.properties and exception_fa.properties for exception messages
+* Changed:
+* Fixed:

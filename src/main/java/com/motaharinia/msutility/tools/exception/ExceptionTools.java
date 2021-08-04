@@ -7,6 +7,7 @@ import com.motaharinia.msutility.custom.customdto.exception.ExceptionMessageDto;
 import com.motaharinia.msutility.custom.customexception.ExceptionTypeEnum;
 import com.motaharinia.msutility.custom.customexception.externalcall.ExternalCallException;
 import com.motaharinia.msutility.custom.customdto.ClientResponseDto;
+import com.motaharinia.msutility.custom.customexception.ratelimit.RateLimitException;
 import com.motaharinia.msutility.tools.string.StringTools;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -48,18 +49,21 @@ public interface ExceptionTools {
         if (exception != null && exception.getClass() != null) {
 
             //به صورت پیش فرض روی خطای عمومی ست میشود
-            HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            HttpStatus httpStatus;
 
             //به دست آوردن مدل از روی نوع اکسپشن
             if (exception instanceof BusinessException) {
                 exceptionDto = getDtoFromBusinessException((BusinessException) exception, appName, appPort, messageSource);
                 httpStatus = HttpStatus.BAD_REQUEST;
-            } else if (exception instanceof ExternalCallException) {
-                exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
-                httpStatus = HttpStatus.CONFLICT;
             } else if (exception instanceof MethodArgumentNotValidException) {
                 exceptionDto = getDtoFromMethodArgumentNotValidException((MethodArgumentNotValidException) exception, appName, appPort, messageSource);
                 httpStatus = HttpStatus.BAD_REQUEST;
+            } else if (exception instanceof ExternalCallException) {
+                exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
+                httpStatus = HttpStatus.CONFLICT;
+            } else if (exception instanceof RateLimitException) {
+                exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
+                httpStatus = HttpStatus.TOO_MANY_REQUESTS;
             } else {
                 exceptionDto = getDtoFromGeneralException(exception, appName, appPort);
                 httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -105,38 +109,6 @@ public interface ExceptionTools {
 
 
     /**
-     * متد سازنده مدل خطا از خطای فراخوانی سرویسهای بیرونی
-     *
-     * @param externalCallException خطای فراخوانی سرویسهای بیرونی
-     * @param appName               نام برنامه
-     * @param appPort               پورت برنامه
-     * @param messageSource         شیی ترجمه
-     * @return خروجی: مدل خطا
-     */
-    static ExceptionDto getDtoFromExternalCallException(ExternalCallException externalCallException, String appName, int appPort, MessageSource messageSource) {
-        List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
-        String translatedMessage = "ExternalCallException for " + "[" + externalCallException.getRequestMethod().toString() + "]: " + externalCallException.getRequestUrl() + " message:" + externalCallException.getResponseException().getMessage();
-        messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(externalCallException), getStackTraceLineString(externalCallException), ""));
-        ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
-        exceptionDto.setType(ExceptionTypeEnum.EXTERNAL_CALL_EXCEPTION);
-        exceptionDto.setExceptionClassName(externalCallException.getExceptionClassName());
-        exceptionDto.setDataId(externalCallException.getRequestUrl());
-        if (!messageDtoList.isEmpty()) {
-            if (externalCallException.getResponseCustomError().equalsIgnoreCase("I/O error. Connection refused: connect")) {
-                exceptionDto.setMessage("خطای شبکه روی درخواست: " + externalCallException.getRequestCode() );
-            }else if (externalCallException.getResponseCode().isEmpty()) {
-                exceptionDto.setMessage("خطای نامشخص روی درخواست: " + externalCallException.getRequestCode() );
-            }else {
-                exceptionDto.setMessage("خطای سرویس روی درخواست: " + externalCallException.getRequestCode() + " کد خطا: " + externalCallException.getResponseCode() + " خطا: " + externalCallException.getResponseCustomError());
-            }
-        }
-        exceptionDto.setMessageDtoList(messageDtoList);
-        exceptionDto.setDescription(externalCallException.getRequestMethod().toString());
-        return exceptionDto;
-    }
-
-
-    /**
      * متد سازنده مدل خطا از خطای اعتبارسنجی
      *
      * @param methodArgumentNotValidException خطای اعتبارسنجی
@@ -165,6 +137,60 @@ public interface ExceptionTools {
         return exceptionDto;
     }
 
+    /**
+     * متد سازنده مدل خطا از خطای فراخوانی سرویسهای بیرونی
+     *
+     * @param externalCallException خطای فراخوانی سرویسهای بیرونی
+     * @param appName               نام برنامه
+     * @param appPort               پورت برنامه
+     * @param messageSource         شیی ترجمه
+     * @return خروجی: مدل خطا
+     */
+    static ExceptionDto getDtoFromExternalCallException(ExternalCallException externalCallException, String appName, int appPort, MessageSource messageSource) {
+        List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
+        String translatedMessage = "ExternalCallException for " + "[" + externalCallException.getRequestMethod().toString() + "]: " + externalCallException.getRequestUrl() + " message:" + externalCallException.getResponseException().getMessage();
+        messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(externalCallException), getStackTraceLineString(externalCallException), ""));
+        ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
+        exceptionDto.setType(ExceptionTypeEnum.EXTERNAL_CALL_EXCEPTION);
+        exceptionDto.setExceptionClassName(externalCallException.getExceptionClassName());
+        exceptionDto.setDataId(externalCallException.getRequestUrl());
+        if (!messageDtoList.isEmpty()) {
+            if (externalCallException.getResponseCustomError().equalsIgnoreCase("I/O error. Connection refused: connect")) {
+                exceptionDto.setMessage( StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.IO::" +externalCallException.getRequestCode() ) );
+            }else if (externalCallException.getResponseCode().isEmpty()) {
+                exceptionDto.setMessage( StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.UNKNOWN::" +externalCallException.getRequestCode() ) );
+            }else {
+                exceptionDto.setMessage( StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.CODE::" +externalCallException.getResponseCode() + "," + externalCallException.getRequestCode()) );
+            }
+        }
+        exceptionDto.setMessageDtoList(messageDtoList);
+        exceptionDto.setDescription(externalCallException.getRequestMethod().toString());
+        return exceptionDto;
+    }
+
+    /**
+     * متد سازنده مدل خطا از خطای محدودیت بازدید
+     *
+     * @param rateLimitException خطای محدودیت بازدید
+     * @param appName               نام برنامه
+     * @param appPort               پورت برنامه
+     * @param messageSource         شیی ترجمه
+     * @return خروجی: مدل خطا
+     */
+    static ExceptionDto getDtoFromRateLimitException(RateLimitException rateLimitException, String appName, int appPort, MessageSource messageSource) {
+        List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
+        messageDtoList.add(new ExceptionMessageDto(rateLimitException.getMessage(), getStackTraceString(rateLimitException), getStackTraceLineString(rateLimitException), ""));
+        ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
+        exceptionDto.setType(ExceptionTypeEnum.RATE_LIMIT_EXCEPTION);
+        exceptionDto.setExceptionClassName("");
+        exceptionDto.setDataId("");
+        if (!messageDtoList.isEmpty()) {
+            exceptionDto.setMessage(messageDtoList.get(0).getMessage());
+        }
+        exceptionDto.setMessageDtoList(messageDtoList);
+        exceptionDto.setDescription("");
+        return exceptionDto;
+    }
 
     /**
      * متد سازنده مدل خطا از خطای عمومی
