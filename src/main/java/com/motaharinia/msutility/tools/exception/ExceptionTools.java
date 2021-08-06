@@ -62,7 +62,7 @@ public interface ExceptionTools {
                 exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
                 httpStatus = HttpStatus.CONFLICT;
             } else if (exception instanceof RateLimitException) {
-                exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
+                exceptionDto = getDtoFromRateLimitException((RateLimitException) exception, appName, appPort, messageSource);
                 httpStatus = HttpStatus.TOO_MANY_REQUESTS;
             } else {
                 exceptionDto = getDtoFromGeneralException(exception, appName, appPort);
@@ -78,7 +78,7 @@ public interface ExceptionTools {
         exceptionDto.setUserId(userId);
         exceptionDto.setUsername(username);
 
-        return new ClientResponseDto<String>(exceptionDto, exceptionDto.getMessage());
+        return new ClientResponseDto<>(exceptionDto, exceptionDto.getMessage());
     }
 
 
@@ -179,7 +179,7 @@ public interface ExceptionTools {
      */
     static ExceptionDto getDtoFromRateLimitException(RateLimitException rateLimitException, String appName, int appPort, MessageSource messageSource) {
         List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
-        messageDtoList.add(new ExceptionMessageDto(rateLimitException.getMessage(), getStackTraceString(rateLimitException), getStackTraceLineString(rateLimitException), ""));
+        messageDtoList.add(new ExceptionMessageDto(StringTools.translateCustomMessage(messageSource, rateLimitException.getMessage() ), getStackTraceString(rateLimitException), getStackTraceLineString(rateLimitException), ""));
         ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
         exceptionDto.setType(ExceptionTypeEnum.RATE_LIMIT_EXCEPTION);
         exceptionDto.setExceptionClassName("");

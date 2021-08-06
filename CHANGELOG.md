@@ -171,3 +171,9 @@
 * Changed:
   * ClientResponseDto generic type is not required to be serialized anymore
 * Fixed:
+
+#### [0.0.27] - 2021-08-06
+* Added:
+* Changed:
+* Fixed:
+  * fixed RateLimitException translation
