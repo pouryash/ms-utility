@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>ms-utility</artifactId>
-    <version>0.0.27</version>
+    <version>0.0.28</version>
     <name>MsUtility</name>
     <description>Motaharinia MsUtility</description>
     <url>https://github.com/motaharinia</url>
@@ -129,6 +129,12 @@
             <groupId>com.drewnoakes</groupId>
             <artifactId>metadata-extractor</artifactId>
             <version>2.16.0</version>
+        </dependency>
+        <!--user agent parser for NetworkTools-->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.21</version>
         </dependency>
     </dependencies>
 
