@@ -177,10 +177,15 @@
 * Changed:
 * Fixed:
   * fixed RateLimitException translation
-
-
+  
 #### [0.0.28] - 2021-08-22
 * Added:
 * Changed:
   * changed NetworkTools.readCurrentRequestInfo added withAgentOsDeviceData parameter to retrieve the optional browser, OS and device additional data
+* Fixed:
+
+#### [0.0.29] - 2021-09-01
+* Added:
+  * added ExcelTools.generate
+* Changed:
 * Fixed:
