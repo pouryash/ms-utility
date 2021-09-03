@@ -84,15 +84,15 @@ class ExcelToolsUnitTest {
             ExcelStyleDto excelStyleDtoNumeric = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",false, Color.BLUE, Color.WHITE, BorderStyle.THIN, Color.BLACK,"#,##0");
             ExcelStyleDto excelStyleDtoNumericFloat = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",false, Color.BLUE, Color.WHITE, BorderStyle.THIN, Color.BLACK,"#,##0.00");
             List<ExcelColumnDto> columnList = new ArrayList<>();
-            columnList.add(new ExcelColumnDto(false, null, excelStyleDto));
-            columnList.add(new ExcelColumnDto(false, null, excelStyleDto));
-            columnList.add(new ExcelColumnDto(false, formatterMap, excelStyleDto));
-            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
-            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
-            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumericFloat));
-            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumericFloat));
-            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
-            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto( null, excelStyleDto));
+            columnList.add(new ExcelColumnDto( null, excelStyleDto));
+            columnList.add(new ExcelColumnDto( formatterMap, excelStyleDto));
+            columnList.add(new ExcelColumnDto( null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto( null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto( null, excelStyleDtoNumericFloat));
+            columnList.add(new ExcelColumnDto( null, excelStyleDtoNumericFloat));
+            columnList.add(new ExcelColumnDto( null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto( null, excelStyleDtoNumeric));
 
             //سطرهای اکسل
             List<Object[]> rowList = new ArrayList<>();

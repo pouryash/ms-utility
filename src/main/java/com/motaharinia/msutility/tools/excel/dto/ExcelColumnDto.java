@@ -24,10 +24,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @Data
 public class ExcelColumnDto implements Serializable {
-    /**
-     * نوع ستون که عددی یا متنی است
-     */
-    private Boolean isNumeric = false;
+
     /**
      * فرمت کننده ستون
      * مثلا میخواهیم برای مقادیر صفر در ستون کلمه خیر بیاریم و برای مقادیر یک در ستون کلمه بلی بیاریم
