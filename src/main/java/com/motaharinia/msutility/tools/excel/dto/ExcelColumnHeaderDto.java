@@ -13,29 +13,22 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * @author https://github.com/motaharinia<br>
- * کلاس مدل تنظمیات ستونهای اکسل
+ * کلاس مدل عناوین ستونهای اکسل
  */
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ExcelColumnDto implements Serializable {
+public class ExcelColumnHeaderDto implements Serializable {
     /**
-     * نوع ستون که عددی یا متنی است
+     * عنوان ستون
      */
-    private Boolean isNumeric = false;
+    private String title = "";
     /**
-     * فرمت کننده ستون
-     * مثلا میخواهیم برای مقادیر صفر در ستون کلمه خیر بیاریم و برای مقادیر یک در ستون کلمه بلی بیاریم
-     */
-    private HashMap<Object, Object> formatterMap;
-    /**
-     * تنظیمات ظاهری ستون
+     * تنظیمات ظاهری عنوان ستون
      */
     private ExcelStyleDto style;
-
 }

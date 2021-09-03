@@ -1,15 +1,16 @@
 package com.motaharinia.msutility.tools.excel;
 
-import com.motaharinia.msutility.tools.excel.dto.ExcelDto;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import com.motaharinia.msutility.tools.excel.dto.*;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Locale;
+import java.util.HashMap;
 
 /**
  * @author https://github.com/motaharinia<br>
@@ -17,97 +18,135 @@ import java.util.Locale;
  */
 public interface ExcelTools {
 
+    /**
+     * متد تولید شیی کتاب اکسل
+     *
+     * @param excelDto مدل اطلاعات و تنظیمات تولید اکسل
+     * @return خروجی: شیی کتاب اکسل
+     */
     @NotNull
-    static XSSFWorkbook generate(@NotNull ExcelDto excelDto, @NotNull String sheetTitle , @NotNull String fontName) {
-        List<Object[]> listData = excelDto.getRowList();
+    static XSSFWorkbook generate(@NotNull ExcelDto excelDto) {
 
         //ساخت شیی اکسل و صفحه اکسل داخل آن
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet worksheet = workbook.createSheet(sheetTitle);
-        //تنظیمات لوکال که راست به چپ باشد یا خیر
-        Locale locale = LocaleContextHolder.getLocale();
-        if ((locale.getLanguage().equals("fa")) || (locale.getLanguage().equals("ar"))) {
-            worksheet.setRightToLeft(true);
-        } else {
-            worksheet.setRightToLeft(false);
-        }
-        //متغیرهای مربوط به هدر
-        XSSFFont headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        headerFont.setFontName(fontName);
-        XSSFCellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-        headerStyle.setFont(headerFont);
-        //متغیرهای مربطو به سطرهای داده
-        XSSFFont dataFont = workbook.createFont();
-        dataFont.setBold(false);
-        dataFont.setFontName(fontName);
-        XSSFCellStyle dataStyle;
-
-
+        XSSFSheet worksheet = workbook.createSheet(excelDto.getSheetTitle());
+        worksheet.setRightToLeft(excelDto.getSheetRightToLeft());
 
         //تعریف متغیرها
         XSSFRow row;
         XSSFCell cell;
+        XSSFCellStyle style;
         int rowIndex = 0;
-        int colIndex = 0;
-        BigInteger bigIntegerTest = null;
-        BigDecimal bigDecimalTest = null;
 
-        //تنظیم سطر اول اکسل به عنوان هدر
-        row = worksheet.createRow(rowIndex++);
-        for (int i = 0; i < excelDto.getColumnList().size(); i++) {
-                cell = row.createCell(colIndex++);
 
-                cell.setCellStyle(headerStyle);
-                cell.setCellValue(excelDto.getColumnList().get(i).getTitle());
+        //اگر نیاز به وجود عنوان سربرگ بود
+        if (!ObjectUtils.isEmpty(excelDto.getCaptionDto())) {
+            //متغیرهای مربوط به سطر سربرگ
+            style = makeStyle(workbook, excelDto.getCaptionDto().getStyle());
+            System.out.println("style.getDataFormat():" + style.getDataFormat() + " style.getDataFormatString():" + style.getDataFormatString());
+            //تنظیم سطر اکسل به عنوان سطر سربرگ
+            row = worksheet.createRow(rowIndex++);
+            cell = row.createCell(0);
+            cell.setCellStyle(style);
+            cell.setCellValue(excelDto.getCaptionDto().getTitle());
+            worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, excelDto.getColumnList().size() - 1));
         }
 
-        //تبدیل اطلاعات سطرها در صفحه اکسل
-        for (int i = 0; i < listData.size(); i++) {
-            colIndex = 0;
+        //اگر نیاز به وجود عناوین ستونها بود
+        if (!ObjectUtils.isEmpty(excelDto.getColumnHeaderList())) {
+            //متغیرهای مربوط به سطر عناوین ستونها
+            int columnHeaderIndex = 0;
+            //تنظیم سطر اکسل به عنوان سطر عناوین ستونها
             row = worksheet.createRow(rowIndex++);
-            for (int j = 0; j < excelDto.getColumnList().size(); j++) {
-                    cell = row.createCell(colIndex++);
+            for (ExcelColumnHeaderDto dto : excelDto.getColumnHeaderList()) {
+                style = makeStyle(workbook, dto.getStyle());
+                cell = row.createCell(columnHeaderIndex++);
+                cell.setCellStyle(style);
+                cell.setCellValue(dto.getTitle());
+            }
+        }
 
-                dataStyle = workbook.createCellStyle();
-                    dataStyle.setAlignment(excelDto.getColumnList().get(j).getAlignment());
-                    dataStyle.setFont(dataFont);
-                    cell.setCellStyle(dataStyle);
 
-                if(excelDto.getColumnList().get(j).getFormatterMap()!=null && excelDto.getColumnList().get(j).getFormatterMap().get(listData.get(i)[j])!=null){
-                    cell.setCellValue((String) excelDto.getColumnList().get(j).getFormatterMap().get(listData.get(i)[j]));
-                }else{
-                    if (listData.get(i)[j] instanceof String) {
-                        cell.setCellValue((String) listData.get(i)[j]);
-                    } else if (listData.get(i)[j] instanceof Boolean) {
-                        cell.setCellValue((Boolean) listData.get(i)[j]);
-                    } else if (listData.get(i)[j] instanceof Integer) {
-                        cell.setCellValue((Integer) listData.get(i)[j]);
-                    } else if (listData.get(i)[j] instanceof Long) {
-                        cell.setCellValue((Long) listData.get(i)[j]);
-                    } else if (listData.get(i)[j] instanceof Float) {
-                        cell.setCellValue((Float) listData.get(i)[j]);
-                    } else if (listData.get(i)[j] instanceof Double) {
-                        cell.setCellValue((Double) listData.get(i)[j]);
-                    } else if (listData.get(i)[j] instanceof BigInteger) {
-                        bigIntegerTest = (BigInteger) listData.get(i)[j];
+        //متغیرهای مربوط به سطرهای داده
+        BigInteger bigIntegerTest = null;
+        BigDecimal bigDecimalTest = null;
+        ExcelColumnDto excelColumnDto;
+        HashMap<Object, Object> formatterMap = new HashMap<>();
+        style = makeStyle(workbook, new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma", false, Color.BLACK, Color.WHITE, BorderStyle.THIN, Color.BLACK, "General"));
+        for (Object[] dataColumnArray : excelDto.getRowList()) {
+            row = worksheet.createRow(rowIndex++);
+            for (int columnIndex = 0; columnIndex < dataColumnArray.length; columnIndex++) {
+                if (!ObjectUtils.isEmpty(excelDto.getColumnList()) && excelDto.getColumnList().size() > columnIndex) {
+                    excelColumnDto = excelDto.getColumnList().get(columnIndex);
+                    style = makeStyle(workbook, excelColumnDto.getStyle());
+                    formatterMap = excelColumnDto.getFormatterMap();
+                }
+                cell = row.createCell(columnIndex);
+                cell.setCellStyle(style);
+                if (!ObjectUtils.isEmpty(formatterMap) && formatterMap.get(dataColumnArray[columnIndex]) != null) {
+                    cell.setCellValue((String) formatterMap.get(dataColumnArray[columnIndex]));
+                } else {
+                    if (dataColumnArray[columnIndex] instanceof String) {
+                        cell.setCellValue((String) dataColumnArray[columnIndex]);
+                    } else if (dataColumnArray[columnIndex] instanceof Boolean) {
+                        cell.setCellValue((Boolean) dataColumnArray[columnIndex]);
+                    } else if (dataColumnArray[columnIndex] instanceof Integer) {
+                        cell.setCellValue((Integer) dataColumnArray[columnIndex]);
+                    } else if (dataColumnArray[columnIndex] instanceof Long) {
+                        cell.setCellValue((Long) dataColumnArray[columnIndex]);
+                    } else if (dataColumnArray[columnIndex] instanceof Float) {
+                        cell.setCellValue((Float) dataColumnArray[columnIndex]);
+                    } else if (dataColumnArray[columnIndex] instanceof Double) {
+                        cell.setCellValue((Double) dataColumnArray[columnIndex]);
+                    } else if (dataColumnArray[columnIndex] instanceof BigInteger) {
+                        bigIntegerTest = (BigInteger) dataColumnArray[columnIndex];
                         cell.setCellValue(bigIntegerTest.doubleValue());
-                    } else if (listData.get(i)[j] instanceof BigDecimal) {
-                        bigDecimalTest = (BigDecimal) listData.get(i)[j];
+                    } else if (dataColumnArray[columnIndex] instanceof BigDecimal) {
+                        bigDecimalTest = (BigDecimal) dataColumnArray[columnIndex];
                         cell.setCellValue(bigDecimalTest.doubleValue());
                     } else {
-                        cell.setCellValue(listData.get(i)[j] + "");
+                        cell.setCellValue(dataColumnArray[columnIndex] + "");
                     }
                 }
             }
         }
 
         //تنظیم عرض خودکار روی صفحه اکسل که داده داخل آن پر شده است
-        for (int i = 0; i < colIndex; i++) {
-            worksheet.autoSizeColumn(i);
+        for (int columnIndex = 0; columnIndex < excelDto.getColumnList().size(); columnIndex++) {
+            worksheet.autoSizeColumn(columnIndex);
         }
 
+
         return workbook;
+    }
+
+
+    /**
+     * این متد با دریافت مدل تنظیمات ظاهری شیی استایل اکسل را ایجاد میکند
+     *
+     * @param workbook      شیی کتاب اکسل
+     * @param excelStyleDto مدل تنظیمات ظاهری
+     * @return خروجی: شیی استایل اکسل
+     */
+    private static XSSFCellStyle makeStyle(XSSFWorkbook workbook, ExcelStyleDto excelStyleDto) {
+        XSSFFont styleFont = workbook.createFont();
+        XSSFCellStyle style = workbook.createCellStyle();
+        DataFormat dataFormat = workbook.createDataFormat();
+        //قلم
+        styleFont.setBold(excelStyleDto.getFontIsBold());
+        styleFont.setFontName(excelStyleDto.getFontName());
+        styleFont.setColor(new XSSFColor(excelStyleDto.getFontColor()));
+        //ظاهر
+        style.setFont(styleFont);
+        style.setAlignment(excelStyleDto.getAlignment());
+        style.setFillForegroundColor(new XSSFColor(excelStyleDto.getBackgroundColor()));
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        style.setBorderBottom(excelStyleDto.getBorderStyle());
+        style.setBorderRight(excelStyleDto.getBorderStyle());
+        style.setBorderLeft(excelStyleDto.getBorderStyle());
+        style.setBorderTop(excelStyleDto.getBorderStyle());
+        style.setDataFormat(dataFormat.getFormat(excelStyleDto.getDataFormat()));
+
+        return style;
     }
 }

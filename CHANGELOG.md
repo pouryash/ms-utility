@@ -189,3 +189,10 @@
   * added ExcelTools.generate
 * Changed:
 * Fixed:
+
+#### [0.0.30] - 2021-09-03
+* Added:
+  * added PdfTools.generateFromHtml
+* Changed:
+  * improved ExcelTools.generate with Caption and columnHeader settings in ExcelDto
+* Fixed:

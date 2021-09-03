@@ -1,11 +1,13 @@
 package com.motaharinia.msutility.tools.excel;
 
-import com.motaharinia.msutility.tools.excel.dto.ExcelColumnDto;
-import com.motaharinia.msutility.tools.excel.dto.ExcelDto;
+import com.motaharinia.msutility.tools.excel.dto.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.*;
+import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -43,35 +45,64 @@ class ExcelToolsUnitTest {
 
     @Order(1)
     @Test
-    void excelExportTest() {
+    void generateTest() {
         try {
 
-            //فرنت کننده برای فیلدهای boolean
-            HashMap<Object,Object> formatterMap = new HashMap<>();
-            formatterMap.put(true,"بلی");
-            formatterMap.put(false,"خیر");
+            //تنظیمات لوکال که راست به چپ باشد یا خیر
+            boolean sheetRightToLeft = false;
+            Locale locale = LocaleContextHolder.getLocale();
+            if ((locale.getLanguage().equals("fa")) || (locale.getLanguage().equals("ar"))) {
+                sheetRightToLeft = true;
+            }
 
-            //عناوین و مشخصات ستونهای اکسل
+            //فرمت کننده برای فیلدهای boolean
+            HashMap<Object, Object> formatterMap = new HashMap<>();
+            formatterMap.put(true, "بلی");
+            formatterMap.put(false, "خیر");
+
+            ExcelStyleDto excelStyleDto;
+
+            //عنوان سربرگ اکسل
+            excelStyleDto = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",true, Color.WHITE, new Color(198, 0, 199), BorderStyle.THIN, Color.BLACK,"General");
+            ExcelCaptionDto captionDto = new ExcelCaptionDto("گزارش تیرماه اطلاعات کاربران", excelStyleDto);
+
+            //عناوین ستونهای اکسل
+            excelStyleDto = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",true, Color.BLACK, new Color(49, 204, 206), BorderStyle.THIN, Color.BLACK,"General");
+            List<ExcelColumnHeaderDto> columnHeaderList = new ArrayList<>();
+            columnHeaderList.add(new ExcelColumnHeaderDto("نام", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("نام خانوادگی", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("دریافت خبرنامه؟", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("امتیاز", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("تعداد گردش", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("معدل", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("ضریب محاسبه", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("تعداد مراجعه", excelStyleDto));
+            columnHeaderList.add(new ExcelColumnHeaderDto("مبلغ موجودی", excelStyleDto));
+
+            //تنظیمات ستونهای اکسل
+            excelStyleDto = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",false, Color.BLACK, Color.WHITE, BorderStyle.THIN, Color.BLACK,"General");
+            ExcelStyleDto excelStyleDtoNumeric = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",false, Color.BLUE, Color.WHITE, BorderStyle.THIN, Color.BLACK,"#,##0");
+            ExcelStyleDto excelStyleDtoNumericFloat = new ExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma",false, Color.BLUE, Color.WHITE, BorderStyle.THIN, Color.BLACK,"#,##0.00");
             List<ExcelColumnDto> columnList = new ArrayList<>();
-            columnList.add(new ExcelColumnDto("نام", HorizontalAlignment.RIGHT,false,null));
-            columnList.add(new ExcelColumnDto("نام خانوادگی", HorizontalAlignment.RIGHT,false, null));
-            columnList.add(new ExcelColumnDto("دریافت خبرنامه؟", HorizontalAlignment.CENTER,false,formatterMap));
-            columnList.add(new ExcelColumnDto("امتیاز", HorizontalAlignment.LEFT,true, null));
-            columnList.add(new ExcelColumnDto("تعداد گردش", HorizontalAlignment.LEFT,true, null));
-            columnList.add(new ExcelColumnDto("معدل", HorizontalAlignment.LEFT,true, null));
-            columnList.add(new ExcelColumnDto("ضریب محاسبه", HorizontalAlignment.LEFT,true, null));
-            columnList.add(new ExcelColumnDto("تعداد مراجعه", HorizontalAlignment.LEFT,true, null));
-            columnList.add(new ExcelColumnDto("مبلغ موجودی", HorizontalAlignment.LEFT,true, null));
+            columnList.add(new ExcelColumnDto(false, null, excelStyleDto));
+            columnList.add(new ExcelColumnDto(false, null, excelStyleDto));
+            columnList.add(new ExcelColumnDto(false, formatterMap, excelStyleDto));
+            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumericFloat));
+            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumericFloat));
+            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
+            columnList.add(new ExcelColumnDto(true, null, excelStyleDtoNumeric));
 
             //سطرهای اکسل
             List<Object[]> rowList = new ArrayList<>();
-            rowList.add(new Object[]{"مصطفی","مطهری نیا",true,10000,1000000L,1.5f,1.25d, BigInteger.valueOf(1000000000L), BigDecimal.valueOf(150000)});
-            rowList.add(new Object[]{"احمد","کریمی راد",false,20000,2000000L,2.5f,2.25d, BigInteger.valueOf(2000000000L), BigDecimal.valueOf(250000)});
+            rowList.add(new Object[]{"مصطفی", "مطهری نیا", true, 10000, 1000000L, 1.5f, 1.25d, BigInteger.valueOf(1000000000L), BigDecimal.valueOf(150000)});
+            rowList.add(new Object[]{"احمد", "کریمی راد", false, 20000, 2000000L, 2.5f, 2.25d, BigInteger.valueOf(2000000000L), BigDecimal.valueOf(250000)});
 
-            //تبدیل
-            ExcelDto excelDto = new ExcelDto(rowList,columnList);
-            XSSFWorkbook workbook = ExcelTools.generate(excelDto, "اطلاعات کاربران سامانه","Tahoma");
-            FileOutputStream fileOutputStream = new FileOutputStream("excelExportTest.xlsx");
+            //تولید اکسل
+            ExcelDto excelDto = new ExcelDto("اطلاعات کاربران سامانه", sheetRightToLeft, captionDto, columnHeaderList, columnList, rowList);
+            XSSFWorkbook workbook = ExcelTools.generate(excelDto);
+            FileOutputStream fileOutputStream = new FileOutputStream("ExcelToolsUnitTest_generateTest.xlsx");
             workbook.write(fileOutputStream);
             assertThat(workbook).isNotNull();
         } catch (Exception ex) {
