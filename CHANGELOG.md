@@ -183,16 +183,3 @@
 * Changed:
   * changed NetworkTools.readCurrentRequestInfo added withAgentOsDeviceData parameter to retrieve the optional browser, OS and device additional data
 * Fixed:
-
-#### [0.0.29] - 2021-09-01
-* Added:
-  * added ExcelTools.generate
-* Changed:
-* Fixed:
-
-#### [0.0.30] - 2021-09-03
-* Added:
-  * added PdfTools.generateFromHtml
-* Changed:
-  * moved PdfTools.generateFromHtml and ExcelTools.generate to ms-converter-utility
-* Fixed:
