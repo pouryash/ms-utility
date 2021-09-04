@@ -12,7 +12,7 @@
     <artifactId>ms-utility</artifactId>
     <version>0.0.30</version>
     <name>Ms-Utility</name>
-    <description>Motaharinia MsUtility</description>
+    <description>Ms-Utility is developed by Mostafa Motaharinia (eng.motahari@gmail.com). The project contains utilities to make the main project code uniform and similar and it is used as a dependency in other projects</description>
     <url>https://github.com/motaharinia</url>
 
     <properties>
