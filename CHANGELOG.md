@@ -194,5 +194,5 @@
 * Added:
   * added PdfTools.generateFromHtml
 * Changed:
-  * improved ExcelTools.generate with Caption and columnHeader settings in ExcelDto
+  * moved PdfTools.generateFromHtml and ExcelTools.generate to ms-converter-utility
 * Fixed:
