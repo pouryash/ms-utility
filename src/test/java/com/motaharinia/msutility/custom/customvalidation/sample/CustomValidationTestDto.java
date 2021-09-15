@@ -24,6 +24,7 @@ import com.motaharinia.msutility.custom.customvalidation.price.Price;
 import com.motaharinia.msutility.custom.customvalidation.required.Required;
 import com.motaharinia.msutility.custom.customvalidation.stringlength.StringLength;
 import com.motaharinia.msutility.custom.customvalidation.stringpattern.StringPattern;
+import com.motaharinia.msutility.custom.customvalidation.url.Url;
 import com.motaharinia.msutility.custom.customvalidation.usernameemailormobile.UsernameEmailOrMobile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -160,6 +161,42 @@ public class CustomValidationTestDto implements Serializable {
     //StringPattern (Visa Card. All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13):
     @StringPattern(pattern = "^4[0-9]{12}(?:[0-9]{3})?$")
     private String stringPattern;
+
+    //Url:
+    @Url
+    private String url1;
+    @Url
+    private String url2;
+    @Url
+    private String url3;
+    @Url
+    private String url4;
+    @Url
+    private String url5;
+    @Url
+    private String url6;
+    @Url
+    private String url7;
+    @Url
+    private String url8;
+    @Url
+    private String url9;
+    @Url
+    private String url10;
+    @Url
+    private String url11;
+    @Url
+    private String url12;
+    @Url
+    private String url13;
+    @Url
+    private String url14;
+    @Url
+    private String url15;
+    @Url
+    private String url16;
+    @Url
+    private String url17;
 
     //UsernameEmailOrMobile:
     @UsernameEmailOrMobile

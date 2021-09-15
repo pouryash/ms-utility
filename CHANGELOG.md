@@ -183,3 +183,9 @@
 * Changed:
   * changed NetworkTools.readCurrentRequestInfo added withAgentOsDeviceData parameter to retrieve the optional browser, OS and device additional data
 * Fixed:
+
+#### [0.0.29] - 2021-09-15
+* Added:
+  * added @Url validation annotation
+* Changed:
+* Fixed:

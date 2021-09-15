@@ -72,6 +72,11 @@ public enum CustomValidationRegularExceptionEnum {
      * عبارت منظم اعتبارسنجی رشته با الفبای لاتین و اعداد
      */
     LATIN_CHARACTERS_NUMBERS("^[a-zA-Z0-9]*$"),
+    /**
+     * نشانی وب. حالتهای صحیح و غلط:
+     * regex101.com/r/HUNasA/2
+     */
+    URL("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$"),
     ;
     private final String value;
 
