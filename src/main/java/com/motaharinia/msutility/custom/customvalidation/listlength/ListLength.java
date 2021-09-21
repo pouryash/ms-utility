@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ListLength {
 
-    String message() default "CUSTOM_VALIDATION.LIST_LENGTH";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

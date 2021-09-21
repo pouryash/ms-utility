@@ -16,6 +16,8 @@ public class ListLengthValidator implements ConstraintValidator<ListLength, List
     private static final String MESSAGE_EXACT = "CUSTOM_VALIDATION.LIST_LENGTH_EXACT";
     private static final String MESSAGE_MIN = "CUSTOM_VALIDATION.LIST_LENGTH_MIN";
     private static final String MESSAGE_MAX = "CUSTOM_VALIDATION.LIST_LENGTH_MAX";
+    private static final String UTILITY_EXCEPTION_MIN_OR_MAX_IS_NEGATIVE = "UTILITY_EXCEPTION.MIN_OR_MAX_IS_NEGATIVE";
+    private static final String UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX = "UTILITY_EXCEPTION.MIN_IS_GREATER_THAN_MAX";
 
     private String message;
     private Integer min;
@@ -39,21 +41,21 @@ public class ListLengthValidator implements ConstraintValidator<ListLength, List
         if (exact > 0) {
             if (!exact.equals(list.size())) {
                 result = false;
-                message = MESSAGE_EXACT + "::" + exact;
+                setMessage(MESSAGE_EXACT + "::" + exact);
             }
         } else {
             if (min <= 0 && max <= 0) {
                 result = false;
-                message += "[min<=0 || max<=0]";
+                setMessage(UTILITY_EXCEPTION_MIN_OR_MAX_IS_NEGATIVE + "::min=" + min + "max=" + max);
             } else if (min > 0 && max > 0 && min > max) {
                 result = false;
-                message += "[min>max]";
+                setMessage(UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX + "::min=" + min + "max=" + max);
             } else if (min > 0 && list.size() < min) {
                 result = false;
-                message = MESSAGE_MIN + "::" + min;
+                setMessage(MESSAGE_MIN + "::" + min);
             } else if (max > 0 && list.size() > max) {
                 result = false;
-                message = MESSAGE_MAX + "::" + max;
+                setMessage(MESSAGE_MAX + "::" + max);
             }
         }
         cvc.disableDefaultConstraintViolation();
@@ -61,4 +63,13 @@ public class ListLengthValidator implements ConstraintValidator<ListLength, List
         return result;
     }
 
+    /**
+     * تنظیم پیام خطای پیش فرض در صورتی که توسعه دهنده پیام خاصی در انوتیشن ست نکرده باشد
+     * @param conditionalMessage خطای پیش فرض
+     */
+    private void setMessage(String conditionalMessage) {
+        if (ObjectUtils.isEmpty(message)) {
+            message = conditionalMessage;
+        }
+    }
 }

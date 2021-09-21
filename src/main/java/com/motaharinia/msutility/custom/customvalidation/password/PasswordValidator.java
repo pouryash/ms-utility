@@ -16,17 +16,19 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
     private static final String MESSAGE_MIN = "CUSTOM_VALIDATION.PASSWORD_MIN";
     private static final String MESSAGE_MAX = "CUSTOM_VALIDATION.PASSWORD_MAX";
     private static final String MESSAGE_COMPLICATED = "CUSTOM_VALIDATION.PASSWORD_COMPLICATED";
+    private static final String UTILITY_EXCEPTION_MIN_OR_MAX_IS_NEGATIVE = "UTILITY_EXCEPTION.MIN_OR_MAX_IS_NEGATIVE";
+    private static final String UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX = "UTILITY_EXCEPTION.MIN_IS_GREATER_THAN_MAX";
 
     private String message;
-    private Integer minLength;
-    private Integer maxLength;
+    private Integer min;
+    private Integer max;
     private Boolean complicated;
     private String complicatedSpecialChars;
 
     @Override
     public void initialize(Password password) {
-        minLength = password.minLength();
-        maxLength = password.maxLength();
+        min = password.min();
+        max = password.max();
         complicated = password.complicated();
         complicatedSpecialChars = password.complicatedSpecialChars();
         message = password.message();
@@ -37,31 +39,38 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
         if (ObjectUtils.isEmpty(password)) {
             return true;
         }
-        if (minLength <= 0) {
-            return false;
-        }
-        if (maxLength <= 0) {
-            return false;
-        }
+
         boolean result = true;
-        if (password.length() < minLength) {
-            message = MESSAGE_MIN + "::" + minLength;
-            cvc.disableDefaultConstraintViolation();
-            cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
-            return false;
+        if (min < 0 || max < 0) {
+            result = false;
+            setMessage(UTILITY_EXCEPTION_MIN_OR_MAX_IS_NEGATIVE + "::min=" + min + "max=" + max);
+        } else if (min > max) {
+            result = false;
+            setMessage(UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX + "::min=" + min + "max=" + max);
+        } else if (password.length() < min) {
+            setMessage(MESSAGE_MIN + "::" + min);
+            result = false;
+        } else if (password.length() > max) {
+            setMessage(MESSAGE_MAX + "::" + max);
+            result = false;
         }
-        if (password.length() > maxLength) {
-            message = MESSAGE_MAX + "::" + maxLength;
-            cvc.disableDefaultConstraintViolation();
-            cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
-            return false;
+        if (complicated.equals(true) && (!password.matches(CustomValidationRegularExceptionEnum.PASSWORD_COMPLEXITY.getValue().replace("%COMPLECATED_SPECIAL_CHARS%", complicatedSpecialChars)))) {
+            setMessage(MESSAGE_COMPLICATED);
+            result = false;
         }
-        if (complicated.equals(true) && (!password.matches(CustomValidationRegularExceptionEnum.PASSWORD_COMPLEXITY.getValue().replace("%COMPLECATED_SPECIAL_CHARS%",complicatedSpecialChars)))){
-                message = MESSAGE_COMPLICATED;
-                cvc.disableDefaultConstraintViolation();
-                cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
-                result = false;
-        }
+
+        cvc.disableDefaultConstraintViolation();
+        cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
         return result;
+    }
+
+    /**
+     * تنظیم پیام خطای پیش فرض در صورتی که توسعه دهنده پیام خاصی در انوتیشن ست نکرده باشد
+     * @param conditionalMessage خطای پیش فرض
+     */
+    private void setMessage(String conditionalMessage) {
+        if (ObjectUtils.isEmpty(message)) {
+            message = conditionalMessage;
+        }
     }
 }

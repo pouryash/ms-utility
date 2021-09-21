@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IntegerRange {
 
-    String message() default "CUSTOM_VALIDATION.INTEGER_RANGE";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

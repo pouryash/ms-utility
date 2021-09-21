@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DecimalCount {
 
-    String message() default "CUSTOM_VALIDATION.DECIMAL_COUNT";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

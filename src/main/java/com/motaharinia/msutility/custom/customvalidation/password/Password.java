@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
 
-    String message() default "CUSTOM_VALIDATION.PASSWORD";
+    String message() default "";
 
     Class<?>[] groups() default {};
 
@@ -26,14 +26,14 @@ public @interface Password {
      *
      * @return خروجی:
      */
-    int minLength();
+    int min();
 
     /**
      * حداکثر طول رمز عبور
      *
      * @return خروجی:
      */
-    int maxLength() default 16;
+    int max() default 16;
 
     /**
      * بررسی رمز عبور پیچیده انجام شود؟

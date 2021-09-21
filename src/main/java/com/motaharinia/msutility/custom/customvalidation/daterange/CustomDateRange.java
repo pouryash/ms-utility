@@ -6,16 +6,16 @@ import java.lang.annotation.*;
 
 /**
  * @author https://github.com/motaharinia<br>
- * انوتیشن اعتبارسنجی محدوده تاریخ<br>
+ * انوتیشن اعتبارسنجی محدوده تارریخ customdate<br>
  * فقط برای فیلدهای از نوع CustomDate میتوان از این اعتبارسنجی استفاده کرد
  */
 @Documented
-@Constraint(validatedBy = DateRangeValidator.class)
+@Constraint(validatedBy = CustomDateRangeValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DateRange {
+public @interface CustomDateRange {
 
-    String message() default "CUSTOM_VALIDATION.DATE_RANGE";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

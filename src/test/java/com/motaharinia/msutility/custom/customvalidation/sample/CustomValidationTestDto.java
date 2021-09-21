@@ -2,7 +2,8 @@ package com.motaharinia.msutility.custom.customvalidation.sample;
 
 import com.motaharinia.msutility.custom.customfield.CustomDate;
 import com.motaharinia.msutility.custom.customvalidation.companyphone.CompanyPhone;
-import com.motaharinia.msutility.custom.customvalidation.daterange.DateRange;
+import com.motaharinia.msutility.custom.customvalidation.daterange.CustomDateRange;
+import com.motaharinia.msutility.custom.customvalidation.daterange.EpochMiliDateRange;
 import com.motaharinia.msutility.custom.customvalidation.decimalcount.DecimalCount;
 import com.motaharinia.msutility.custom.customvalidation.doublerange.DoubleRange;
 import com.motaharinia.msutility.custom.customvalidation.email.Email;
@@ -48,15 +49,25 @@ public class CustomValidationTestDto implements Serializable {
     @CompanyPhone
     private String companyPhoneNo;
 
-    //DateRange:
-    @DateRange(from = "1399-01-01", to = "1400-12-29")
-    private CustomDate dateRange1;
-    @DateRange(from = "1399-01-01")
-    private CustomDate dateRange2;
-    @DateRange(to = "1400-12-29")
-    private CustomDate dateRange3;
-    @DateRange(from = "today", to = "1400-12-29")
-    private CustomDate dateRange4;
+    //CustomDateRange:
+    @CustomDateRange(from = "1399-01-01", to = "1400-12-29")
+    private CustomDate customDateRange1;
+    @CustomDateRange(from = "1399-01-01")
+    private CustomDate customDateRange2;
+    @CustomDateRange(to = "1400-12-29")
+    private CustomDate customDateRange3;
+    @CustomDateRange(from = "today", to = "1400-12-29")
+    private CustomDate customDateRange4;
+
+    //EpochMiliDateRange:
+    @EpochMiliDateRange(from = "1399-01-01", to = "1400-12-29")
+    private Long epochMiliDateRange1;
+    @EpochMiliDateRange(from = "1399-01-01")
+    private Long epochMiliDateRange2;
+    @EpochMiliDateRange(to = "1400-12-29")
+    private Long epochMiliDateRange3;
+    @EpochMiliDateRange(from = "today", to = "1400-12-29")
+    private Long epochMiliDateRange4;
 
     //DecimalCount:
     @DecimalCount(min = 2, max = 4)
@@ -115,13 +126,13 @@ public class CustomValidationTestDto implements Serializable {
     private String organizationRegistrationNo;
 
     //Password:
-    @Password(minLength = 6, maxLength = 16, complicated = false)
+    @Password(min = 6, max = 16, complicated = false)
     private String password1;
-    @Password(minLength = 2, maxLength = 8, complicated = false)
+    @Password(min = 2, max = 8, complicated = false)
     private String password2;
-    @Password(minLength = 6, maxLength = 16, complicated = true)
+    @Password(min = 6, max = 16, complicated = true)
     private String password3;
-    @Password(minLength = 6, maxLength = 16, complicated = true ,complicatedSpecialChars = "~")
+    @Password(min = 6, max = 16, complicated = true ,complicatedSpecialChars = "~")
     private String password4;
 
     //PersianCharacters:

@@ -14,7 +14,8 @@ public class IntegerRangeValidator implements ConstraintValidator<IntegerRange, 
 
     private static final String MESSAGE_MIN = "CUSTOM_VALIDATION.INTEGER_RANGE_MIN";
     private static final String MESSAGE_MAX = "CUSTOM_VALIDATION.INTEGER_RANGE_MAX";
-
+    private static final String UTILITY_EXCEPTION_MIN_OR_MAX_IS_NEGATIVE = "UTILITY_EXCEPTION.MIN_OR_MAX_IS_NEGATIVE";
+    private static final String UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX = "UTILITY_EXCEPTION.MIN_IS_GREATER_THAN_MAX";
 
     private String message;
     private Integer min;
@@ -34,13 +35,15 @@ public class IntegerRangeValidator implements ConstraintValidator<IntegerRange, 
         }
 
         boolean result = true;
-
-        if (number < min) {
+        if (min > max) {
             result = false;
-            message = MESSAGE_MIN + "::" + min;
+            setMessage(UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX + "::min=" + min + "max=" + max);
+        } else if (number < min) {
+            result = false;
+            setMessage(MESSAGE_MIN + "::" + min);
         } else if (number > max) {
             result = false;
-            message = MESSAGE_MAX + "::" + max;
+            setMessage(MESSAGE_MAX + "::" + max);
         }
 
         cvc.disableDefaultConstraintViolation();
@@ -48,5 +51,13 @@ public class IntegerRangeValidator implements ConstraintValidator<IntegerRange, 
         return result;
     }
 
-
+    /**
+     * تنظیم پیام خطای پیش فرض در صورتی که توسعه دهنده پیام خاصی در انوتیشن ست نکرده باشد
+     * @param conditionalMessage خطای پیش فرض
+     */
+    private void setMessage(String conditionalMessage) {
+        if (ObjectUtils.isEmpty(message)) {
+            message = conditionalMessage;
+        }
+    }
 }

@@ -11,6 +11,7 @@ import com.motaharinia.msutility.custom.customexception.ratelimit.RateLimitExcep
 import com.motaharinia.msutility.tools.string.StringTools;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,6 +22,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eng.motahari@gmail.com<br>
@@ -93,7 +95,10 @@ public interface ExceptionTools {
      */
     static ExceptionDto getDtoFromBusinessException(BusinessException businessException, String appName, int appPort, MessageSource messageSource) {
         List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
-        String translatedMessage = StringTools.translateCustomMessage(messageSource, businessException.getMessage());
+        String translatedMessage = businessException.getMessage();
+        if (!ObjectUtils.isEmpty(translatedMessage) && translatedMessage.toUpperCase(Locale.getDefault()).startsWith("BUSINESS_EXCEPTION")) {
+            translatedMessage = StringTools.translateCustomMessage(messageSource, businessException.getMessage());
+        }
         messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(businessException), getStackTraceLineString(businessException), ""));
         ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
         exceptionDto.setType(ExceptionTypeEnum.BUSINESS_EXCEPTION);
@@ -126,7 +131,10 @@ public interface ExceptionTools {
         String translatedMessage;
         for (FieldError fieldError : fieldErrors) {
             String dtoName = fieldError.getObjectName();
-            translatedMessage = StringTools.translateCustomMessage(messageSource, fieldError.getDefaultMessage());
+            translatedMessage = fieldError.getDefaultMessage();
+            if (!ObjectUtils.isEmpty(translatedMessage) && translatedMessage.toUpperCase(Locale.getDefault()).startsWith("CUSTOM_VALIDATION")) {
+                translatedMessage = StringTools.translateCustomMessage(messageSource, fieldError.getDefaultMessage());
+            }
             messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(methodArgumentNotValidException), getStackTraceLineString(methodArgumentNotValidException), dtoName + "." + fieldError.getField()));
         }
         if (!messageDtoList.isEmpty()) {
@@ -156,11 +164,11 @@ public interface ExceptionTools {
         exceptionDto.setDataId(externalCallException.getRequestUrl());
         if (!messageDtoList.isEmpty()) {
             if (externalCallException.getResponseCustomError().equalsIgnoreCase("I/O error. Connection refused: connect")) {
-                exceptionDto.setMessage( StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.IO::" +externalCallException.getRequestCode() ) );
-            }else if (externalCallException.getResponseCode().isEmpty()) {
-                exceptionDto.setMessage( StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.UNKNOWN::" +externalCallException.getRequestCode() ) );
-            }else {
-                exceptionDto.setMessage( StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.CODE::" +externalCallException.getResponseCode() + "," + externalCallException.getRequestCode()) );
+                exceptionDto.setMessage(StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.IO::" + externalCallException.getRequestCode()));
+            } else if (externalCallException.getResponseCode().isEmpty()) {
+                exceptionDto.setMessage(StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.UNKNOWN::" + externalCallException.getRequestCode()));
+            } else {
+                exceptionDto.setMessage(StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.CODE::" + externalCallException.getResponseCode() + "," + externalCallException.getRequestCode()));
             }
         }
         exceptionDto.setMessageDtoList(messageDtoList);
@@ -172,14 +180,14 @@ public interface ExceptionTools {
      * متد سازنده مدل خطا از خطای محدودیت بازدید
      *
      * @param rateLimitException خطای محدودیت بازدید
-     * @param appName               نام برنامه
-     * @param appPort               پورت برنامه
-     * @param messageSource         شیی ترجمه
+     * @param appName            نام برنامه
+     * @param appPort            پورت برنامه
+     * @param messageSource      شیی ترجمه
      * @return خروجی: مدل خطا
      */
     static ExceptionDto getDtoFromRateLimitException(RateLimitException rateLimitException, String appName, int appPort, MessageSource messageSource) {
         List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
-        messageDtoList.add(new ExceptionMessageDto(StringTools.translateCustomMessage(messageSource, rateLimitException.getMessage() ), getStackTraceString(rateLimitException), getStackTraceLineString(rateLimitException), ""));
+        messageDtoList.add(new ExceptionMessageDto(StringTools.translateCustomMessage(messageSource, rateLimitException.getMessage()), getStackTraceString(rateLimitException), getStackTraceLineString(rateLimitException), ""));
         ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
         exceptionDto.setType(ExceptionTypeEnum.RATE_LIMIT_EXCEPTION);
         exceptionDto.setExceptionClassName("");

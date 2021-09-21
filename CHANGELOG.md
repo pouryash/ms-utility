@@ -189,3 +189,10 @@
   * added @Url validation annotation
 * Changed:
 * Fixed:
+
+#### [0.0.30] - 2021-09-21
+* Added:
+* Changed:
+  * improve ExceptionTools in translation of business and validation exceptions only start with their keywords
+  * improve custom validation override message and min-max control
+* Fixed:

@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DoubleRange {
 
-    String message() default "CUSTOM_VALIDATION.DOUBLE_RANGE";
+    String message() default "";
 
     Class<?>[] groups() default {};
 
