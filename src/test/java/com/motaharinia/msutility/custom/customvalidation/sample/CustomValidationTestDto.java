@@ -108,7 +108,9 @@ public class CustomValidationTestDto implements Serializable {
 
     //LongRange:
     @LongRange(min = 12, max = 13)
-    private Long longRange;
+    private Long longRange1;
+    @LongRange(min = 1, max = 10000)
+    private Long longRange2;
 
     //Mobile:
     @Mobile
