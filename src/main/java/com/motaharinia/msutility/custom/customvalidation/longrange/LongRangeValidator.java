@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.custom.customvalidation.integerrange;
+package com.motaharinia.msutility.custom.customvalidation.longrange;
 
 import org.springframework.util.ObjectUtils;
 
@@ -10,25 +10,25 @@ import javax.validation.ConstraintValidatorContext;
  * کلاس بررسی کننده انوتیشن اعتبارسنجی محدوده اعداد صحیح<br>
  * فقط برای فیلدهای از نوع Integer میتوان از این اعتبارسنجی استفاده کرد
  */
-public class IntegerRangeValidator implements ConstraintValidator<IntegerRange, Integer> {
+public class LongRangeValidator implements ConstraintValidator<LongRange, Long> {
 
-    private static final String MESSAGE_MIN = "CUSTOM_VALIDATION.INTEGER_RANGE_MIN";
-    private static final String MESSAGE_MAX = "CUSTOM_VALIDATION.INTEGER_RANGE_MAX";
+    private static final String MESSAGE_MIN = "CUSTOM_VALIDATION.LONG_RANGE_MIN";
+    private static final String MESSAGE_MAX = "CUSTOM_VALIDATION.LONG_RANGE_MAX";
     private static final String UTILITY_EXCEPTION_MIN_IS_GREATER_THAN_MAX = "UTILITY_EXCEPTION.MIN_IS_GREATER_THAN_MAX";
 
     private String message;
-    private Integer min;
-    private Integer max;
+    private Long min;
+    private Long max;
 
     @Override
-    public void initialize(IntegerRange integerRange) {
-        min = integerRange.min();
-        max = integerRange.max();
-        message = integerRange.message();
+    public void initialize(LongRange longRange) {
+        min = longRange.min();
+        max = longRange.max();
+        message = longRange.message();
     }
 
     @Override
-    public boolean isValid(Integer number, ConstraintValidatorContext cvc) {
+    public boolean isValid(Long number, ConstraintValidatorContext cvc) {
         if (ObjectUtils.isEmpty(number)) {
             return true;
         }

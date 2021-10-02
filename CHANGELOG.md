@@ -196,3 +196,9 @@
   * improve ExceptionTools in translation of business and validation exceptions only start with their keywords
   * improve custom validation override message and min-max control
 * Fixed:
+
+#### [0.0.31] - 2021-10-02
+* Added:
+  * added @LongRange validation annotation
+* Changed:
+* Fixed:

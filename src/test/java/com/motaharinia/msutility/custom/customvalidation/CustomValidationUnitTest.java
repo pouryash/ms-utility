@@ -87,6 +87,8 @@ class CustomValidationUnitTest {
             dto.setListNoDuplicate(Arrays.asList("item1", "item2", "item3"));
             //ListNoDuplicateByFields:
             dto.setListNoDuplicateByFields(Arrays.asList(new ListNoDuplicateByFieldsDto("f11", "f12"), new ListNoDuplicateByFieldsDto("f21", "f22"), new ListNoDuplicateByFieldsDto("f31", "f32")));
+            //LongRange:
+            dto.setLongRange(12L);
             //Mobile:
             dto.setMobile("09124376251");
             //NationalCode:

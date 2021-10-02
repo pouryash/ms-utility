@@ -12,6 +12,7 @@ import com.motaharinia.msutility.custom.customvalidation.latincharacters.LatinCh
 import com.motaharinia.msutility.custom.customvalidation.listlength.ListLength;
 import com.motaharinia.msutility.custom.customvalidation.listnoduplicate.ListNoDuplicate;
 import com.motaharinia.msutility.custom.customvalidation.listnoduplicatebyfields.ListNoDuplicateByFields;
+import com.motaharinia.msutility.custom.customvalidation.longrange.LongRange;
 import com.motaharinia.msutility.custom.customvalidation.mobile.Mobile;
 import com.motaharinia.msutility.custom.customvalidation.nationalcode.NationalCode;
 import com.motaharinia.msutility.custom.customvalidation.organizationeconomiccode.OrganizationEconomicCode;
@@ -104,6 +105,10 @@ public class CustomValidationTestDto implements Serializable {
     //ListNoDuplicateByFields:
     @ListNoDuplicateByFields(fields = {"field1"})
     private List<ListNoDuplicateByFieldsDto> listNoDuplicateByFields;
+
+    //LongRange:
+    @LongRange(min = 12, max = 13)
+    private Long longRange;
 
     //Mobile:
     @Mobile

@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.custom.customvalidation.integerrange;
+package com.motaharinia.msutility.custom.customvalidation.longrange;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -6,14 +6,14 @@ import java.lang.annotation.*;
 
 /**
  * @author https://github.com/motaharinia<br>
- * انوتیشن اعتبارسنجی محدوده اعداد صحیح<br>
- * فقط برای فیلدهای از نوع Integer میتوان از این اعتبارسنجی استفاده کرد
+ * انوتیشن اعتبارسنجی محدوده اعداد long<br>
+ * فقط برای فیلدهای از نوع Long میتوان از این اعتبارسنجی استفاده کرد
  */
 @Documented
-@Constraint(validatedBy = IntegerRangeValidator.class)
+@Constraint(validatedBy = LongRangeValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IntegerRange {
+public @interface LongRange {
 
     String message() default "";
 
@@ -26,13 +26,13 @@ public @interface IntegerRange {
      *
      * @return خروجی:
      */
-    int min() default Integer.MIN_VALUE;
+    long min() default Long.MIN_VALUE;
 
     /**
      * انتهای محدوده عددی
      *
      * @return خروجی:
      */
-    int max() default Integer.MAX_VALUE;
+    long max() default Long.MAX_VALUE;
 
 }
