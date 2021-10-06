@@ -18,11 +18,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author eng.motahari@gmail.com<br>
@@ -59,6 +63,9 @@ public interface ExceptionTools {
                 httpStatus = HttpStatus.BAD_REQUEST;
             } else if (exception instanceof MethodArgumentNotValidException) {
                 exceptionDto = getDtoFromMethodArgumentNotValidException((MethodArgumentNotValidException) exception, appName, appPort, messageSource);
+                httpStatus = HttpStatus.BAD_REQUEST;
+            } else if (exception instanceof ConstraintViolationException) {
+                exceptionDto = getDtoFromConstraintViolationException((ConstraintViolationException) exception, appName, appPort, messageSource);
                 httpStatus = HttpStatus.BAD_REQUEST;
             } else if (exception instanceof ExternalCallException) {
                 exceptionDto = getDtoFromExternalCallException((ExternalCallException) exception, appName, appPort, messageSource);
@@ -114,9 +121,9 @@ public interface ExceptionTools {
 
 
     /**
-     * متد سازنده مدل خطا از خطای اعتبارسنجی
+     * متد سازنده مدل خطا از خطای اعتبارسنجی فیلدهای DTO
      *
-     * @param methodArgumentNotValidException خطای اعتبارسنجی
+     * @param methodArgumentNotValidException خطای اعتبارسنجی فیلدهای DTO
      * @param appName                         نام برنامه
      * @param appPort                         پورت برنامه
      * @param messageSource                   شیی ترجمه
@@ -136,6 +143,41 @@ public interface ExceptionTools {
                 translatedMessage = StringTools.translateCustomMessage(messageSource, fieldError.getDefaultMessage());
             }
             messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(methodArgumentNotValidException), getStackTraceLineString(methodArgumentNotValidException), dtoName + "." + fieldError.getField()));
+        }
+        if (!messageDtoList.isEmpty()) {
+            exceptionDto.setMessage(messageDtoList.get(0).getMessage());
+        }
+        exceptionDto.setMessageDtoList(messageDtoList);
+        exceptionDto.setDescription("");
+        return exceptionDto;
+    }
+
+    /**
+     * متد سازنده مدل خطا از خطای اعتبارسنجی پارامترهای متد
+     *
+     * @param constraintViolationException خطای اعتبارسنجی پارامتر متد
+     * @param appName                      نام برنامه
+     * @param appPort                      پورت برنامه
+     * @param messageSource                شیی ترجمه
+     * @return خروجی: مدل خطا
+     */
+    static ExceptionDto getDtoFromConstraintViolationException(ConstraintViolationException constraintViolationException, String appName, int appPort, MessageSource messageSource) {
+        Set<ConstraintViolation<?>> constraintViolationSet = constraintViolationException.getConstraintViolations();
+        List<ExceptionMessageDto> messageDtoList = new ArrayList<>();
+        ExceptionDto exceptionDto = new ExceptionDto(appName, String.valueOf(appPort));
+        exceptionDto.setType(ExceptionTypeEnum.VALIDATION_EXCEPTION);
+        String translatedMessage;
+        String fieldName;
+        for (ConstraintViolation<?> violation : constraintViolationSet) {
+            fieldName = "";
+            for (Path.Node node : violation.getPropertyPath()) {
+                fieldName = node.getName();
+            }
+            translatedMessage = violation.getMessage();
+            if (!ObjectUtils.isEmpty(translatedMessage) && translatedMessage.toUpperCase(Locale.getDefault()).startsWith("CUSTOM_VALIDATION")) {
+                translatedMessage = StringTools.translateCustomMessage(messageSource, violation.getMessage());
+            }
+            messageDtoList.add(new ExceptionMessageDto(translatedMessage, getStackTraceString(constraintViolationException), getStackTraceLineString(constraintViolationException), fieldName));
         }
         if (!messageDtoList.isEmpty()) {
             exceptionDto.setMessage(messageDtoList.get(0).getMessage());

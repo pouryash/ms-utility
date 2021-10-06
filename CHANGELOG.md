@@ -202,3 +202,9 @@
   * added @LongRange validation annotation
 * Changed:
 * Fixed:
+
+#### [0.0.32] - 2021-10-06
+* Added:
+  * enable custom validations to be used in controller method parameters
+* Changed:
+* Fixed:

@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  */
 @Documented
 @Constraint(validatedBy = OrganizationRegistrationNoValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OrganizationRegistrationNo {
     String message() default "CUSTOM_VALIDATION.ORGANIZATION_REGISTRATION_NO";

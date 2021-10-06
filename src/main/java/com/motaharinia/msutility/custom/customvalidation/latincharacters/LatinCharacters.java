@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  */
 @Documented
 @Constraint(validatedBy = LatinCharactersValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LatinCharacters {
 
