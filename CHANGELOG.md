@@ -208,3 +208,9 @@
   * enable custom validations to be used in controller method parameters
 * Changed:
 * Fixed:
+
+#### [0.0.33] - 2021-10-16
+* Added:
+  * added RestTools.call
+* Changed:
+* Fixed:
