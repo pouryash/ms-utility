@@ -23,7 +23,7 @@ public @interface ListLength {
 
     int min() default 0;
 
-    int max() default 0;
+    int max() default Integer.MAX_VALUE;
 
     int exact() default 0;
 

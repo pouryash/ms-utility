@@ -33,6 +33,6 @@ public @interface DoubleRange {
      *
      * @return خروجی:
      */
-    double max() default 1.7976931348623157E308;
+    double max() default Double.MAX_VALUE;
 
 }

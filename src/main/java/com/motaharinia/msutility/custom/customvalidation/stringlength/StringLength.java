@@ -33,7 +33,7 @@ public @interface StringLength {
      *
      * @return خروجی:
      */
-    int max() default 0;
+    int max() default Integer.MAX_VALUE;
 
     /**
      * طول دقیق رشته. پیش فرض غیر فعال است
