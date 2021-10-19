@@ -220,3 +220,9 @@
 * Changed:
 * Fixed:
   * fixed default ListLength.max,StringLength.max,DoubleRange.max to max number
+  
+#### [0.0.35] - 2021-10-19
+* Added:
+* Changed:
+  * changed RestTools.call signature to get RestTemplate as a parameter
+* Fixed:

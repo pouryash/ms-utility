@@ -20,13 +20,13 @@ import org.springframework.web.client.RestTemplate;
  * این اینترفیس متدهای ابزاری فراخوانی rest و کنترل خطای آن را دارا میباشد
  */
 public interface RestTools {
-    RestTemplate restTemplate = new RestTemplate();
-    CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
+    CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
     /**
      * متد فراخوانی Rest به سرویسهای بیرونی
      *
+     * @param restTemplate   شیی ارسال درخواست rest
      * @param httpMethod   روش ارسال درخواست POST,GET,PUT,DELETE
      * @param requestUrl   نشانی درخواست
      * @param requestCode  کد درخواست که در ترجمه و لاگ خطا از آن استفاده میشود
@@ -39,7 +39,7 @@ public interface RestTools {
      * @param <C>          نوع کلاس ارسال کننده درخواست به سرویس بیرونی
      * @return خروجی: داده پاسخ درخواستی
      */
-    static <T, R, C> R call(@NotNull HttpMethod httpMethod, @NotNull String requestUrl, @NotNull String requestCode, @NotNull HttpHeaders httpHeaders, T body, @NotNull ParameterizedTypeReference<R> responseType, C classType) {
+    static <T, R, C> R call(@NotNull RestTemplate restTemplate, @NotNull HttpMethod httpMethod, @NotNull String requestUrl, @NotNull String requestCode, @NotNull HttpHeaders httpHeaders, T body, @NotNull ParameterizedTypeReference<R> responseType, C classType) {
         //تولید مدل و مسیر درخواست
         ResponseEntity<R> responseEntity;
         try {
