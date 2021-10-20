@@ -226,3 +226,9 @@
 * Changed:
   * changed RestTools.call signature to get RestTemplate as a parameter
 * Fixed:
+
+#### [0.0.36] - 2021-10-20
+* Added:
+* Changed:
+  * improve properties
+* Fixed:
