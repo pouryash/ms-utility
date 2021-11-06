@@ -104,8 +104,41 @@ class CalendarToolsUnitTest {
         }
     }
 
-    //--------------------------------------------------متدهای تبدیل تاریخ جلالی به میلادی--------------------------------------------------
     @Order(7)
+    @Test
+    void getCurrentJalaliLeapYearStatusTest() {
+        try {
+            assertThat(CalendarTools.getCurrentJalaliLeapYearStatus()).isNotNull();
+            System.out.println("getCurrentJalaliLeapYearStatus:"+CalendarTools.getCurrentJalaliLeapYearStatus());
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(8)
+    @Test
+    void getJalaliFirstDayOfMonthTest() {
+        try {
+            assertThat(CalendarTools.getJalaliFirstDayOfMonth("/")).isNotNull();
+            System.out.println("getJalaliFirstDayOfMonthTest:"+CalendarTools.getJalaliFirstDayOfMonth("/"));
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(9)
+    @Test
+    void getJalaliLastDayOfMonthTest() {
+        try {
+            assertThat(CalendarTools.getJalaliLastDayOfMonth("/")).isNotNull();
+            System.out.println("getJalaliLastDayOfMonth:"+CalendarTools.getJalaliLastDayOfMonth("/"));
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    //--------------------------------------------------متدهای تبدیل تاریخ جلالی به میلادی--------------------------------------------------
+    @Order(10)
     @Test
     void jalaliToGregorianDateTest() {
         try {
@@ -118,7 +151,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(8)
+    @Order(11)
     @Test
     void jalaliToGregorianDateWithTimeTest() {
         try {
@@ -132,7 +165,7 @@ class CalendarToolsUnitTest {
     }
 
 
-    @Order(9)
+    @Order(12)
     @Test
     void jalaliToGregorianStringTest() {
         try {
@@ -142,7 +175,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(10)
+    @Order(13)
     @Test
     void jalaliToGregorianStringWithTimeTest() {
         try {
@@ -152,7 +185,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(11)
+    @Order(14)
     @Test
     void jalaliToGregorianInstantTest() {
         try {
@@ -163,7 +196,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(12)
+    @Order(15)
     @Test
     void jalaliToGregorianInstantWithTimeTest() {
         try {
@@ -174,7 +207,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(13)
+    @Order(16)
     @Test
     void jalaliToGregorianLocalDateTest() {
         try {
@@ -186,7 +219,7 @@ class CalendarToolsUnitTest {
     }
 
 
-    @Order(14)
+    @Order(17)
     @Test
     void jalaliToGregorianLocalDateWithTimeTest() {
         try {
@@ -197,7 +230,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(15)
+    @Order(18)
     @Test
     void jalaliToGregorianLocalDateTimeTest() {
         try {
@@ -210,7 +243,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای تبدیل تاریخ میلادی به جلالی--------------------------------------------------
 
-    @Order(16)
+    @Order(19)
     @Test
     void gregorianToJalaliStringTest() {
         try {
@@ -220,7 +253,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(17)
+    @Order(20)
     @Test
     void gregorianToJalaliStringWithTimeTest() {
         try {
@@ -230,7 +263,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(18)
+    @Order(21)
     @Test
     void gregorianToJalaliDateTest() {
         try {
@@ -243,7 +276,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(19)
+    @Order(22)
     @Test
     void gregorianToJalaliDateWithTimeTest() {
         try {
@@ -256,7 +289,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(20)
+    @Order(23)
     @Test
     void gregorianToJalaliInstantTest() {
         try {
@@ -267,7 +300,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(21)
+    @Order(24)
     @Test
     void gregorianToJalaliInstantWithTimeTest() {
         try {
@@ -278,7 +311,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(22)
+    @Order(25)
     @Test
     void gregorianToJalaliLocalDateTest() {
         try {
@@ -289,7 +322,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(23)
+    @Order(26)
     @Test
     void gregorianToJalaliLocalDateWithTimeTest() {
         try {
@@ -300,7 +333,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(24)
+    @Order(27)
     @Test
     void gregorianToJalaliLocalDateTimeTest() {
         try {
@@ -311,7 +344,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(25)
+    @Order(28)
     @Test
     void gregorianToJalaliLocalDateTimeWithTimeTest() {
         try {
@@ -322,7 +355,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(26)
+    @Order(29)
     @Test
     void gregorianToJalaliCustomDate() {
         try {
@@ -336,7 +369,7 @@ class CalendarToolsUnitTest {
     }
 
 
-    @Order(27)
+    @Order(30)
     @Test
     void gregorianToJalaliCustomDateTime() {
         try {
@@ -351,7 +384,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای اصلاح کننده متناسب با زبان لوکال و تفاوت زمانی بین دو تاریخ--------------------------------------------------
 
-    @Order(28)
+    @Order(31)
     @Test
     void fixToLocaleDateTest() {
         try {
@@ -361,13 +394,13 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(29)
+    @Order(32)
     @Test
     void fixToLocaleDateTimeTest() throws ParseException, UtilityException {
         assertThat(CalendarTools.fixToLocaleDateTime("2021/03/20 00:00:00", "-", new Locale("fa", "IR"))).isEqualTo("1399-12-30 00:00:00");
     }
 
-    @Order(30)
+    @Order(33)
     @Test
     void getTwoDateDifferenceSecondTest() {
         try {
@@ -382,7 +415,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(31)
+    @Order(34)
     @Test
     void getTwoDateDifferenceMinuteTest() {
         try {
@@ -397,7 +430,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(32)
+    @Order(35)
     @Test
     void getTwoDateDifferenceHourTest() {
         try {
@@ -412,7 +445,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(33)
+    @Order(36)
     @Test
     void getTwoDateDifferenceDayTest() {
         try {
@@ -429,7 +462,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای تبدیلی CustomDate و CustomDateTime به Date--------------------------------------------------
 
-    @Order(34)
+    @Order(37)
     @Test
     void getDateFromCustomDateTest() {
         try {
@@ -443,7 +476,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(35)
+    @Order(38)
     @Test
     void getDateFromCustomDateTimeTest() {
         try {
@@ -459,7 +492,7 @@ class CalendarToolsUnitTest {
 
     //--------------------------------------------------متدهای بررسی کننده تاریخهای جلالی و میلادی--------------------------------------------------
 
-    @Order(36)
+    @Order(39)
     @Test
     void checkJalaliDateValidityTest() {
         try {
@@ -469,7 +502,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(37)
+    @Order(40)
     @Test
     void checkGregorianDateValidityTest() {
         try {
@@ -479,7 +512,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(38)
+    @Order(41)
     @Test
     void isTodayTest() {
         try {
@@ -489,7 +522,7 @@ class CalendarToolsUnitTest {
         }
     }
 
-    @Order(39)
+    @Order(42)
     @Test
     void fixJalaliStringTest() {
         try {

@@ -158,6 +158,52 @@ public interface CalendarTools {
         return fixDateSlash(jalaliCalendar.getJalaliDate(new Date()), dateDelimiter) + " " + simpleDateFormat.format(new Date());
     }
 
+    /**
+     * این متد بررسی میکند امسال سال کبیسه هست یا خیر
+     *
+     * @return خروجی: وضعیت سال کبیسه امسال
+     */
+    @NotNull
+    static Boolean getCurrentJalaliLeapYearStatus() {
+        String[] jalaliDateArray = getCurrentJalaliDateString("-").split("-");
+        return JalaliCalendar.isLeepYear(Integer.parseInt(jalaliDateArray[0]));
+    }
+
+    /**
+     * این متد تاریخ جلالی شروع ماه جاری را با توجه به رشته جدا کننده تاریخ ورودی به صورت رشته تاریخ جلالی خروجی میدهد
+     *
+     * @param dateDelimiter رشته جدا کننده تاریخ
+     * @return خروجی: تاریخ جلالی شروع ماه جاری
+     */
+    @NotNull
+    static String getJalaliFirstDayOfMonth(@NotNull String dateDelimiter) {
+        String[] jalaliDateArray = getCurrentJalaliDateString(dateDelimiter).split(dateDelimiter);
+        return jalaliDateArray[0] + "/" + jalaliDateArray[1] + "/01";
+    }
+
+    /**
+     * این متد تاریخ جلالی پایان ماه جاری را با توجه به رشته جدا کننده تاریخ ورودی به صورت رشته تاریخ جلالی خروجی میدهد
+     *
+     * @param dateDelimiter رشته جدا کننده تاریخ
+     * @return خروجی: تاریخ جلالی پایان ماه جاری
+     */
+    @NotNull
+    static String getJalaliLastDayOfMonth(@NotNull String dateDelimiter) {
+        String[] jalaliDateArray = getCurrentJalaliDateString(dateDelimiter).split(dateDelimiter);
+        int jalaliMonth = Integer.parseInt(jalaliDateArray[1]);
+        if (jalaliMonth <= 6) {
+            return jalaliDateArray[0] + "/" + jalaliDateArray[1] + "/31";
+        }
+        if (jalaliMonth < 12) {
+            return jalaliDateArray[0] + "/" + jalaliDateArray[1] + "/30";
+        }
+        if (JalaliCalendar.isLeepYear(Integer.parseInt(jalaliDateArray[0]))) {
+            return jalaliDateArray[0] + "/" + jalaliDateArray[1] + "/30";
+        } else {
+            return jalaliDateArray[0] + "/" + jalaliDateArray[1] + "/29";
+        }
+    }
+
 
     //--------------------------------------------------متدهای تبدیل تاریخ جلالی به میلادی--------------------------------------------------
 

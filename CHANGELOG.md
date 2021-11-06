@@ -232,3 +232,12 @@
 * Changed:
   * improve properties
 * Fixed:
+
+#### [0.0.37] - 2021-11-06
+* Added:
+  * added ExcelTools.generateBatch
+  * added CalendarTools.getCurrentJalaliLeapYearStatus
+  * added CalendarTools.getJalaliFirstDayOfMonth
+  * added CalendarTools.getJalaliLastDayOfMonth
+* Changed:
+* Fixed:
