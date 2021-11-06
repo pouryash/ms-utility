@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ZipToolsUnitTest {
 
-    String parentDirPath = "/MsUtilityTests";
+    String parentDirPath = System.getProperty("user.dir") + "/MsUtilityTests";
 
     String dir1Path = parentDirPath + "/dir1";
     String dir1File1Path = dir1Path + "/dir1file1.txt";

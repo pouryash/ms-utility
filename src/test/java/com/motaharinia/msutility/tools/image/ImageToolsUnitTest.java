@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ImageToolsUnitTest {
 
-    String parentDirPath = "/MsUtilityTests";
+    String parentDirPath = System.getProperty("user.dir") + "/MsUtilityTests";
     String imageFileFullName = "imageTools.jpg";
 
     FsoConfigDto fsoConfigDto = new FsoConfigDto(new Integer[]{60, 120}, "thumb", 100);
@@ -66,8 +66,8 @@ class ImageToolsUnitTest {
     void createThumbTest() {
         try {
             //تست ایجاد تصویر بندانگشتی از فایل تصویر موجود
-            ImageTools.createThumb(parentDirPath, imageFileFullName, fsoConfigDto.getThumbSizeArray()[0],  fsoConfigDto.getThumbSizeArray()[0]);
-            File file = new File(parentDirPath + "/" + imageFileFullName + "-" +  fsoConfigDto.getThumbSizeArray()[0] + ".thumb");
+            ImageTools.createThumb(parentDirPath, imageFileFullName, fsoConfigDto.getThumbSizeArray()[0], fsoConfigDto.getThumbSizeArray()[0]);
+            File file = new File(parentDirPath + "/" + imageFileFullName + "-" + fsoConfigDto.getThumbSizeArray()[0] + ".thumb");
             assertThat(file).exists();
         } catch (Exception ex) {
             fail(ex.toString());
@@ -79,7 +79,7 @@ class ImageToolsUnitTest {
     void imageResizeTest() {
         try {
             File sourceFile = new File(parentDirPath + "/" + imageFileFullName);
-           byte[] resizedByteArray=  ImageTools.imageResize(FileUtils.readFileToByteArray(sourceFile),"jpg",100,100);
+            byte[] resizedByteArray = ImageTools.imageResize(FileUtils.readFileToByteArray(sourceFile), "jpg", 100, 100);
             FileUtils.writeByteArrayToFile(new File(parentDirPath + "/imgaeToolsResized.jpg"), resizedByteArray);
             File file = new File(parentDirPath + "/imgaeToolsResized.jpg");
             assertThat(file).exists();

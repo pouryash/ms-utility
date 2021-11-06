@@ -3,6 +3,7 @@ package com.motaharinia.msutility.tools.fso;
 import com.motaharinia.msutility.tools.fso.check.FsoPathCheckTypeEnum;
 import com.motaharinia.msutility.tools.fso.content.FsoPathContentDto;
 import com.motaharinia.msutility.tools.image.ImageTools;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 
@@ -23,10 +24,11 @@ import static org.assertj.core.api.Assertions.fail;
  * @author https://github.com/motaharinia<br>
  * کلاس تست FsoTools
  */
+@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FsoToolsUnitTest {
 
-    String parentDirPath = "/MsUtilityTests";
+    String parentDirPath = System.getProperty("user.dir") + "/MsUtilityTests";
     String parentDirFile1Path = parentDirPath + "/parentfile1.txt";
     String parentDirFile2Path = parentDirPath + "/parentfile2.txt";
 
