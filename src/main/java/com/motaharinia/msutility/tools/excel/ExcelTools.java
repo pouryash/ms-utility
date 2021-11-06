@@ -16,7 +16,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -145,7 +144,7 @@ public interface ExcelTools {
      */
     static byte[] generateBatch(@NotNull CustomExcelDto excelDto, @NotNull Integer rowCount, @NotNull String password, @NotNull String zipName) throws IOException {
         //نام پوشه برای ذخیره موقت فایل ها
-        String tempFolder = "temp/";
+        String tempFolder = System.getProperty("java.io.tmpdir");
         //تعداد کل فایل هایی که باید تولید شود
         int batchSize = excelDto.getRowList().size() / rowCount;
         //مسیر هر فایل تولید شده
