@@ -1,9 +1,6 @@
 package com.motaharinia.msutility.tools.excel;
 
-import com.motaharinia.msutility.tools.excel.dto.CustomExcelColumnDto;
-import com.motaharinia.msutility.tools.excel.dto.CustomExcelColumnHeaderDto;
-import com.motaharinia.msutility.tools.excel.dto.CustomExcelDto;
-import com.motaharinia.msutility.tools.excel.dto.CustomExcelStyleDto;
+import com.motaharinia.msutility.tools.excel.dto.*;
 import com.motaharinia.msutility.tools.zip.ZipTools;
 import net.lingala.zip4j.model.enums.AesKeyStrength;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -23,7 +20,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -80,46 +76,21 @@ public interface ExcelTools {
 
 
         //متغیرهای مربوط به سطرهای داده
-        BigInteger bigIntegerTest = null;
-        BigDecimal bigDecimalTest = null;
         CustomExcelColumnDto customExcelColumnDto;
-        HashMap<Object, Object> formatterMap = new HashMap<>();
+        CustomFormatter formatter;
         style = makeStyle(workbook, new CustomExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma", false, Color.BLACK, Color.WHITE, BorderStyle.THIN, Color.BLACK, "General"));
         for (Object[] dataColumnArray : excelDto.getRowList()) {
             row = worksheet.createRow(rowIndex++);
             for (int columnIndex = 0; columnIndex < dataColumnArray.length; columnIndex++) {
+                formatter=null;
                 if (!ObjectUtils.isEmpty(excelDto.getColumnList()) && excelDto.getColumnList().size() > columnIndex) {
                     customExcelColumnDto = excelDto.getColumnList().get(columnIndex);
                     style = makeStyle(workbook, customExcelColumnDto.getStyle());
-                    formatterMap = customExcelColumnDto.getFormatterMap();
+                    formatter = customExcelColumnDto.getFormatter();
                 }
                 cell = row.createCell(columnIndex);
                 cell.setCellStyle(style);
-                if (!ObjectUtils.isEmpty(formatterMap) && formatterMap.get(dataColumnArray[columnIndex]) != null) {
-                    cell.setCellValue((String) formatterMap.get(dataColumnArray[columnIndex]));
-                } else {
-                    if (dataColumnArray[columnIndex] instanceof String) {
-                        cell.setCellValue((String) dataColumnArray[columnIndex]);
-                    } else if (dataColumnArray[columnIndex] instanceof Boolean) {
-                        cell.setCellValue((Boolean) dataColumnArray[columnIndex]);
-                    } else if (dataColumnArray[columnIndex] instanceof Integer) {
-                        cell.setCellValue((Integer) dataColumnArray[columnIndex]);
-                    } else if (dataColumnArray[columnIndex] instanceof Long) {
-                        cell.setCellValue((Long) dataColumnArray[columnIndex]);
-                    } else if (dataColumnArray[columnIndex] instanceof Float) {
-                        cell.setCellValue((Float) dataColumnArray[columnIndex]);
-                    } else if (dataColumnArray[columnIndex] instanceof Double) {
-                        cell.setCellValue((Double) dataColumnArray[columnIndex]);
-                    } else if (dataColumnArray[columnIndex] instanceof BigInteger) {
-                        bigIntegerTest = (BigInteger) dataColumnArray[columnIndex];
-                        cell.setCellValue(bigIntegerTest.doubleValue());
-                    } else if (dataColumnArray[columnIndex] instanceof BigDecimal) {
-                        bigDecimalTest = (BigDecimal) dataColumnArray[columnIndex];
-                        cell.setCellValue(bigDecimalTest.doubleValue());
-                    } else {
-                        cell.setCellValue(dataColumnArray[columnIndex] + "");
-                    }
-                }
+                setCellValue(cell,dataColumnArray[columnIndex],formatter);
             }
         }
 
@@ -194,10 +165,8 @@ public interface ExcelTools {
 
 
             //متغیرهای مربوط به سطرهای داده
-            BigInteger bigIntegerTest = null;
-            BigDecimal bigDecimalTest = null;
             CustomExcelColumnDto customExcelColumnDto;
-            HashMap<Object, Object> formatterMap = new HashMap<>();
+            CustomFormatter formatter;
             style = makeStyle(workbook, new CustomExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma", false, Color.BLACK, Color.WHITE, BorderStyle.THIN, Color.BLACK, "General"));
             //ایجاد فایل اکسل از پوزیشن آخرین سطر اکسل آخر اگر تعداد سطر درخواستی به علاوه آخرین پوزیشن بیشتر از سایز دیتا نباشد
             int rowSize = (Math.min((lastPosition + rowCount), excelDto.getRowList().size()));
@@ -205,38 +174,15 @@ public interface ExcelTools {
                 Object[] dataColumnArray = excelDto.getRowList().get(j);
                 row = worksheet.createRow(rowIndex++);
                 for (int columnIndex = 0; columnIndex < dataColumnArray.length; columnIndex++) {
+                    formatter=null;
                     if (!ObjectUtils.isEmpty(excelDto.getColumnList()) && excelDto.getColumnList().size() > columnIndex) {
                         customExcelColumnDto = excelDto.getColumnList().get(columnIndex);
                         style = makeStyle(workbook, customExcelColumnDto.getStyle());
-                        formatterMap = customExcelColumnDto.getFormatterMap();
+                        formatter = customExcelColumnDto.getFormatter();
                     }
                     cell = row.createCell(columnIndex);
                     cell.setCellStyle(style);
-                    if (!ObjectUtils.isEmpty(formatterMap) && formatterMap.get(dataColumnArray[columnIndex]) != null) {
-                        cell.setCellValue((String) formatterMap.get(dataColumnArray[columnIndex]));
-                    } else {
-                        if (dataColumnArray[columnIndex] instanceof String) {
-                            cell.setCellValue((String) dataColumnArray[columnIndex]);
-                        } else if (dataColumnArray[columnIndex] instanceof Boolean) {
-                            cell.setCellValue((Boolean) dataColumnArray[columnIndex]);
-                        } else if (dataColumnArray[columnIndex] instanceof Integer) {
-                            cell.setCellValue((Integer) dataColumnArray[columnIndex]);
-                        } else if (dataColumnArray[columnIndex] instanceof Long) {
-                            cell.setCellValue((Long) dataColumnArray[columnIndex]);
-                        } else if (dataColumnArray[columnIndex] instanceof Float) {
-                            cell.setCellValue((Float) dataColumnArray[columnIndex]);
-                        } else if (dataColumnArray[columnIndex] instanceof Double) {
-                            cell.setCellValue((Double) dataColumnArray[columnIndex]);
-                        } else if (dataColumnArray[columnIndex] instanceof BigInteger) {
-                            bigIntegerTest = (BigInteger) dataColumnArray[columnIndex];
-                            cell.setCellValue(bigIntegerTest.doubleValue());
-                        } else if (dataColumnArray[columnIndex] instanceof BigDecimal) {
-                            bigDecimalTest = (BigDecimal) dataColumnArray[columnIndex];
-                            cell.setCellValue(bigDecimalTest.doubleValue());
-                        } else {
-                            cell.setCellValue(dataColumnArray[columnIndex] + "");
-                        }
-                    }
+                    setCellValue(cell,dataColumnArray[columnIndex],formatter);
                 }
             }
 
@@ -295,6 +241,33 @@ public interface ExcelTools {
         FileOutputStream fileOutputStream = new FileOutputStream(filePath);
         workbook.write(fileOutputStream);
         fileOutputStream.close();
+    }
+
+
+    private static void setCellValue(XSSFCell cell,Object value,CustomFormatter formatter){
+        if (formatter!=null) {
+            cell.setCellValue(formatter.format(value));
+        } else {
+            if (value instanceof String) {
+                cell.setCellValue((String) value);
+            } else if (value instanceof Boolean) {
+                cell.setCellValue((Boolean) value);
+            } else if (value instanceof Integer) {
+                cell.setCellValue((Integer) value);
+            } else if (value instanceof Long) {
+                cell.setCellValue((Long) value);
+            } else if (value instanceof Float) {
+                cell.setCellValue((Float) value);
+            } else if (value instanceof Double) {
+                cell.setCellValue((Double) value);
+            } else if (value instanceof BigInteger) {
+                cell.setCellValue(((BigInteger) value).doubleValue() );
+            } else if (value instanceof BigDecimal) {
+                cell.setCellValue(((BigDecimal) value).doubleValue() );
+            } else {
+                cell.setCellValue(value + "");
+            }
+        }
     }
 
 }

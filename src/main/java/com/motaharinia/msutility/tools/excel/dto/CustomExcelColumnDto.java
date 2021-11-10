@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * @author https://github.com/motaharinia<br>
@@ -27,7 +26,7 @@ public class CustomExcelColumnDto implements Serializable {
      * فرمت کننده ستون
      * مثلا میخواهیم برای مقادیر صفر در ستون کلمه خیر بیاریم و برای مقادیر یک در ستون کلمه بلی بیاریم
      */
-    private HashMap<Object, Object> formatterMap;
+    private CustomFormatter formatter;
     /**
      * تنظیمات ظاهری ستون
      */
