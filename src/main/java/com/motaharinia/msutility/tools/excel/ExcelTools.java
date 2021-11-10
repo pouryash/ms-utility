@@ -139,7 +139,7 @@ public interface ExcelTools {
      * @param excelDto مدل اطلاعات و تنظیمات تولید اکسل
      * @param rowCount تعداد سطر هر فایل
      * @param password رمز فایل زیپ
-     * @param zipName اسم فایل زیپ
+     * @param zipName  اسم فایل زیپ
      * @return خروجی: آرایه بایت
      */
     static byte[] generateBatch(@NotNull CustomExcelDto excelDto, @NotNull Integer rowCount, @NotNull String password, @NotNull String zipName) throws IOException {
@@ -151,7 +151,7 @@ public interface ExcelTools {
         List<String> paths = new ArrayList<>();
         //شماره آخرین سطر آخرین اکسل تولید شده
         int lastPosition = 0;
-        for (int i = 1; i <= batchSize; i++) {
+        for (int i = 0; i <= batchSize; i++) {
 
 
             //ساخت شیی اکسل و صفحه اکسل داخل آن
@@ -199,7 +199,9 @@ public interface ExcelTools {
             CustomExcelColumnDto customExcelColumnDto;
             HashMap<Object, Object> formatterMap = new HashMap<>();
             style = makeStyle(workbook, new CustomExcelStyleDto(HorizontalAlignment.CENTER, "Tahoma", false, Color.BLACK, Color.WHITE, BorderStyle.THIN, Color.BLACK, "General"));
-            for (int j = lastPosition; j < (lastPosition + rowCount); j++) {
+            //ایجاد فایل اکسل از پوزیشن آخرین سطر اکسل آخر اگر تعداد سطر درخواستی به علاوه آخرین پوزیشن بیشتر از سایز دیتا نباشد
+            int rowSize = (Math.min((lastPosition + rowCount), excelDto.getRowList().size()));
+            for (int j = lastPosition; j < rowSize; j++) {
                 Object[] dataColumnArray = excelDto.getRowList().get(j);
                 row = worksheet.createRow(rowIndex++);
                 for (int columnIndex = 0; columnIndex < dataColumnArray.length; columnIndex++) {
@@ -243,20 +245,16 @@ public interface ExcelTools {
                 worksheet.autoSizeColumn(columnIndex);
             }
             //ذخیره فایل و اضافه کردن مسیر آن به لیست مسیرها
-            String path = (tempFolder + lastPosition + "_" + (lastPosition + rowCount) + ".xlsx");
+            String path = (tempFolder + lastPosition + "_" + rowSize + ".xlsx");
             saveTempExcel(path, workbook);
             paths.add(path);
             lastPosition += rowCount;
         }
 
-        ZipTools.zip(paths, tempFolder + zipName, CompressionMethod.DEFLATE, CompressionLevel.MAXIMUM, password, EncryptionMethod.AES, AesKeyStrength.KEY_STRENGTH_256);
+        ZipTools.zip(paths, tempFolder + zipName.concat(".zip"), CompressionMethod.DEFLATE, CompressionLevel.MAXIMUM, password, EncryptionMethod.AES, AesKeyStrength.KEY_STRENGTH_256);
 
-        byte[] bytes = FileUtils.readFileToByteArray(new File(tempFolder + zipName));
-        //حذف پوشه موقت فایل ها
-        FileUtils.forceDelete(new File(tempFolder));
-        return bytes;
+        return FileUtils.readFileToByteArray(new File(tempFolder + zipName.concat(".zip")));
     }
-
 
     /**
      * این متد با دریافت مدل تنظیمات ظاهری شیی استایل اکسل را ایجاد میکند
@@ -294,14 +292,9 @@ public interface ExcelTools {
      * @param workbook شی اکسل
      */
     private static void saveTempExcel(@NotNull String filePath, @NotNull XSSFWorkbook workbook) throws IOException {
-        File file = new File(filePath.substring(0, filePath.indexOf("/")));
-        if (!file.exists())
-            FileUtils.forceMkdir(file);
-        String path = filePath;
-        FileOutputStream fileOutputStream = new FileOutputStream(path);
+        FileOutputStream fileOutputStream = new FileOutputStream(filePath);
         workbook.write(fileOutputStream);
         fileOutputStream.close();
     }
-
 
 }

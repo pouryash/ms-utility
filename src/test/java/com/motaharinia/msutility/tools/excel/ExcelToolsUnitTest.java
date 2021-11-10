@@ -4,9 +4,12 @@ import com.motaharinia.msutility.tools.excel.dto.UserExcelDto;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -50,9 +53,13 @@ class ExcelToolsUnitTest {
 
             //تولید اکسل
             XSSFWorkbook workbook = ExcelTools.generate(new UserExcelDto(rowList));
-            FileOutputStream fileOutputStream = new FileOutputStream("test_converted/ExcelToolsUnitTest_generateTest.xlsx");
-            workbook.write(fileOutputStream);
             assertThat(workbook).isNotNull();
+            String fileName="ExcelToolsUnitTest_generateTest.xlsx";
+            Files.createDirectories(Paths.get("/test_converted"));
+            File file = new File("/test_converted/"+fileName);
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file,false);
+            workbook.write(fileOutputStream);
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -74,8 +81,14 @@ class ExcelToolsUnitTest {
             rowList.add(new Object[]{"احمد", "کریمی راد", false, 20000, 2000000L, 2.5f, 2.25d, BigInteger.valueOf(2000000000L), BigDecimal.valueOf(250000)});
 
             //تولید اکسل
-            byte[] bytes = ExcelTools.generateBatch(new UserExcelDto(rowList), 2, "", "result.zip");
+            String fileName="result.zip";
+            byte[] bytes = ExcelTools.generateBatch(new UserExcelDto(rowList), 2, "", fileName);
             assertThat(bytes).isNotEmpty();
+            File file = new File("/test_converted/"  + fileName);
+            Files.createDirectories(Paths.get("/test_converted"));
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file,false);
+            fileOutputStream.write(bytes);
         } catch (Exception ex) {
             fail(ex.toString());
         }
