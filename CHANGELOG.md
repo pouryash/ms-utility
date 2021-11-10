@@ -242,7 +242,6 @@
 * Changed:
 * Fixed:
 
-
 #### [0.0.38] - 2021-11-10
 * Added:
 * Changed:
