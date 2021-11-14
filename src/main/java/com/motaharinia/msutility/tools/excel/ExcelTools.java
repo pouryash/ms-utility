@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.tools.excel;
 
 import com.motaharinia.msutility.tools.excel.dto.*;
+import com.motaharinia.msutility.tools.fso.FsoTools;
 import com.motaharinia.msutility.tools.zip.ZipTools;
 import net.lingala.zip4j.model.enums.AesKeyStrength;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -82,7 +83,7 @@ public interface ExcelTools {
         for (Object[] dataColumnArray : excelDto.getRowList()) {
             row = worksheet.createRow(rowIndex++);
             for (int columnIndex = 0; columnIndex < dataColumnArray.length; columnIndex++) {
-                formatter=null;
+                formatter = null;
                 if (!ObjectUtils.isEmpty(excelDto.getColumnList()) && excelDto.getColumnList().size() > columnIndex) {
                     customExcelColumnDto = excelDto.getColumnList().get(columnIndex);
                     style = makeStyle(workbook, customExcelColumnDto.getStyle());
@@ -90,7 +91,7 @@ public interface ExcelTools {
                 }
                 cell = row.createCell(columnIndex);
                 cell.setCellStyle(style);
-                setCellValue(cell,dataColumnArray[columnIndex],formatter);
+                setCellValue(cell, dataColumnArray[columnIndex], formatter);
             }
         }
 
@@ -103,7 +104,6 @@ public interface ExcelTools {
         return workbook;
     }
 
-
     /**
      * متد ایجاد و فشرده سازی فایل های اکسل
      *
@@ -115,7 +115,7 @@ public interface ExcelTools {
      */
     static byte[] generateBatch(@NotNull CustomExcelDto excelDto, @NotNull Integer rowCount, @NotNull String password, @NotNull String zipName) throws IOException {
         //نام پوشه برای ذخیره موقت فایل ها
-        String tempFolder = System.getProperty("java.io.tmpdir");
+        String tempPathWithTrailingSlash = FsoTools.fixPathTrailingSlash(System.getProperty("java.io.tmpdir"),true);
         //تعداد کل فایل هایی که باید تولید شود
         int batchSize = excelDto.getRowList().size() / rowCount;
         //مسیر هر فایل تولید شده
@@ -123,7 +123,6 @@ public interface ExcelTools {
         //شماره آخرین سطر آخرین اکسل تولید شده
         int lastPosition = 0;
         for (int i = 0; i <= batchSize; i++) {
-
 
             //ساخت شیی اکسل و صفحه اکسل داخل آن
             XSSFWorkbook workbook = new XSSFWorkbook();
@@ -174,7 +173,7 @@ public interface ExcelTools {
                 Object[] dataColumnArray = excelDto.getRowList().get(j);
                 row = worksheet.createRow(rowIndex++);
                 for (int columnIndex = 0; columnIndex < dataColumnArray.length; columnIndex++) {
-                    formatter=null;
+                    formatter = null;
                     if (!ObjectUtils.isEmpty(excelDto.getColumnList()) && excelDto.getColumnList().size() > columnIndex) {
                         customExcelColumnDto = excelDto.getColumnList().get(columnIndex);
                         style = makeStyle(workbook, customExcelColumnDto.getStyle());
@@ -182,7 +181,7 @@ public interface ExcelTools {
                     }
                     cell = row.createCell(columnIndex);
                     cell.setCellStyle(style);
-                    setCellValue(cell,dataColumnArray[columnIndex],formatter);
+                    setCellValue(cell, dataColumnArray[columnIndex], formatter);
                 }
             }
 
@@ -191,15 +190,15 @@ public interface ExcelTools {
                 worksheet.autoSizeColumn(columnIndex);
             }
             //ذخیره فایل و اضافه کردن مسیر آن به لیست مسیرها
-            String path = (tempFolder + lastPosition + "_" + rowSize + ".xlsx");
+            String path = (tempPathWithTrailingSlash +  lastPosition + "_" + rowSize + ".xlsx");
             saveTempExcel(path, workbook);
             paths.add(path);
             lastPosition += rowCount;
         }
 
-        ZipTools.zip(paths, tempFolder + zipName.concat(".zip"), CompressionMethod.DEFLATE, CompressionLevel.MAXIMUM, password, EncryptionMethod.AES, AesKeyStrength.KEY_STRENGTH_256);
+        ZipTools.zip(paths, tempPathWithTrailingSlash + zipName.concat(".zip"), CompressionMethod.DEFLATE, CompressionLevel.MAXIMUM, password, EncryptionMethod.AES, AesKeyStrength.KEY_STRENGTH_256);
 
-        return FileUtils.readFileToByteArray(new File(tempFolder + zipName.concat(".zip")));
+        return FileUtils.readFileToByteArray(new File(tempPathWithTrailingSlash + zipName.concat(".zip")));
     }
 
     /**
@@ -244,8 +243,8 @@ public interface ExcelTools {
     }
 
 
-    private static void setCellValue(XSSFCell cell,Object value,CustomFormatter formatter){
-        if (formatter!=null) {
+    private static void setCellValue(XSSFCell cell, Object value, CustomFormatter formatter) {
+        if (formatter != null) {
             cell.setCellValue(formatter.format(value));
         } else {
             if (value instanceof String) {
@@ -261,9 +260,9 @@ public interface ExcelTools {
             } else if (value instanceof Double) {
                 cell.setCellValue((Double) value);
             } else if (value instanceof BigInteger) {
-                cell.setCellValue(((BigInteger) value).doubleValue() );
+                cell.setCellValue(((BigInteger) value).doubleValue());
             } else if (value instanceof BigDecimal) {
-                cell.setCellValue(((BigDecimal) value).doubleValue() );
+                cell.setCellValue(((BigDecimal) value).doubleValue());
             } else {
                 cell.setCellValue(value + "");
             }

@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +29,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FsoToolsUnitTest {
 
-    String parentDirPath = System.getProperty("user.dir") + "/MsUtilityTests";
+    String parentDirPath = FsoTools.fixPathTrailingSlash(System.getProperty("user.dir") , false) + "/MsUtilityTests";
     String parentDirFile1Path = parentDirPath + "/parentfile1.txt";
     String parentDirFile2Path = parentDirPath + "/parentfile2.txt";
 
@@ -388,6 +389,21 @@ class FsoToolsUnitTest {
             assertThat(FsoTools.recursiveCreateName(dir1Path, 0)).isEqualTo(dir1Path + " - Copy");
             //تست نام فایل تکراری
             assertThat(FsoTools.recursiveCreateName(dir1Path, "dir1file1", "txt", 0)).isEqualTo(dir1Path + "/dir1file1 - Copy.txt");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(17)
+    @Test
+    void fixPathEndsWithSlashTest() {
+        try {
+            String separator=FileSystems.getDefault().getSeparator();
+            String directoryPath= separator + "ms-utility";
+            //تست داشتن اسلش در انتهای مسیر
+            assertThat(FsoTools.fixPathTrailingSlash(directoryPath, true)).isEqualTo(directoryPath +  separator);
+            //تست نداشتن اسلش در انتهای مسیر
+            assertThat(FsoTools.fixPathTrailingSlash(directoryPath +  separator, false)).isEqualTo(directoryPath);
         } catch (Exception ex) {
             fail(ex.toString());
         }

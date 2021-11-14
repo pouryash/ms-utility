@@ -200,6 +200,12 @@ public interface StringTools {
     }
 
 
+    /**
+     * متد ترجمه متن مورد نظر
+     * @param messageSource منبع ترجمه
+     * @param customMessage کلید پیام برای ترجمه
+     * @return خروجی: پیام ترجمه شده
+     */
     static String translateCustomMessage(MessageSource messageSource, String customMessage) {
         if (!ObjectUtils.isEmpty(messageSource) && !ObjectUtils.isEmpty(customMessage)) {
             if (customMessage.split("::").length > 1) {
@@ -212,4 +218,6 @@ public interface StringTools {
         }
         return customMessage;
     }
+
+
 }

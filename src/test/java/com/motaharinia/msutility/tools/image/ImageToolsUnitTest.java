@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.tools.image;
 
 import com.motaharinia.msutility.tools.fso.FsoConfigDto;
+import com.motaharinia.msutility.tools.fso.FsoTools;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ImageToolsUnitTest {
 
-    String parentDirPath = System.getProperty("user.dir") + "/MsUtilityTests";
+    String parentDirPath = FsoTools.fixPathTrailingSlash(System.getProperty("user.dir"),false) + "/MsUtilityTests";
     String imageFileFullName = "imageTools.jpg";
 
     FsoConfigDto fsoConfigDto = new FsoConfigDto(new Integer[]{60, 120}, "thumb", 100);

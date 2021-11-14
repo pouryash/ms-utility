@@ -247,3 +247,10 @@
 * Changed:
   * improve ExcelTools to use functional formatter
 * Fixed:
+
+#### [0.0.39] - 2021-11-14
+* Added:
+  * added FsoTools.fixPathTrailingSlash to fix path in Windows and Linux filesystem
+* Changed:
+  * improve getting system path from System.getProperty with FsoTools.fixPathTrailingSlash
+* Fixed:

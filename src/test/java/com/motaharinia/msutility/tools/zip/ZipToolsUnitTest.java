@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.tools.zip;
 
 import com.motaharinia.msutility.tools.fso.FsoConfigDto;
+import com.motaharinia.msutility.tools.fso.FsoTools;
 import com.motaharinia.msutility.tools.image.ImageTools;
 import net.lingala.zip4j.model.enums.AesKeyStrength;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ZipToolsUnitTest {
 
-    String parentDirPath = System.getProperty("user.dir") + "/MsUtilityTests";
+    String parentDirPath = FsoTools.fixPathTrailingSlash(System.getProperty("user.dir"),false) + "/MsUtilityTests";
 
     String dir1Path = parentDirPath + "/dir1";
     String dir1File1Path = dir1Path + "/dir1file1.txt";

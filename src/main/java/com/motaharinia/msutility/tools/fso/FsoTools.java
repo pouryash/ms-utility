@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -237,9 +238,9 @@ public interface FsoTools {
     /**
      * این متد یک مسیر ورودی و یک سوال که آیا مسیر ورودی تصویر بندانگشتی دارد یا خیر را از ورودی دریافت میکند و در صورت وجود مسیر ورودی، آن را حذف مینماید
      *
-     * @param path           مسیر ورودی
-     * @param withThumbnail  مسیر مبدا حاوی تصویر بندانگشتی
-     * @param fsoConfigDto مدل تنظیمات ابزار فایل
+     * @param path          مسیر ورودی
+     * @param withThumbnail مسیر مبدا حاوی تصویر بندانگشتی
+     * @param fsoConfigDto  مدل تنظیمات ابزار فایل
      */
     static void delete(@NotNull String path, boolean withThumbnail, FsoConfigDto fsoConfigDto) {
         if (ObjectUtils.isEmpty(path)) {
@@ -268,7 +269,7 @@ public interface FsoTools {
      * @param pathFrom              مسیر مبدا
      * @param pathTo                مسیر مقصد
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
-     * @param fsoConfigDto        مدل تنظیمات ابزار فایل
+     * @param fsoConfigDto          مدل تنظیمات ابزار فایل
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
      */
     static void move(@NotNull String pathFrom, @NotNull String pathTo, boolean withThumbnail, FsoConfigDto fsoConfigDto, boolean withDirectoryCreation) {
@@ -320,7 +321,7 @@ public interface FsoTools {
      * @param pathFrom              مسیر مبدا که میتواند دایرکتوری یا فایل باشد
      * @param pathTo                مسیر مقصد که اگر مسیر مبدا فایل بوده باید این مسیر نیز مسیر کامل فایل باشد
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
-     * @param fsoConfigDto        مدل تنظیمات ابزار فایل
+     * @param fsoConfigDto          مدل تنظیمات ابزار فایل
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
      * @param withRenameOnExist     در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد
      * @throws IOException این متد ممکن است اکسپشن داشته باشد
@@ -430,11 +431,11 @@ public interface FsoTools {
     /**
      * این متد یک مسیر دایرکتوری و نام کامل فایل و آرایه بایت داده را از ورودی دریافت میکند و بعد از ثبت آرایه بایت در مسیر مورد نظر ، مسیر رمزگذاری شده فایل ثبت شده را خروجی میدهد
      *
-     * @param directoryPath  مسیر دایرکتوری
-     * @param fileFullName   نام کامل فایل
-     * @param fileBytes      آرایه بایت داده فایل
-     * @param withThumbnail  مسیر مبدا حاوی تصویر بندانگشتی
-     * @param fsoConfigDto مدل تنظیمات ابزار فایل
+     * @param directoryPath مسیر دایرکتوری
+     * @param fileFullName  نام کامل فایل
+     * @param fileBytes     آرایه بایت داده فایل
+     * @param withThumbnail مسیر مبدا حاوی تصویر بندانگشتی
+     * @param fsoConfigDto  مدل تنظیمات ابزار فایل
      * @return خروجی: مسیر رمزگذاری شده فایل ثبت شده
      * @throws IOException این متد ممکن است اکسپشن داشته باشد
      */
@@ -593,4 +594,22 @@ public interface FsoTools {
     }
 
 
+    /**
+     * متد بررسی و اصلاح انتهای مسیرها که اسلش داشته باشد یا خیر
+     *
+     * @param path مسیر
+     * @return خروجی: مسیر اصلاح شده طبق ورودی
+     */
+    static String fixPathTrailingSlash(String path, boolean endWithSlash) {
+        if (ObjectUtils.isEmpty(path)) {
+            return path;
+        }
+        if (endWithSlash && !path.endsWith(FileSystems.getDefault().getSeparator())) {
+            path += FileSystems.getDefault().getSeparator();
+        }
+        if (!endWithSlash && path.endsWith(FileSystems.getDefault().getSeparator())) {
+            path = path.substring(0, path.length() - FileSystems.getDefault().getSeparator().length());
+        }
+        return path;
+    }
 }
