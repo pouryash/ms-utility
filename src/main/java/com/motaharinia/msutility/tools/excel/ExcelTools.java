@@ -112,6 +112,7 @@ public interface ExcelTools {
      * @param password رمز فایل زیپ
      * @param zipName  اسم فایل زیپ
      * @return خروجی: آرایه بایت
+     * @throws IOException خطا
      */
     static byte[] generateBatch(@NotNull CustomExcelDto excelDto, @NotNull Integer rowCount, @NotNull String password, @NotNull String zipName) throws IOException {
         //نام پوشه برای ذخیره موقت فایل ها

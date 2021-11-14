@@ -593,11 +593,11 @@ public interface FsoTools {
         }
     }
 
-
     /**
      * متد بررسی و اصلاح انتهای مسیرها که اسلش داشته باشد یا خیر
      *
      * @param path مسیر
+     * @param endWithSlash مسیر با اسلش خاتمه یابد؟
      * @return خروجی: مسیر اصلاح شده طبق ورودی
      */
     static String fixPathTrailingSlash(String path, boolean endWithSlash) {
