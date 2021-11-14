@@ -211,6 +211,7 @@ public interface ExceptionTools {
                 exceptionDto.setMessage(StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.UNKNOWN::" + externalCallException.getRequestCode()));
             } else {
                 exceptionDto.setMessage(StringTools.translateCustomMessage(messageSource, "EXTERNAL_CALL_EXCEPTION.CODE::" + externalCallException.getResponseCode() + "," + externalCallException.getRequestCode()));
+                exceptionDto.setExternalMessage(externalCallException.getResponseCustomError());
             }
         }
         exceptionDto.setMessageDtoList(messageDtoList);

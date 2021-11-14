@@ -48,6 +48,10 @@ public class ExceptionDto implements Serializable {
      */
     private String message;
     /**
+     * پیام خطای اکسترنال
+     */
+    private String externalMessage;
+    /**
      * پیامهای خطا
      */
     private List<ExceptionMessageDto> messageDtoList = new ArrayList<>();

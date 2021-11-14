@@ -253,4 +253,5 @@
   * added FsoTools.fixPathTrailingSlash to fix path in Windows and Linux filesystem
 * Changed:
   * improve getting system path from System.getProperty with FsoTools.fixPathTrailingSlash
+  * improve ExceptionTools.doException by adding CustomResponseDto.getException().getExternalMessage() for EXTERNAL_CALL_EXCEPTION errors
 * Fixed:
