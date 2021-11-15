@@ -2,6 +2,8 @@ package com.motaharinia.msutility.tools.excel;
 
 import com.motaharinia.msutility.tools.excel.dto.*;
 import com.motaharinia.msutility.tools.fso.FsoTools;
+import com.motaharinia.msutility.tools.string.RandomGenerationTypeEnum;
+import com.motaharinia.msutility.tools.string.StringTools;
 import com.motaharinia.msutility.tools.zip.ZipTools;
 import net.lingala.zip4j.model.enums.AesKeyStrength;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -20,8 +22,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author https://github.com/motaharinia<br>
@@ -110,17 +117,21 @@ public interface ExcelTools {
      * @param excelDto مدل اطلاعات و تنظیمات تولید اکسل
      * @param rowCount تعداد سطر هر فایل
      * @param password رمز فایل زیپ
-     * @param zipName  اسم فایل زیپ
      * @return خروجی: آرایه بایت
      * @throws IOException خطا
      */
-    static byte[] generateBatch(@NotNull CustomExcelDto excelDto, @NotNull Integer rowCount, @NotNull String password, @NotNull String zipName) throws IOException {
+    static byte[] generateBatch(@NotNull CustomExcelDto excelDto, @NotNull Integer rowCount, @NotNull String password) throws IOException {
         //نام پوشه برای ذخیره موقت فایل ها
-        String tempPathWithTrailingSlash = FsoTools.fixPathTrailingSlash(System.getProperty("java.io.tmpdir"),true);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss", Locale.ENGLISH);
+        String dateTime = simpleDateFormat.format(new Date());
+        String tempDirectory = FsoTools.fixPathTrailingSlash(System.getProperty("java.io.tmpdir"),true) + "ziptools-" + dateTime + "-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false);
+        //آماده سازی ساخت پوشه موقت
+        Files.createDirectories(Paths.get(tempDirectory));
+
         //تعداد کل فایل هایی که باید تولید شود
         int batchSize = excelDto.getRowList().size() / rowCount;
         //مسیر هر فایل تولید شده
-        List<String> paths = new ArrayList<>();
+        List<String> pathList = new ArrayList<>();
         //شماره آخرین سطر آخرین اکسل تولید شده
         int lastPosition = 0;
         for (int i = 0; i <= batchSize; i++) {
@@ -191,15 +202,17 @@ public interface ExcelTools {
                 worksheet.autoSizeColumn(columnIndex);
             }
             //ذخیره فایل و اضافه کردن مسیر آن به لیست مسیرها
-            String path = (tempPathWithTrailingSlash +  lastPosition + "_" + rowSize + ".xlsx");
+            String path = (tempDirectory + "/" +  lastPosition + "_" + rowSize + ".xlsx");
             saveTempExcel(path, workbook);
-            paths.add(path);
+            pathList.add(path);
             lastPosition += rowCount;
         }
 
-        ZipTools.zip(paths, tempPathWithTrailingSlash + zipName.concat(".zip"), CompressionMethod.DEFLATE, CompressionLevel.MAXIMUM, password, EncryptionMethod.AES, AesKeyStrength.KEY_STRENGTH_256);
+        ZipTools.zip(pathList, tempDirectory + "/result.zip" , CompressionMethod.DEFLATE, CompressionLevel.MAXIMUM, password, EncryptionMethod.AES, AesKeyStrength.KEY_STRENGTH_256);
 
-        return FileUtils.readFileToByteArray(new File(tempPathWithTrailingSlash + zipName.concat(".zip")));
+        byte[] result=FileUtils.readFileToByteArray(new File(tempDirectory + "/result.zip"));
+        FileUtils.deleteDirectory(new File(tempDirectory));
+        return result;
     }
 
     /**

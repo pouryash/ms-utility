@@ -255,3 +255,9 @@
   * improve getting system path from System.getProperty with FsoTools.fixPathTrailingSlash
   * improve ExceptionTools.doException by adding CustomResponseDto.getException().getExternalMessage() for EXTERNAL_CALL_EXCEPTION errors
 * Fixed:
+
+#### [0.0.40] - 2021-11-15
+* Added:
+* Changed:
+  * improve ExcelTools.generateBatch to remove its created temp files in os temp directory
+* Fixed:

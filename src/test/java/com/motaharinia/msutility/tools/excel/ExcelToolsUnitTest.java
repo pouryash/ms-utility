@@ -82,10 +82,9 @@ class ExcelToolsUnitTest {
             rowList.add(new Object[]{"احمد", "کریمی راد", 20000, 2000000L, 2.5f, 2.25d, BigInteger.valueOf(2000000000L), BigDecimal.valueOf(250000), false, Instant.now().toEpochMilli(), Instant.now().toEpochMilli()});
 
             //تولید اکسل
-            String fileName = "result.zip";
-            byte[] bytes = ExcelTools.generateBatch(new UserExcelDto(rowList), 2, "", fileName);
+            byte[] bytes = ExcelTools.generateBatch(new UserExcelDto(rowList), 2, "");
             assertThat(bytes).isNotEmpty();
-            File file = new File("/test_converted/" + fileName);
+            File file = new File("/test_converted/result.zip");
             Files.createDirectories(Paths.get("/test_converted"));
             file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file, false);
