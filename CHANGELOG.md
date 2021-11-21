@@ -261,3 +261,9 @@
 * Changed:
   * improve ExcelTools.generateBatch to remove its created temp files in os temp directory
 * Fixed:
+
+#### [0.0.41] - 2021-11-21
+* Added:
+  * added SecurityTools.getUntrustedSSLContext to use in RestTemplate and Jsoup SSL config
+* Changed:
+* Fixed:
