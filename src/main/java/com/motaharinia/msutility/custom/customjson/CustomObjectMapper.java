@@ -7,6 +7,9 @@ import com.motaharinia.msutility.custom.customfield.CustomDate;
 import com.motaharinia.msutility.custom.customfield.CustomDateTime;
 import com.motaharinia.msutility.custom.customjson.deserializer.JsonDeserializerString;
 import com.motaharinia.msutility.custom.customjson.serializer.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.context.MessageSource;
 import org.springframework.util.ObjectUtils;
 
@@ -17,6 +20,9 @@ import java.util.Date;
  * این کلاس مپر برای تبدیل کلاسهای مدل به رشته جیسون و برعکس استفاده میشود. تفاوت آن نسبت به مپر پیش فرض داشتن مسیج سورس برای ترجمه است
  */
 
+@Data
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
 public class CustomObjectMapper extends ObjectMapper {
 
     public CustomObjectMapper(MessageSource messageSource) {
@@ -32,7 +38,9 @@ public class CustomObjectMapper extends ObjectMapper {
         simpleModule.addSerializer(CustomDateTime.class, new JsonSerializerCustomDateTime());
         if (!ObjectUtils.isEmpty(messageSource)) {
             simpleModule.addSerializer(String.class, new JsonSerializerString(messageSource));
+            simpleModule.addSerializer(CustomEnum.class, new JsonSerializerEnum(messageSource));
         }
+
 
         //تنظیم دیسریالایزرها برای تبدیل خودکار اطلاعات از رشته جیسون کلاینت به مدل جاوا
         simpleModule.addDeserializer(String.class, new JsonDeserializerString());
@@ -56,5 +64,9 @@ public class CustomObjectMapper extends ObjectMapper {
         this.registerModule(simpleModule);
     }
 
+    @Override
+    public ObjectMapper copy() {
+        return this.toBuilder().build();
+    }
 
 }

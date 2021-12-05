@@ -1,11 +1,13 @@
 package com.motaharinia.msutility.custom.customjson.sample;
 
 
+import com.motaharinia.msutility.custom.customjson.serializer.CustomEnum;
+
 /**
  * @author eng.motahari@gmail.com<br>
  * کلاس مقادیر ثابت جنسیت
  */
-public enum EtcItemGender {
+public enum EtcItemGender implements CustomEnum {
 
     /**
      *جنسیت : مرد
@@ -22,6 +24,7 @@ public enum EtcItemGender {
         this.value = value;
     }
 
+    @Override
     public String getValue() {
         return value;
     }

@@ -17,12 +17,16 @@ import java.util.Random;
  * Created by IntelliJ IDEA.
  *
  * @author https://github.com/motaharinia
- *  اینترفیس پدر تمامی اینترفیسهای جستجوی پیشرفته دیتابیس که حکم میکند تمام آنها باید متد گتر آی دی را داشته باشند
+ * اینترفیس پدر تمامی اینترفیسهای جستجوی پیشرفته دیتابیس که حکم میکند تمام آنها باید متد گتر آی دی را داشته باشند
  * تمام اینترفیسهای جستجوی پیشرفته دیتابیس باید از این اینترفیس گسترش یابند
  */
 public interface StringTools {
 
-
+    String CHARACTERS_LOWER = "abcdefghigklmnopqrstuvwxyz";
+    String CHARACTERS_UPPER = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
+    String NUMBERS = "1234567890";
+    String PUNCTUATIONS = "_-$#@%^*&=+";
+    String CHARACTERS_PERSIAN = "ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی";
     Random RANDOM = new Random();
 
     /**
@@ -132,76 +136,81 @@ public interface StringTools {
         if (ObjectUtils.isEmpty(withLeadingZero)) {
             throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "withLeadingZero");
         }
-        String characterLower = "abcdefghigklmnopqrstuvwxyz";
-        String characterUpper = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
-        String number = "1234567890";
-        String punc = "_-$#@%^*&=+";
-        String characterPersian = "ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی";
-        String characters = "";
-
-        switch (randomGenerationTypeEnum) {
-            case LATIN_CHARACTERS:
-                characters = characterLower + characterUpper;
-                break;
-            case LATIN_LOWER_CHARACTERS:
-                characters = characterLower;
-                break;
-            case LATIN_UPPER_CHARACTERS:
-                characters = characterUpper;
-                break;
-            case NUMBER:
-                characters = number;
-                break;
-            case LATIN_CHARACTERS_NUMBERS:
-                characters = characterLower + characterUpper + number;
-                break;
-            case PUNCTUATIONS:
-                characters = punc;
-                break;
-            case LATIN_CHARACTERS_NUMBERS_PUNCTUATIONS:
-                characters = characterLower + characterUpper + number + punc;
-                break;
-            case LATIN_CHARACTERS_NUMBERS_UNDERLINE:
-                characters = characterLower + characterUpper + number + "_";
-                break;
-            case NUMBERS_UNDERLINE:
-                characters = number + "_";
-                break;
-            case PERSIAN_CHARACTERS_SPACE:
-                characters = characterPersian + " ";
-                break;
-            case PERSIAN_CHARACTERS_SPACE_NUMBERS:
-                characters = characterPersian + number + " ";
-                break;
-        }
-        int charactersLength = characters.length();
-        int randomNum;
-        char randomChar;
+        String characters = getCharacters(randomGenerationTypeEnum);
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            randomNum = RANDOM.nextInt(charactersLength);
-            randomChar = characters.charAt(randomNum);
-            if ((i == 0) && (!withLeadingZero)) {
-                while (((int) randomChar == 48)) {
-                    randomNum = RANDOM.nextInt((charactersLength - 1));
-                    randomChar = characters.charAt(randomNum);
-                }
-            }
-            //در حالت رشته ای در ابتدا یا انتها حرف فاصله نباشد
-            if ((i == 0) || (i == length - 1)) {
-                while (((int) randomChar == 32)) {
-                    randomNum = RANDOM.nextInt((charactersLength - 1));
-                    randomChar = characters.charAt(randomNum);
-                }
-            }
-            stringBuilder.append(randomChar);
+            stringBuilder.append(characters.charAt(RANDOM.nextInt(characters.length())));
         }
+        checkBlankZero(stringBuilder, characters, length, withLeadingZero);
         return stringBuilder.toString();
     }
 
+    /**
+     * متد بررسی جای خالی و عدد صفر در رشته تولید شده
+     *
+     * @param stringBuilder   شیی سازنده رشته
+     * @param characters      رشته حاوی کارکترهای مورد نظر
+     * @param length          طول رشته مورد نظر
+     * @param withLeadingZero با صفر شروع شود؟
+     */
+    static void checkBlankZero(@NotNull StringBuilder stringBuilder, @NotNull String characters, @NotNull Integer length, @NotNull Boolean withLeadingZero) {
+        //بررسی عدم وجود صفر در ابتدای رشته با بررسی withLeadingZero
+        if (((stringBuilder.toString().charAt(0)) == 48) && (!withLeadingZero)) {
+            stringBuilder.deleteCharAt(0);
+            stringBuilder.insert(0, characters.charAt(RANDOM.nextInt(characters.length())));
+            checkBlankZero(stringBuilder, characters, length, withLeadingZero);
+        }
+        //بررسی عدم وجود جای خالی در ابتدا و انتهای رشته
+        if (Character.isWhitespace(stringBuilder.toString().charAt(0))) {
+            stringBuilder.deleteCharAt(0);
+            stringBuilder.insert(0, characters.charAt(RANDOM.nextInt(characters.length())));
+            checkBlankZero(stringBuilder, characters, length, withLeadingZero);
+        }
+        if (Character.isWhitespace(stringBuilder.toString().charAt(length - 1))) {
+            stringBuilder.deleteCharAt(length - 1);
+            stringBuilder.append(characters.charAt(RANDOM.nextInt(characters.length())));
+            checkBlankZero(stringBuilder, characters, length, withLeadingZero);
+        }
+    }
+
+    /**
+     * متد تولید رشته حاوی کارکترهای مورد نظر
+     *
+     * @param randomGenerationTypeEnum نوع ترکیب رشته
+     * @return خروجی: رشته حاوی کارکترهای مورد نظر
+     */
+    static String getCharacters(@NotNull RandomGenerationTypeEnum randomGenerationTypeEnum) {
+        switch (randomGenerationTypeEnum) {
+            case LATIN_CHARACTERS:
+                return CHARACTERS_LOWER + CHARACTERS_UPPER;
+            case LATIN_LOWER_CHARACTERS:
+                return CHARACTERS_LOWER;
+            case LATIN_UPPER_CHARACTERS:
+                return CHARACTERS_UPPER;
+            case NUMBER:
+                return NUMBERS;
+            case LATIN_CHARACTERS_NUMBERS:
+                return CHARACTERS_LOWER + CHARACTERS_UPPER + NUMBERS;
+            case PUNCTUATIONS:
+                return PUNCTUATIONS;
+            case LATIN_CHARACTERS_NUMBERS_PUNCTUATIONS:
+                return CHARACTERS_LOWER + CHARACTERS_UPPER + NUMBERS + PUNCTUATIONS;
+            case LATIN_CHARACTERS_NUMBERS_UNDERLINE:
+                return CHARACTERS_LOWER + CHARACTERS_UPPER + NUMBERS + "_";
+            case NUMBERS_UNDERLINE:
+                return NUMBERS + "_";
+            case PERSIAN_CHARACTERS_SPACE:
+                return CHARACTERS_PERSIAN + " ";
+            case PERSIAN_CHARACTERS_SPACE_NUMBERS:
+                return CHARACTERS_PERSIAN + NUMBERS + " ";
+            default:
+                return "";
+        }
+    }
 
     /**
      * متد ترجمه متن مورد نظر
+     *
      * @param messageSource منبع ترجمه
      * @param customMessage کلید پیام برای ترجمه
      * @return خروجی: پیام ترجمه شده

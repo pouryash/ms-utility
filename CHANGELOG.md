@@ -267,3 +267,11 @@
   * added SecurityTools.getUntrustedSSLContext to use in RestTemplate and Jsoup SSL config
 * Changed:
 * Fixed:
+
+#### [0.0.42] - 2021-12-05
+* Added:
+  * added CustomEnum and JsonSerializerEnum
+* Changed:
+  * changed JsonSerializerString to only translate strings with a prefix: "USER_MESSAGE."
+  * changed CustomObjectMapper add builder and equals hashcode and override copy method
+* Fixed:

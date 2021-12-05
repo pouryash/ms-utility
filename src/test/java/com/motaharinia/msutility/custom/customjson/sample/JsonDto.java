@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author https://github.com/motaharinia<br>
@@ -17,6 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class JsonDto implements Serializable {
     private CustomDate customDate;
-    private List<String> genderList;
+    private EtcItemGender gender;
     private Long dateOfBirth;
 }
