@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این اینترفیس متدهای ابزاری امنیتی را دارا میباشد
  */
 public interface SecurityTools {

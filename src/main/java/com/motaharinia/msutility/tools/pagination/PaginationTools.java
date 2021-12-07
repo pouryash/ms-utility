@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متدهای ابزاری صفحه بندی داده ها
  */
 public interface PaginationTools {

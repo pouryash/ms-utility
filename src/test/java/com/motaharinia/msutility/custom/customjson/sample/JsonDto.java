@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * Description: <br>
  */
 @Data
@@ -17,5 +17,6 @@ import java.io.Serializable;
 public class JsonDto implements Serializable {
     private CustomDate customDate;
     private EtcItemGender gender;
+    private EtcItemGender genderNull;
     private Long dateOfBirth;
 }

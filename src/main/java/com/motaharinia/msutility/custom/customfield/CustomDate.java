@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس برای جابجا کردن فیلد تاریخ در مدلها از شمسی به میلادی در زمان ارسال درخواست از کلاینت به سرور و بالعکس استفاده میشود
  */
 @Data

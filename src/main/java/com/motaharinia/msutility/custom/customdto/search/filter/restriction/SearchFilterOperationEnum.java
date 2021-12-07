@@ -1,7 +1,7 @@
 package com.motaharinia.msutility.custom.customdto.search.filter.restriction;
 
 /**
-* @author https://github.com/motaharinia<br>
+* @author eng.motahari@gmail.com<br>
  *     مقادیر ثابت عملیات شرط گذاری بر روی جستجوی پیشرفته
  */
 public enum SearchFilterOperationEnum {

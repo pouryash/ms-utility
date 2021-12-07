@@ -2,7 +2,7 @@ package com.motaharinia.msutility.tools.calendar;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  *     مقادیر ثابت واحدهای زمانی
  */
 public enum DateTimeUnitEnum {

@@ -21,7 +21,7 @@ import java.util.Collection;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متدهای ابزاری کار با تصاویر
  */
 public interface ImageTools {

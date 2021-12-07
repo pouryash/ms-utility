@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس مدل نمونه برای تست اعتبارسنجی CustomValidation
  */
 @Data

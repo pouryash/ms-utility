@@ -1,7 +1,7 @@
 package com.motaharinia.msutility.custom.customdto.search.data.columnconfig;
 
 /**
-* @author https://github.com/motaharinia<br>
+* @author eng.motahari@gmail.com<br>
  *     اینام مقادیر ثابت جهت نمایش افقی مطالب
  */
 public enum SearchDataColumnConfigAlignEnum {

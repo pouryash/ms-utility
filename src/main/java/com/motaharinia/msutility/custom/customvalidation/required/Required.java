@@ -5,7 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * انوتیشن اعتبارسنجی الزامی بودن فیلد <br>
  * برای همه فیلدها میتوان از این اعتبارسنجی استفاده کرد
  */

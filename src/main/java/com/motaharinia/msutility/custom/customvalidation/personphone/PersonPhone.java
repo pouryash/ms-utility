@@ -5,7 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * انوتیشن اعتبارسنجی شماره تلفن منزل که میتواند 8 رقم باشد<br>
  * فقط برای فیلدهای از نوع String میتوان از این اعتبارسنجی استفاده کرد
  */

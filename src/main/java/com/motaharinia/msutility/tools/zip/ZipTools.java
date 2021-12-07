@@ -21,7 +21,7 @@ import java.util.List;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متدهای ابزاری کار با فایلهای فشرده
  */
 public interface ZipTools {

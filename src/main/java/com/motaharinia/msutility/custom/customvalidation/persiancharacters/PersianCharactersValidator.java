@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس بررسی کننده انوتیشن اعتبارسنجی رشته با کارکترهای پارسی و حرف فاصله <br>
  * فقط برای فیلدهای از نوع String میتوان از این اعتبارسنجی استفاده کرد
  */

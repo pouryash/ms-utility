@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* @author https://github.com/motaharinia<br>
+* @author eng.motahari@gmail.com<br>
  * از این کلاس مدل برای تنظیم کردن مشخصات نمایشی ستونهای خروجی داده استفاده میشود
  */
 @Data

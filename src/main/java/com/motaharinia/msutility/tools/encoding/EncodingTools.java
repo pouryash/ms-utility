@@ -9,7 +9,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.Base64;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متدهای ابزاری رمزنگاری و رمزگشایی
  */
 public interface EncodingTools {

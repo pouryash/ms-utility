@@ -7,7 +7,7 @@ import java.io.FileFilter;
 import java.util.Arrays;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس فیلتر فایل و دایرکتوری
  */
 class FsoFileListFilter implements FileFilter {

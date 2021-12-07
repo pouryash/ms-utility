@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.Random;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس کپچا ابزارهای لازم برای ساخت تصویر کپچای تصادفی را ارائه مینماید
  */
 public interface CaptchaTools {

@@ -2,7 +2,7 @@ package com.motaharinia.msutility.tools.fso.mimetype;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * مقادیر ثابت نوع فایل
  */
 public enum FsoMimeTypeEnum {

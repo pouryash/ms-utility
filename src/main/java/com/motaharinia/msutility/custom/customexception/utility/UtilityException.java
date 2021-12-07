@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس اکسپشنهای یوتیلیتی که توسط برنامه نویس در پکیج یوتیلیتی کنترل شده است
  */
 @Getter

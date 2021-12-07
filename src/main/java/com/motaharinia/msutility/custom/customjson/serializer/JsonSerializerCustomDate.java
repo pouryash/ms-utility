@@ -14,7 +14,7 @@ import java.util.Locale;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس برای تبدیل کلاس تاریخ میلادی به رشته جیسون تاریخ جلالی برای ارسال به سمت کلاینت میباشد
  */
 @Slf4j

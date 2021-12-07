@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
-* @author https://github.com/motaharinia<br>
+* @author eng.motahari@gmail.com<br>
  * این کلاس مدل شرطی است که میخواهیم در جستجو هایی مانند جستجوی گرید از آن استفاده کنیم
  */
 @Data

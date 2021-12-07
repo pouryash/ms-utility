@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس مدل حاوی نتیجه جستجوی اطلاعات میباشد
  */
 

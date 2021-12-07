@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس بررسی کننده انوتیشن اعتبارسنجی محدوده اعداد اعشاری<br>
  * فقط برای فیلدهای از نوع Double میتوان از این اعتبارسنجی استفاده کرد
  */

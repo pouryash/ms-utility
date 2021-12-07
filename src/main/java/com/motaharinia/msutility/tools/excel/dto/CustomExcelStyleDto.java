@@ -10,7 +10,7 @@ import java.awt.*;
 import java.io.Serializable;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس تنظیمات ظاهری اکسل
  */
 

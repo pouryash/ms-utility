@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متد های ابزاری فایل سیستم
  */
 public interface FsoTools {

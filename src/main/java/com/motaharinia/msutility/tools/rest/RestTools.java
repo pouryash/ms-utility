@@ -16,7 +16,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این اینترفیس متدهای ابزاری فراخوانی rest و کنترل خطای آن را دارا میباشد
  */
 public interface RestTools {

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
 
  * کلاس مدل مشاهده فایل جهت ارسال به کلاینت
  */

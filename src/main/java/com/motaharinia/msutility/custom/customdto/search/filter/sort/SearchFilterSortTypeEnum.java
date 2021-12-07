@@ -1,7 +1,7 @@
 package com.motaharinia.msutility.custom.customdto.search.filter.sort;
 
 /**
-* @author https://github.com/motaharinia<br>
+* @author eng.motahari@gmail.com<br>
  *     اینام مقادیر ثابت نوع مرتب سازی مدل مرتب سازی در جستجوی پیشرفته
  */
 public enum SearchFilterSortTypeEnum {

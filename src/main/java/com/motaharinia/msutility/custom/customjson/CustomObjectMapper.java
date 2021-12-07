@@ -16,7 +16,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.Date;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس مپر برای تبدیل کلاسهای مدل به رشته جیسون و برعکس استفاده میشود. تفاوت آن نسبت به مپر پیش فرض داشتن مسیج سورس برای ترجمه است
  */
 
@@ -27,9 +27,9 @@ public class CustomObjectMapper extends ObjectMapper {
 
     public CustomObjectMapper(MessageSource messageSource) {
         //تنظیم سریالایزر نال
-        DefaultSerializerProvider.Impl sp = new DefaultSerializerProvider.Impl();
-        sp.setNullValueSerializer(new JsonSerializerNullValue());
-        this.setSerializerProvider(sp);
+//        DefaultSerializerProvider.Impl sp = new DefaultSerializerProvider.Impl();
+//        sp.setNullValueSerializer(new JsonSerializerNullValue());
+//        this.setSerializerProvider(sp);
 
         SimpleModule simpleModule = new SimpleModule();
         //تنظیم سرایالایزرها برای تبدیل خودکار اطلاعات از مدل جاوا به رشته جیسون کلاینت
@@ -38,7 +38,7 @@ public class CustomObjectMapper extends ObjectMapper {
         simpleModule.addSerializer(CustomDateTime.class, new JsonSerializerCustomDateTime());
         if (!ObjectUtils.isEmpty(messageSource)) {
             simpleModule.addSerializer(String.class, new JsonSerializerString(messageSource));
-            simpleModule.addSerializer(CustomEnum.class, new JsonSerializerEnum(messageSource));
+//            simpleModule.addSerializer(CustomEnum.class, new JsonSerializerEnum(messageSource));
         }
 
 
@@ -49,9 +49,9 @@ public class CustomObjectMapper extends ObjectMapper {
 
     public CustomObjectMapper() {
         //تنظیم سریالایزر نال
-        DefaultSerializerProvider.Impl sp = new DefaultSerializerProvider.Impl();
-        sp.setNullValueSerializer(new JsonSerializerNullValue());
-        this.setSerializerProvider(sp);
+//        DefaultSerializerProvider.Impl sp = new DefaultSerializerProvider.Impl();
+//        sp.setNullValueSerializer(new JsonSerializerNullValue());
+//        this.setSerializerProvider(sp);
 
         SimpleModule simpleModule = new SimpleModule();
         //تنظیم سرایالایزرها برای تبدیل خودکار اطلاعات از مدل جاوا به رشته جیسون کلاینت

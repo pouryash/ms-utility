@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این اینترفیس متدهای ابزاری رفلکشن جاوا را دارا میباشد
  */
 public interface ReflectionTools {

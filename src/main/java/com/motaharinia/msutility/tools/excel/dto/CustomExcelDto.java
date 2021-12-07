@@ -3,7 +3,7 @@ package com.motaharinia.msutility.tools.excel.dto;
 import java.util.List;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس اینترفیس مدل اطلاعات و تنظیمات تولید اکسل
  */
 public interface CustomExcelDto {

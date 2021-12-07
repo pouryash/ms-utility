@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  *  کلاس بررسی کننده انوتیشن اعتبارسنجی عدم تکرار فیلدهای دلخواه در لیستی از اشیا مورد نظر<br>
  * فقط برای فیلدهای از نوع List میتوان از این اعتبارسنجی استفاده کرد
  */

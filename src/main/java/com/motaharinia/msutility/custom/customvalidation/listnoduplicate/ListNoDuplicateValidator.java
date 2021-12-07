@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس بررسی کننده انوتیشن اعتبارسنجی عدم وجود عنصر تکراری در لیست<br>
  * فقط برای فیلدهای از نوع List میتوان از این اعتبارسنجی استفاده کرد
  */

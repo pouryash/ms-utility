@@ -275,3 +275,10 @@
   * changed JsonSerializerString to only translate strings with a prefix: "USER_MESSAGE."
   * changed CustomObjectMapper add builder and equals hashcode and override copy method
 * Fixed:
+
+#### [0.0.43] - 2021-12-07
+* Added:
+* Changed:
+  * removed JsonSerializerNullValue from CustomObjectMapper config
+* Fixed:
+  * removed CustomObjectMapper add builder and equals hashcode and override copy method

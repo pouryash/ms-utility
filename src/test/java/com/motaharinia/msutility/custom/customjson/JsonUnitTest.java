@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس تست SearchDataDto
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -72,7 +72,7 @@ class JsonUnitTest {
             Instant dateOfBirth = Instant.now();
 
             //مدل جاوا حاوی تاریخ میلادی برای ارسال به کلاینت
-            JsonDto jsonDto = new JsonDto(new CustomDate(dbDate), EtcItemGender.GENDER_FEMALE, dateOfBirth.toEpochMilli());
+            JsonDto jsonDto = new JsonDto(new CustomDate(dbDate), EtcItemGender.GENDER_FEMALE,null, dateOfBirth.toEpochMilli());
             ClientResponseDto<JsonDto> dto = new ClientResponseDto<>(jsonDto, "USER_MESSAGE.FORM_SUBMIT_SUCCESS");
 
             //سریالایز مدل جاوا در کنترلر در زمان ارسال به کلاینت
@@ -81,7 +81,7 @@ class JsonUnitTest {
             System.out.println("jsonString:" + jsonString);
 
             //تستهای سریالایز
-            //تست عدم وجود خطاs
+            //تست عدم وجود خطا
             assertThat(jsonString).isNotNull();
             //تست تبدیل تاریخ میلادی به جلالی جهت ارسال به کلاینت
             //برای اینکه بتوانیم سال شمسی را در رشته جیسون پیدا کنیم این شیی را میسازیم

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس مدل حاوی اطلاعات فایلها و دایرکتوری های داخل یک مسیر
  */
 @Data

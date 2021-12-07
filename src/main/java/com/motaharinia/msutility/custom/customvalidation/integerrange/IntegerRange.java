@@ -5,7 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * انوتیشن اعتبارسنجی محدوده اعداد صحیح<br>
  * فقط برای فیلدهای از نوع Integer میتوان از این اعتبارسنجی استفاده کرد
  */

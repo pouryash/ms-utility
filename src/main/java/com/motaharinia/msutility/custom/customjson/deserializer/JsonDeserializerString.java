@@ -11,7 +11,7 @@ import org.springframework.util.ObjectUtils;
 import java.io.IOException;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس برای تبدیل رشته جیسون کلاینت به رشته میباشد<br>
  * این کلاس در صورتی که رشته جیسون داده شده از نوع فیلدهای با تگ وب باشد آن را خروجی میدهد<br>
  * در غیر این صورت اگر فیلد رشته مورد نظر فیلد رشته ساده باشد تگهای وب را که مشکل امنیتی ممکن است ایجاد کنند از رشته جیسون حذف مینماید

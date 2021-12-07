@@ -5,7 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * انوتیشن اعتبارسنجی محدوده تاریخ epoch mili long<br>
  * فقط برای فیلدهای از نوع Long میتوان از این اعتبارسنجی استفاده کرد
  */

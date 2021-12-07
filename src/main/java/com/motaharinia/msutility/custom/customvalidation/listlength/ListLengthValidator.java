@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس بررسی کننده انوتیشن اعتبارسنجی محدوده اندازه لیست<br>
  * فقط برای فیلدهای از نوع List میتوان از این اعتبارسنجی استفاده کرد
  */

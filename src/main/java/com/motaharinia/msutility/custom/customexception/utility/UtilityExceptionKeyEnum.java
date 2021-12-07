@@ -2,7 +2,7 @@ package com.motaharinia.msutility.custom.customexception.utility;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * مقادیر ثابت کلید اکسپشنهای یوتیلیتی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
  */
 public enum UtilityExceptionKeyEnum {

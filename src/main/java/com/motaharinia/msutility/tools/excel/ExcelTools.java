@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس ابزارهای مربوط به اکسل
  */
 public interface ExcelTools {

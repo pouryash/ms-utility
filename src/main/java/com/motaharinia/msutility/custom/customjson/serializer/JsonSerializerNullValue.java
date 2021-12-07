@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  *     این کلاس برای تبدیل مقدار نال به رشته جیسون خالی برای ارسال به سمت کلاینت میباشد
  */
 public class JsonSerializerNullValue extends JsonSerializer<Object> {

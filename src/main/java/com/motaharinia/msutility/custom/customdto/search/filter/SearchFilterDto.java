@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
  */
 @Data

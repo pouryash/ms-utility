@@ -6,7 +6,7 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import java.io.IOException;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس غیر فعال کننده پرتاب اکسپشن برای resttemplate زمانی که خطا رخ میدهد
  */
 public class CustomResponseErrorHandler extends DefaultResponseErrorHandler {

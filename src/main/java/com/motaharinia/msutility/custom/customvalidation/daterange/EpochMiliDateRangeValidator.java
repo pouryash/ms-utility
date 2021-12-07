@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس بررسی کننده انوتیشن اعتبارسنجی محدوده تاریخ<br>
  * فقط برای فیلدهای از نوع CustomDate میتوان از این اعتبارسنجی استفاده کرد
  */

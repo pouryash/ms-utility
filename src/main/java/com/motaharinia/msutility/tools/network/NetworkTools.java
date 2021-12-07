@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متدهای ابزاری اطلاعات شبکه و درخواستها
  */
 public interface NetworkTools {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * کلاس پیاده سازی مدل اطلاعات و تنظیمات تولید اکسل کاربران
  */
 public class UserExcelDto implements CustomExcelDto, Serializable {

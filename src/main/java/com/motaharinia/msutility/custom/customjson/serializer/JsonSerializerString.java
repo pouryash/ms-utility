@@ -12,8 +12,7 @@ import java.io.IOException;
 /**
  * @author https://github.com/motaharinia<br>
  * این کلاس برای تبدیل رشته به رشته جیسون برای ارسال به سمت کلاینت میباشد<br>
- * این کلاس در صورتی که رشته جیسون داده شده از نوع پیامهای کاربری ترجمه شدنی نباشد خودش را خروجی میدهد<br>
- * در غیر این صورت آن را ترجمه مینماید
+ * این کلاس در صورتی که رشته جیسون داده شده از نوع پیامهای ترجمه شدنی باشد آن را ترجمه میکند<br>
  */
 public class JsonSerializerString extends JsonSerializer<String> {
 
@@ -25,7 +24,7 @@ public class JsonSerializerString extends JsonSerializer<String> {
 
     @Override
     public void serialize(String objString, JsonGenerator jsonGen, SerializerProvider provider) throws IOException {
-        if ((!ObjectUtils.isEmpty(messageSource)) && objString.startsWith("USER_MESSAGE.")) {
+        if ((!ObjectUtils.isEmpty(messageSource)) && (objString.startsWith("USER_MESSAGE.")) ) {
             objString = StringTools.translateCustomMessage(messageSource, objString);
         }
         jsonGen.writeString(objString);

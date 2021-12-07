@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * اینترفیس متدهای ابزاری تاریخ و زمان میلادی و جلالی
  */
 public interface CalendarTools {

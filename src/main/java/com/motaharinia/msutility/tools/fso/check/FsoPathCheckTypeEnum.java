@@ -2,7 +2,7 @@ package com.motaharinia.msutility.tools.fso.check;
 
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * مقادیر ثابت نوع مسیر فایل یا دایرکتوری
  */
 public enum FsoPathCheckTypeEnum {

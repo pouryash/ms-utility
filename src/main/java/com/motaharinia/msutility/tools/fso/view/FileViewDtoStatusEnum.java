@@ -1,7 +1,7 @@
 package com.motaharinia.msutility.tools.fso.view;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  *     مقادیر ثابت وضعیت فایل
  */
 public enum FileViewDtoStatusEnum {

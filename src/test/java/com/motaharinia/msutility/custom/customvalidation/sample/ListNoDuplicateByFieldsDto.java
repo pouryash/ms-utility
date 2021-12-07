@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * Description: <br>
  *     مدل نمونه برای تست اعتبارسنجی ListNoDuplicateByFields
  */

@@ -8,7 +8,7 @@ import org.springframework.util.ObjectUtils;
 import java.io.Serializable;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس برای جابجا کردن داده های اپ تی ام ال استفاده میشود<br>
  * سامانه این فیلد را از فیلدهای معمولی رشته متمایز میکند و تگهای اچ تی ام ال داخل این فیلد را فیلتر نمیکند
  */

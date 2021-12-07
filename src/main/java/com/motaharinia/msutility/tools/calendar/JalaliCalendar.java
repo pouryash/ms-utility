@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.util.*;
 
 /**
- * @author https://github.com/motaharinia<br>
+ * @author eng.motahari@gmail.com<br>
  * این کلاس برای تبدیل تاریخ میلادی و جلالی استفاده میشود
  */
 @EqualsAndHashCode(callSuper = false)
