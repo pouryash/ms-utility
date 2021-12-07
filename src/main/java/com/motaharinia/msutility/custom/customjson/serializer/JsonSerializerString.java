@@ -24,7 +24,7 @@ public class JsonSerializerString extends JsonSerializer<String> {
 
     @Override
     public void serialize(String objString, JsonGenerator jsonGen, SerializerProvider provider) throws IOException {
-        if ((!ObjectUtils.isEmpty(messageSource)) && (objString.startsWith("USER_MESSAGE.")) ) {
+        if ((!ObjectUtils.isEmpty(messageSource)) && (!ObjectUtils.isEmpty(objString)) && (objString.startsWith("USER_MESSAGE."))) {
             objString = StringTools.translateCustomMessage(messageSource, objString);
         }
         jsonGen.writeString(objString);
