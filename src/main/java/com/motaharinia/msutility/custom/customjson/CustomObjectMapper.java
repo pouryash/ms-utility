@@ -1,6 +1,13 @@
 package com.motaharinia.msutility.custom.customjson;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 import com.motaharinia.msutility.custom.customfield.CustomDate;
@@ -26,6 +33,11 @@ import java.util.Date;
 public class CustomObjectMapper extends ObjectMapper {
 
     public CustomObjectMapper(MessageSource messageSource) {
+        super();
+        this.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        this.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        this.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         //تنظیم سریالایزر نال
 //        DefaultSerializerProvider.Impl sp = new DefaultSerializerProvider.Impl();
 //        sp.setNullValueSerializer(new JsonSerializerNullValue());
@@ -48,6 +60,11 @@ public class CustomObjectMapper extends ObjectMapper {
     }
 
     public CustomObjectMapper() {
+        super();
+        this.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        this.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        this.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         //تنظیم سریالایزر نال
 //        DefaultSerializerProvider.Impl sp = new DefaultSerializerProvider.Impl();
 //        sp.setNullValueSerializer(new JsonSerializerNullValue());

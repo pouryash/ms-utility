@@ -281,4 +281,9 @@
 * Changed:
   * removed JsonSerializerNullValue from CustomObjectMapper config
 * Fixed:
-  * removed CustomObjectMapper add builder and equals hashcode and override copy method
+
+#### [0.0.44] - 2021-12-08
+* Added:
+* Changed:
+* Fixed:
+  * fixed default serialize and deserialize features in CustomObjectMapper
