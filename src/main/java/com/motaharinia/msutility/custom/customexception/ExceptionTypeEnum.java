@@ -2,28 +2,32 @@ package com.motaharinia.msutility.custom.customexception;
 
 /**
  * @author eng.motahari@gmail.com<br>
- * کلاس مقادیر ثابت نوع اکسپشن
+ * Exception type enums
  */
 public enum ExceptionTypeEnum {
 
     /**
-     * نوع خطای عمومی غیر دسته بندی شده مثل خطاهای 500 سرور
+     * Exceptions which are not categorized
+     * ex: database exceptions
      */
     GENERAL_EXCEPTION("GENERAL_EXCEPTION"),
     /**
      * نوع خطای بیزینسی پروژه که توسط برنامه نویسان مطابق با فرآیند بیزینس پرتاب میشوند
+     * Business controlled by service exceptions
+     * ex: user already exists
      */
     BUSINESS_EXCEPTION("BUSINESS_EXCEPTION"),
     /**
-     * نوع خطای اعتبارسنجی سفارشی
+     * Validation exceptions controlled by DTO annotations
+     * ex: this field in required
      */
     VALIDATION_EXCEPTION("VALIDATION_EXCEPTION"),
     /**
-     * نوع خطای فراخوانی سرویسهای بیرونی
+     * Exceptions which come from external microservices or other external APIS
      */
     EXTERNAL_CALL_EXCEPTION("EXTERNAL_CALL_EXCEPTION"),
     /**
-     * نوع خطای محدودیت بازدید
+     * Rate limit exceptions which occurs when an API call more than expected
      */
     RATE_LIMIT_EXCEPTION("RATE_LIMIT_EXCEPTION"),
     ;

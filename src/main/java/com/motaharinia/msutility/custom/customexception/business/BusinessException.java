@@ -8,40 +8,31 @@ import java.io.Serializable;
 
 /**
  * @author eng.motahari@gmail.com<br>
- * کلاس خطای بیزینس پایه که تمامی کلاسهای خطای بیزینس سامانه از آن توسعه می یابند
+ * Business class which all business classes extend from it
  */
-
-
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class BusinessException extends RuntimeException implements Serializable {
 
     /**
-     * کلاسی که در آن خطا اتفاق می افتد
+     * The class which exception occurs
      */
     private final String exceptionClassName;
     /**
-     * شناسه یونیک داده ای که خطا دز آن اتفاق افتاده
+     * Data unique id which exception is related to it (it is used to search in Kibana later)
+     * ex: ID or national code of a user
      */
     private final String dataId;
     /**
-     * پیام خطا
+     * Exception message
      */
     private final String message;
     /**
-     * توضیحاتی در مورد خطا
+     * Exception description added by developer to check in Kibana later
      */
     private final String description;
 
 
-    /**
-     * متد سازنده اکسپشن
-     *
-     * @param exceptionClass       کلاسی که در آن خطا اتفاق می افتد
-     * @param dataId     شناسه یونیک داده ای که خطا دز آن اتفاق افتاده
-     * @param message     پیام خطا
-     * @param description توضیحاتی در مورد خطا
-     */
     protected BusinessException(@NotNull Class exceptionClass, @NotNull String dataId, @NotNull String message, String description) {
         this.exceptionClassName = exceptionClass.getSimpleName();
         this.dataId = dataId;
