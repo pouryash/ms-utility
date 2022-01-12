@@ -212,6 +212,16 @@ public interface CalendarTools {
     //--------------------------------------------------متدهای تبدیل تاریخ جلالی به میلادی--------------------------------------------------
 
     /**
+     * متد دریافت تاریخ و اسم روز هفته
+     *
+     * @param gregorianDate تاریخ میلادی
+     * @return خروجی: رشته تاریخ و اسم روز هفته
+     */
+    static String getJalaliDayOfWeek(@NotNull Instant gregorianDate) {
+       return JalaliCalendar.getDayOfWeek(gregorianDate);
+    }
+
+    /**
      * این متد رشته تاریخ جلالی(میتواند شامل زمان هم باشد) و رشته جدا کننده تاریخ جلالی را از ورودی دریافت میکند و Date میلادی خروجی میدهد
      *
      * @param source              رشته تاریخ جلالی(میتواند شامل زمان هم باشد)

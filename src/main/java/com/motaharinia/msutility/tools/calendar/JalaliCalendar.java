@@ -4,6 +4,9 @@ import com.motaharinia.msutility.custom.customexception.utility.UtilityException
 import com.motaharinia.msutility.custom.customexception.utility.UtilityExceptionKeyEnum;
 import lombok.EqualsAndHashCode;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.*;
 
 /**
@@ -12,6 +15,11 @@ import java.util.*;
  */
 @EqualsAndHashCode(callSuper = false)
 public class JalaliCalendar extends Calendar {
+    protected static String[] weekDayNames = {
+            "دوشنبه","سه شنبه","چهارشنبه",
+            "پنج شنبه", "جمعه",
+            "شنبه", "یکشنبه"
+    };
     protected static final int[] gregorianDaysInMonth = {31, 28, 31, 30, 31, 30, 31,
             31, 30, 31, 30, 31};
     protected static final int[] jalaliDaysInMonth = {31, 31, 31, 31, 31, 31, 30, 30,
@@ -814,5 +822,10 @@ public class JalaliCalendar extends Calendar {
         if (month > 11 || month < -11) {
             throw new UtilityException(JalaliCalendar.class, UtilityExceptionKeyEnum.DATE_VALIDATION_FAILED, "");
         }
+    }
+
+    public static String getDayOfWeek(Instant instant) {
+        int dayOfWeek = instant.atZone(ZoneId.systemDefault()).getDayOfWeek().ordinal();
+        return weekDayNames[dayOfWeek];
     }
 }

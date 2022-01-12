@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -531,6 +532,17 @@ class CalendarToolsUnitTest {
             assertThat(CalendarTools.fixJalaliString("13610625","/")).isEqualTo("1361/06/25");
             assertThat(CalendarTools.fixJalaliString("610625","/")).isEqualTo("1361/06/25");
             assertThat(CalendarTools.fixJalaliString("000625","/")).isEqualTo("1400/06/25");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(43)
+    @Test
+    void getJalaliDayOfWeek() {
+        try {
+            assertThat(CalendarTools.getJalaliDayOfWeek(Instant.now())).isNotNull();
+            assertThat(CalendarTools.getJalaliDayOfWeek(Instant.now())).isNotEmpty();
         } catch (Exception ex) {
             fail(ex.toString());
         }
