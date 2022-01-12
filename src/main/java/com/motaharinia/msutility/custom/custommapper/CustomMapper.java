@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * @author eng.motahari@gmail.com<br>
- * کلاس مپر(مبدل پیش فرض انتیتی به مدل و مدل به انتیتی)
+ * Default mapper useful for all mappers. it converts basic transformations
  */
 public interface CustomMapper {
 
@@ -18,183 +18,183 @@ public interface CustomMapper {
     //--------------------Instant-Long--------------------
 
     /**
-     * متد مبدل شیی Instant به میلی ثانیه زمان
+     * Instant to Long(Epoch-milli)
      *
-     * @param instant شیی Instant
-     * @return خروجی: میلی ثانیه
+     * @param instant Instant value
+     * @return Long(Epoch - milli) value
      */
     default Long mapInstantToLong(Instant instant) {
         return instant == null ? null : instant.toEpochMilli();
     }
 
     /**
-     * متد مبدل میلی ثانیه زمان به شیی Instant
+     * Long(Epoch-milli) value to Instant
      *
-     * @param epochMiliLong میلی ثانیه زمان
-     * @return خروجی: شیی Instant
+     * @param epochMilliLong Long(Epoch-milli) value
+     * @return Instant value
      */
-    default Instant mapLongToInstant(Long epochMiliLong) {
-        return epochMiliLong == null ? null : Instant.ofEpochMilli(epochMiliLong);
+    default Instant mapLongToInstant(Long epochMilliLong) {
+        return epochMilliLong == null ? null : Instant.ofEpochMilli(epochMilliLong);
     }
 
     //--------------------LocalDate-Long--------------------
 
     /**
-     * متد مبدل شیی LocalDate به میلی ثانیه زمان
+     * LocalDate to Long(Epoch-milli)
      *
-     * @param localDate شیی LocalDate
-     * @return خروجی: میلی ثانیه
+     * @param localDate LocalDate value
+     * @return Long(Epoch - milli) value
      */
     default Long mapLocalDateToLong(LocalDate localDate) {
         return localDate == null ? null : localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     /**
-     * متد مبدل میلی ثانیه زمان به شیی LocalDate
+     * Long(Epoch-milli) value to LocalDate
      *
-     * @param epochMiliLong میلی ثانیه زمان
-     * @return خروجی: شیی LocalDate
+     * @param epochMilliLong Long(Epoch-milli) value
+     * @return LocalDate value
      */
-    default LocalDate mapLongToLocalDate(Long epochMiliLong) {
+    default LocalDate mapLongToLocalDate(Long epochMilliLong) {
         //because of java8 compatibility:
 //        return instantLong == null ? null : LocalDate.ofInstant(Instant.ofEpochMilli(instantLong), ZoneId.systemDefault());
-        return epochMiliLong == null ? null : Instant.ofEpochMilli(epochMiliLong).atZone(ZoneId.systemDefault()).toLocalDate();
+        return epochMilliLong == null ? null : Instant.ofEpochMilli(epochMilliLong).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     //--------------------LocalDateTime-Long--------------------
 
     /**
-     * متد مبدل شیی LocalDateTime به میلی ثانیه زمان
+     * LocalDateTime to Long(Epoch-milli)
      *
-     * @param localDateTime شیی LocalDateTime
-     * @return خروجی: میلی ثانیه
+     * @param localDateTime LocalDateTime value
+     * @return Long(Epoch - milli) value
      */
     default Long mapLocalDateTimeToLong(LocalDateTime localDateTime) {
         return localDateTime == null ? null : localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     /**
-     * متد مبدل میلی ثانیه زمان به شیی LocalDateTime
+     * Long(Epoch-milli) value to LocalDateTime
      *
-     * @param epochMiliLong میلی ثانیه زمان
-     * @return خروجی: شیی LocalDateTime
+     * @param epochMilliLong Long(Epoch-milli) value
+     * @return LocalDateTime value
      */
-    default LocalDateTime mapLongToLocalDateTime(Long epochMiliLong) {
-        return epochMiliLong == null ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMiliLong), ZoneId.systemDefault());
+    default LocalDateTime mapLongToLocalDateTime(Long epochMilliLong) {
+        return epochMilliLong == null ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMilliLong), ZoneId.systemDefault());
     }
 
     //--------------------Date-Long--------------------
 
     /**
-     * متد مبدل شیی Date به میلی ثانیه زمان
+     * Date to Long(Epoch-milli)
      *
-     * @param date شیی Date
-     * @return خروجی: میلی ثانیه
+     * @param date Date value
+     * @return Long(Epoch - milli) value
      */
     default Long mapDateToLong(Date date) {
         return date == null ? null : date.getTime();
     }
 
     /**
-     * متد مبدل میلی ثانیه زمان به شیی Date
+     * Long(Epoch-milli) value to Date
      *
-     * @param epochMiliLong میلی ثانیه زمان
-     * @return خروجی: شیی Date
+     * @param epochMilliLong Long(Epoch-milli) value
+     * @return Date value
      */
-    default Date mapLongToDate(Long epochMiliLong) {
-        return epochMiliLong == null ? null : new Date(epochMiliLong);
+    default Date mapLongToDate(Long epochMilliLong) {
+        return epochMilliLong == null ? null : new Date(epochMilliLong);
     }
 
 
     //--------------------Instant-String--------------------
 
     /**
-     * متد مبدل شیی Instant به رشته تاریخ شمسی
+     * Instant to String(JalaliDate)
      *
-     * @param instant شیی Instant
-     * @return خروجی: رشته تاریخ شمسی
+     * @param instant Instant value
+     * @return String(JalaliDate) value
      */
     default String mapInstantToJalaliString(Instant instant) {
         return instant == null ? null : CalendarTools.gregorianToJalaliString(instant, "/", true);
     }
 
     /**
-     * متد مبدل رشته تاریخ شمسی به شیی Instant
+     * String(JalaliDate) to Instant
      *
-     * @param jalaliString رشته تاریخ شمسی
-     * @return خروجی: شیی Instant
+     * @param jalaliString String(JalaliDate) value
+     * @return Instant value
      */
     default Instant mapJalaliStringToInstant(String jalaliString) {
-        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        jalaliString = CalendarTools.fixJalaliString(jalaliString, "/");
         return jalaliString == null ? null : CalendarTools.jalaliToGregorianInstant(jalaliString, "/", ZoneId.systemDefault());
     }
 
     //--------------------LocalDate-String--------------------
 
     /**
-     * متد مبدل شیی LocalDate به رشته تاریخ شمسی
+     * LocalDate to String(JalaliDate)
      *
-     * @param localDate شیی LocalDate
-     * @return خروجی: رشته تاریخ شمسی
+     * @param localDate LocalDate value
+     * @return String(JalaliDate) value
      */
     default String mapLocalDateToJalaliString(LocalDate localDate) {
         return localDate == null ? null : CalendarTools.gregorianToJalaliString(localDate, "/", false);
     }
 
     /**
-     * متد مبدل رشته تاریخ شمسی به شیی LocalDate
+     * String(JalaliDate) to LocalDate
      *
-     * @param jalaliString رشته تاریخ شمسی
-     * @return خروجی: شیی LocalDate
+     * @param jalaliString String(JalaliDate) value
+     * @return LocalDate value
      */
     default LocalDate mapJalaliStringToLocalDate(String jalaliString) {
-        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        jalaliString = CalendarTools.fixJalaliString(jalaliString, "/");
         return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDate(jalaliString, "/", ZoneId.systemDefault());
     }
 
     //--------------------LocalDateTime-String--------------------
 
     /**
-     * متد مبدل شیی LocalDateTime به رشته تاریخ شمسی
+     * LocalDateTime to String(JalaliDate)
      *
-     * @param localDateTime شیی LocalDateTime
-     * @return خروجی: رشته تاریخ شمسی
+     * @param localDateTime LocalDateTime value
+     * @return String(JalaliDate) value
      */
     default String mapLocalDateTimeToString(LocalDateTime localDateTime) {
         return localDateTime == null ? null : CalendarTools.gregorianToJalaliString(localDateTime, "/", true);
     }
 
     /**
-     * متد مبدل رشته تاریخ شمسی به شیی LocalDateTime
+     * String(JalaliDate) to LocalDateTime
      *
-     * @param jalaliString رشته تاریخ شمسی
-     * @return خروجی: شیی LocalDateTime
+     * @param jalaliString String(JalaliDate) value
+     * @return LocalDateTime value
      */
     default LocalDateTime mapStringToLocalDateTime(String jalaliString) {
-        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        jalaliString = CalendarTools.fixJalaliString(jalaliString, "/");
         return jalaliString == null ? null : CalendarTools.jalaliToGregorianLocalDateTime(jalaliString, "/", ZoneId.systemDefault());
     }
 
     //--------------------Date-String--------------------
 
     /**
-     * متد مبدل شیی Date به رشته تاریخ شمسی
+     * Date to String(JalaliDate)
      *
-     * @param date شیی Date
-     * @return خروجی: رشته تاریخ شمسی
+     * @param date Date value
+     * @return String(JalaliDate) value
      */
     default String mapDateToJalaliString(Date date) {
         return date == null ? null : CalendarTools.gregorianToJalaliString(date, "/", true);
     }
 
     /**
-     * متد مبدل رشته تاریخ شمسی به شیی Date
+     * String(JalaliDate) to Date
      *
-     * @param jalaliString رشته تاریخ شمسی
-     * @return خروجی: شیی Date
+     * @param jalaliString String(JalaliDate) value
+     * @return Date value
      */
     default Date mapJalaliStringToDate(String jalaliString) {
-        jalaliString=CalendarTools.fixJalaliString(jalaliString,"/");
+        jalaliString = CalendarTools.fixJalaliString(jalaliString, "/");
         return jalaliString == null ? null : CalendarTools.jalaliToGregorianDate(jalaliString, "/");
     }
 
